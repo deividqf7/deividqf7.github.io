@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Facas X - Todo sobre el Plástico</title>
+  <style>
+    /* Reset y estilos básicos */
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #fff;
+      color: #000;
+      padding-left: 220px; /* espacio para la biblioteca fija */
+      padding-top: 60px; /* espacio para el header fijo */
+      transition: padding-left 0.3s ease;
+    }
+
+    /* Header fijo arriba */
+    header {
+      position: fixed;
+      top: 0;
+      left: 220px;
+      right: 0;
+      height: 60px;
+      background-color: #001f3f;
+      color: white;
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      font-size: 1.5rem;
+      font-weight: bold;
+      z-index: 1001;
+      transition: left 0.3s ease;
+    }
+
+    /* Biblioteca lateral fija */
+    nav.biblioteca {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 220px;
+      height: 100vh;
+      background-color: #111;
+      display: flex;
+      flex-direction: column;
+      padding-top: 60px;
+      z-index: 1000;
+      box-shadow: 2px 0 5px rgba(0,0,0,0.3);
+    }
+
+    nav.biblioteca button {
+      background: none;
+      border: none;
+      color: white;
+      padding: 15px 20px;
+      text-align: left;
+      font-weight: bold;
+      font-size: 1rem;
+      cursor: pointer;
+      border-left: 5px solid transparent;
+      transition: background-color 0.3s, border-color 0.3s;
+    }
+
+    nav.biblioteca button:hover,
+    nav.biblioteca button.active {
+      background-color: #003366;
+      border-left-color: #00aaff;
+      outline: none;
+    }
+
+    /* Main contenido */
+    main {
+      max-width: 900px;
+      margin: 0 auto 50px auto;
+      padding: 20px;
+    }
+
+    section {
+      display: none;
+    }
+    section.active {
+      display: block;
+    }
+
+    h2 {
+      color: #003366;
+      margin-top: 0;
+    }
+
+    /* Imágenes y videos responsivos */
+    img.responsive, iframe {
+      max-width: 100%;
+      height: auto;
+      margin: 15px 0;
+      border-radius: 5px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.2);
+    }
+
+    /* Imagen fondo de la biblioteca con oscuridad */
+    nav.biblioteca::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 220px;
+      height: 100vh;
+      background-image: url('https://2.bp.blogspot.com/-9WyHcmw7Xds/UgbBmvANAHI/AAAAAAAAD9k/9kpfys_Sat4/s1600/Nitrocellulose3d.jpg');
+      background-size: cover;
+      background-position: center;
+      filter: brightness(0.4);
+      z-index: -1;
+    }
+
+    footer {
+      text-align: center;
+      padding: 15px;
+      background-color: #001f3f;
+      color: white;
+      margin-top: 50px;
+      font-size: 0.9rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      body {
+        padding-left: 0;
+        padding-top: 140px;
+      }
+      header {
+        left: 0;
+        width: 100%;
+      }
+      nav.biblioteca {
+        position: fixed;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        height: auto;
+        flex-direction: row;
+        padding-top: 0;
+        box-shadow: none;
+      }
+      nav.biblioteca button {
+        flex: 1;
+        padding: 10px 5px;
+        border-left: none;
+        border-bottom: 3px solid transparent;
+      }
+      nav.biblioteca button:hover,
+      nav.biblioteca button.active {
+        border-bottom-color: #00aaff;
+        background-color: transparent;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="biblioteca">
+    <button class="active" onclick="mostrarSeccion('inicio', this)">Inicio</button>
+    <button onclick="mostrarSeccion('que-es', this)">¿Qué es el plástico?</button>
+    <button onclick="mostrarSeccion('tipos', this)">Tipos de Plástico</button>
+    <button onclick="mostrarSeccion('reciclaje', this)">Cómo Reciclar</button>
+    <button onclick="mostrarSeccion('impacto', this)">Impacto Ambiental</button>
+    <button onclick="mostrarSeccion('ayuda', this)">Ayuda</button>
+  </nav>
+
+  <header>
+    Facas X
+  </header>
+
+  <main>
+    <!-- Inicio -->
+    <section id="inicio" class="active">
+      <h2>Bienvenido a Facas X</h2>
+      <p>
+        Facas X es una empresa dedicada a la investigación, educación y divulgación sobre los plásticos y su impacto en nuestro entorno.
+        Nuestro objetivo es proporcionar información precisa, actualizada y de fácil comprensión para fomentar un uso responsable de los materiales plásticos.
+      </p>
+      <p>
+        Con un equipo de expertos en química, ingeniería ambiental y educación, ofrecemos recursos multimedia, guías prácticas y asesoría para que individuos y organizaciones puedan contribuir a la reducción del impacto ambiental.
+      </p>
+      <p>
+        Nuestra misión es ser un referente en el conocimiento del plástico, promoviendo el reciclaje, la innovación sostenible y el compromiso social.
+      </p>
+    </section>
+
+    <!-- Qué es el plástico -->
+    <section id="que-es">
+      <h2>¿Qué es el Plástico?</h2>
+      <p>
+        El plástico es un material sintético elaborado principalmente a partir de polímeros derivados del petróleo y el gas natural. Gracias a su versatilidad, durabilidad y bajo costo, se ha convertido en un elemento esencial en numerosas industrias y aplicaciones cotidianas.
+      </p>
+      <p>
+        Su estructura molecular permite moldearlo en diversas formas y tamaños, facilitando su uso en embalajes, componentes electrónicos, automóviles, textiles, y muchos otros productos.
+      </p>
+      <p>
+        Sin embargo, el plástico también representa un gran desafío ambiental debido a su lenta degradación y la generación de residuos que afectan ecosistemas y la salud humana.
+      </p>
+      <iframe
+        class="responsive"
+        width="560"
+        height="315"
+        src="https://www.youtube.com/embed/ZIqsLguLkEY"
+        title="¿Qué es el plástico?"
+        frameborder="0"
+        allowfullscreen
+      ></iframe>
+    </section>
+
+    <!-- Tipos de plástico -->
+    <section id="tipos">
+      <h2>Tipos de Plásticos</h2>
+      <p>
+        Existen múltiples tipos de plásticos, cada uno con características específicas que determinan su uso y reciclabilidad:
+      </p>
+      <ul>
+        <li><strong>PET (Tereftalato de polietileno):</strong> comúnmente usado en botellas y envases de alimentos.</li>
+        <li><strong>HDPE (Polietileno de alta densidad):</strong> utilizado en envases resistentes, tuberías y juguetes.</li>
+        <li><strong>PVC (Policloruro de vinilo):</strong> presente en tuberías, ventanas y suelos.</li>
+        <li><strong>LDPE (Polietileno de baja densidad):</strong> usado en bolsas plásticas y envolturas.</li>
+        <li><strong>PP (Polipropileno):</strong> empleado en tapas, recipientes y piezas automotrices.</li>
+        <li><strong>PS (Poliestireno):</strong> común en envases desechables y embalajes.</li>
+      </ul>
+      <img
+        class="responsive"
+        src="https://tse2.mm.bing.net/th/id/OIP.MDyrsWME4pop1snzkMUMBQHaDn?pid=Api&P=0&h=180"
+        alt="Tipos de plástico"
+      />
+      <iframe
+        class="responsive"
+        width="560"
+        height="315"
+        src="https://www.youtube.com/embed/4XtGdxS4E7U"
+        title="Tipos de Plásticos"
+        frameborder="0"
+        allowfullscreen
+      ></iframe>
+      <p>
+        La correcta identificación y clasificación de los diferentes tipos de plástico es fundamental para facilitar su reciclaje y minimizar su impacto ambiental.
+      </p>
+    </section>
+
+    <!-- Cómo reciclar -->
+    <section id="reciclaje">
+      <h2>Cómo Reciclar</h2>
+      <p>
+        El reciclaje es una de las principales herramientas para reducir el impacto ambiental del plástico. Consiste en recolectar, procesar y transformar los materiales plásticos usados en nuevos productos.
+      </p>
+      <p>
+        Para reciclar correctamente, es importante separar los residuos según su tipo y asegurarse de que estén limpios y secos. Además, es recomendable conocer los códigos de reciclaje que identifican cada tipo de plástico.
+      </p>
+      <img
+        class="responsive"
+        src="https://www.ecured.cu/images/a/a7/Reciclajee.jpg"
+        alt="Reciclaje de plástico"
+      />
+      <iframe
+        class="responsive"
+        width="560"
+        height="315"
+        src="https://www.youtube.com/embed/YiHTNfKJwAw"
+        title="Cómo reciclar plástico"
+        frameborder="0"
+        allowfullscreen
+      ></iframe>
+      <p>
+        Fomentar el reciclaje contribuye a conservar recursos naturales, reducir la contaminación y disminuir la cantidad de residuos que llegan a los vertederos y océanos.
+      </p>
+    </section>
+
+    <!-- Impacto ambiental -->
+    <section id="impacto">
+      <h2>Impacto Ambiental</h2>
+      <p>
+        El impacto ambiental derivado del uso y desecho inadecuado de materiales plásticos representa una amenaza significativa para los ecosistemas terrestres y marinos. La acumulación de residuos plásticos contribuye a la contaminación del suelo, ríos y océanos, afectando la biodiversidad y la salud humana.
+      </p>
+      <p>
+        Los microplásticos, fragmentos diminutos de plástico que resultan de la degradación de materiales mayores, se han detectado en organismos marinos y terrestres, ingresando a la cadena alimentaria y provocando consecuencias negativas para la fauna y la flora. Además, la producción masiva de plásticos se asocia con la emisión de gases de efecto invernadero, que agravan el cambio climático.
+      </p>
+      <p>
+        Es fundamental implementar estrategias de gestión sostenible, fomentar el reciclaje y promover la educación ambiental para minimizar estos impactos y garantizar un futuro más saludable para el planeta y las generaciones venideras.
+      </p>
+      <img
+        class="responsive"
+        src="https://tse2.mm.bing.net/th/id/OIP.okqvQSGIKK9uqGcupmjUUQHaEv?pid=Api&P=0&h=180&w=320&c=7&rs=1"
+        alt="Impacto ambiental"
+      />
+      <iframe
+        class="responsive"
+        width="560"
+        height="315"
+        src="https://www.youtube.com/embed/7zEyFPukF-c"
+        title="Impacto Ambiental del Hombre"
+        frameborder="0"
+        allowfullscreen
+      ></iframe>
+    </section>
+
+    <!-- Ayuda -->
+    <section id="ayuda">
+      <h2>Ayuda</h2>
+      <p>Próximamente encontrarás recursos y soporte para aprender más y contribuir con el cuidado ambiental relacionado con los plásticos.</p>
+      <img
+        class="responsive"
+        src="https://cdn.pixabay.com/animation/2022/07/29/10/29/10-29-08-608__480.png"
+        alt="Animación ayuda"
+      />
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Facas X. Todos los derechos reservados.</p>
+  </footer>
+
+  <script>
+    function mostrarSeccion(id, btn) {
+      // Ocultar todas las secciones
+      document.querySelectorAll('main section').forEach(sec => {
+        sec.classList.remove('active');
+      });
+      // Mostrar la sección seleccionada
+      const seccion = document.getElementById(id);
+      if (seccion) {
+        seccion.classList.add('active');
+      }
+
+      // Marcar botón activo y desmarcar los demás
+      document.querySelectorAll('nav.biblioteca button').forEach(button => {
+        button.classList.remove('active');
+      });
+      btn.classList.add('active');
+    }
+  </script>
+</body>
+</html>
+
