@@ -12,45 +12,48 @@
       margin: 0;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background-color: #fff;
-      color: #000;
-      padding-left: 220px;
-      padding-top: 60px;
+      color: #111;
+      padding-left: 240px;
+      padding-top: 70px;
+      line-height: 1.8;
+      font-size: 1.2rem; /* Aumenta tamaño del texto */
     }
     header {
       position: fixed;
       top: 0;
-      left: 220px;
+      left: 240px;
       right: 0;
-      height: 60px;
+      height: 70px;
       background-color: #001f3f;
       color: white;
       display: flex;
       align-items: center;
-      padding: 0 20px;
-      font-size: 1.5rem;
+      padding: 0 25px;
+      font-size: 2rem;
       font-weight: bold;
       z-index: 1001;
+      letter-spacing: 1px;
     }
     nav.biblioteca {
       position: fixed;
       top: 0;
       left: 0;
-      width: 220px;
+      width: 240px;
       height: 100vh;
       background-color: #111;
       display: flex;
       flex-direction: column;
-      padding-top: 60px;
-      box-shadow: 2px 0 5px rgba(0,0,0,0.3);
+      padding-top: 70px;
+      box-shadow: 3px 0 6px rgba(0,0,0,0.4);
       z-index: 1000;
     }
     nav.biblioteca a {
       color: white;
       text-decoration: none;
-      padding: 15px 20px;
+      padding: 18px 25px;
       font-weight: bold;
-      font-size: 1rem;
-      border-left: 5px solid transparent;
+      font-size: 1.2rem;
+      border-left: 6px solid transparent;
       transition: background-color 0.3s, border-color 0.3s;
       display: block;
     }
@@ -60,24 +63,33 @@
       border-left-color: #00aaff;
     }
     main {
-      max-width: 900px;
-      margin: 0 auto 50px auto;
-      padding: 20px;
+      max-width: 950px;
+      margin: 0 auto 60px auto;
+      padding: 25px;
     }
     h2 {
       color: #003366;
       margin-top: 0;
+      font-size: 2rem;
+      border-bottom: 3px solid #00aaff;
+      padding-bottom: 10px;
+    }
+    p {
+      margin-bottom: 20px;
+      text-align: justify;
     }
     iframe {
       width: 100%;
-      height: 315px;
+      height: 350px;
       border: none;
-      margin-top: 20px;
+      margin-top: 25px;
+      border-radius: 12px;
+      box-shadow: 0px 4px 12px rgba(0,0,0,0.3);
     }
     @media (max-width: 768px) {
       body {
         padding-left: 0;
-        padding-top: 140px;
+        padding-top: 150px;
       }
       header {
         left: 0;
@@ -85,19 +97,22 @@
       }
       nav.biblioteca {
         position: fixed;
-        top: 60px;
+        top: 70px;
         left: 0;
         width: 100%;
         height: auto;
         flex-direction: row;
         padding-top: 0;
         box-shadow: none;
+        overflow-x: auto;
       }
       nav.biblioteca a {
         flex: 1;
-        padding: 10px 5px;
+        text-align: center;
+        padding: 12px 8px;
         border-left: none;
-        border-bottom: 3px solid transparent;
+        border-bottom: 4px solid transparent;
+        font-size: 1rem;
       }
       nav.biblioteca a:hover,
       nav.biblioteca a.active {
@@ -122,10 +137,13 @@
   <main>
     <h2>Impacto Ambiental del Plástico</h2>
     <p>
-      El plástico es uno de los principales contaminantes en el medio ambiente debido a su resistencia a la degradación. Su acumulación afecta tanto a ecosistemas terrestres como acuáticos, perjudicando la vida silvestre y la calidad del suelo y agua.
+      El <strong>plástico</strong> es uno de los principales contaminantes del planeta debido a su enorme resistencia a la degradación. Una simple bolsa puede tardar cientos de años en desaparecer, acumulándose en calles, ríos, mares y bosques.
     </p>
     <p>
-      Además, la producción y eliminación inadecuada de plásticos contribuyen a la emisión de gases de efecto invernadero, acelerando el cambio climático.
+      Su presencia en los <strong>ecosistemas terrestres y acuáticos</strong> genera un grave daño: los animales lo ingieren confundiéndolo con alimento, lo que afecta su salud y pone en riesgo la biodiversidad. Además, los microplásticos ya están presentes en el agua que bebemos y en la cadena alimenticia.
+    </p>
+    <p>
+      A esto se suma que la <strong>producción y quema inadecuada</strong> de plásticos libera grandes cantidades de gases de efecto invernadero, contribuyendo al <em>cambio climático</em> y acelerando el calentamiento global.
     </p>
     <iframe src="https://www.youtube.com/embed/7zEyFPukF-c" title="Video Impacto Ambiental" allowfullscreen></iframe>
   </main>
