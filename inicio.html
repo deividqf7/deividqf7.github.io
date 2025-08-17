@@ -1,132 +1,130 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="FACASX: Información y recursos sobre plásticos, reciclaje y sostenibilidad.">
-  <title>FACASX - Inicio</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Facas X - Inicio</title>
   <style>
+    * {
+      box-sizing: border-box;
+    }
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: #ffffff;
-      color: #333;
-      line-height: 1.6;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #fff;
+      color: #000;
+      padding-left: 220px;
+      padding-top: 60px;
     }
-
-    /* Barra superior */
     header {
+      position: fixed;
+      top: 0;
+      left: 220px;
+      right: 0;
+      height: 60px;
+      background-color: #001f3f;
+      color: white;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      padding: 10px 20px;
-      background-color: #000;
+      padding: 0 20px;
+      font-size: 1.5rem;
+      font-weight: bold;
+      z-index: 1001;
+    }
+    nav.biblioteca {
       position: fixed;
       top: 0;
       left: 0;
-      width: 100%;
+      width: 220px;
+      height: 100vh;
+      background-color: #111;
+      display: flex;
+      flex-direction: column;
+      padding-top: 60px;
+      box-shadow: 2px 0 5px rgba(0,0,0,0.3);
       z-index: 1000;
     }
-
-    /* Logo */
-    .logo img {
-      height: 50px;
-      cursor: pointer;
-    }
-
-    /* Nombre empresa */
-    .titulo {
-      font-size: 24px;
-      font-weight: bold;
-      color: #1e90ff;
-      margin-left: 10px;
-    }
-
-    /* Menú */
-    nav {
-      display: flex;
-      gap: 20px;
-    }
-
-    nav a {
+    nav.biblioteca a {
       color: white;
       text-decoration: none;
+      padding: 15px 20px;
       font-weight: bold;
-      transition: color 0.3s;
+      font-size: 1rem;
+      border-left: 5px solid transparent;
+      transition: background-color 0.3s, border-color 0.3s;
+      display: block;
     }
-
-    nav a:hover {
-      color: #1e90ff;
+    nav.biblioteca a:hover,
+    nav.biblioteca a.active {
+      background-color: #003366;
+      border-left-color: #00aaff;
     }
-
-    /* Secciones */
-    section {
-      padding: 80px 20px;
-      max-width: 1000px;
-      margin: auto;
-    }
-
-    /* Inicio con imagen */
-    .inicio {
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
-                  url("https://picsum.photos/1600/900") no-repeat center center/cover;
-      text-align: center;
-      color: white;
+    main {
+      max-width: 900px;
+      margin: 0 auto 50px auto;
       padding: 20px;
     }
-
-    .inicio h1 {
-      font-size: 48px;
-      margin-bottom: 20px;
+    h2 {
+      color: #003366;
+      margin-top: 0;
     }
-
-    .inicio p {
-      font-size: 20px;
-      max-width: 800px;
-      margin: 0 auto;
-    }
-
-    /* Footer */
-    footer {
-      background: #000;
-      color: white;
-      text-align: center;
-      padding: 20px;
-      margin-top: 40px;
+    @media (max-width: 768px) {
+      body {
+        padding-left: 0;
+        padding-top: 140px;
+      }
+      header {
+        left: 0;
+        width: 100%;
+      }
+      nav.biblioteca {
+        position: fixed;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        height: auto;
+        flex-direction: row;
+        padding-top: 0;
+        box-shadow: none;
+      }
+      nav.biblioteca a {
+        flex: 1;
+        padding: 10px 5px;
+        border-left: none;
+        border-bottom: 3px solid transparent;
+      }
+      nav.biblioteca a:hover,
+      nav.biblioteca a.active {
+        border-bottom-color: #00aaff;
+        background-color: transparent;
+      }
     }
   </style>
 </head>
 <body>
+  <nav class="biblioteca">
+    <a href="inicio.html" class="active">Inicio</a>
+    <a href="que-es.html">¿Qué es el plástico?</a>
+    <a href="tipos.html">Tipos de Plástico</a>
+    <a href="reciclaje.html">Cómo Reciclar</a>
+    <a href="impacto.html">Impacto Ambiental</a>
+    <a href="ayuda.html">Ayuda</a>
+  </nav>
 
-  <!-- Barra con logo y menú -->
-  <header>
-    <div class="logo" onclick="location.href='#inicio'">
-      <img src="logo.png" alt="Logo FACASX">
-    </div>
-    <span class="titulo">FACASX</span>
-    <nav>
-      <a href="inicio.html">Inicio</a>
-      <a href="que-es.html">¿Qué es el plástico?</a>
-      <a href="tipos.html">Tipos de Plástico</a>
-      <a href="reciclaje.html">Cómo Reciclar</a>
-      <a href="impacto.html">Impacto Ambiental</a>
-      <a href="ayuda.html">Ayuda</a>
-    </nav>
-  </header>
+  <header>Facas X</header>
 
-  <!-- Sección principal de inicio -->
-  <section class="inicio" id="inicio">
-    <div>
-      <h1>Bienvenido a FACASX</h1>
-      <p>
-        Información, educación y recursos sobre plásticos, reciclaje y sostenibilidad. Descubre cómo puedes contribuir a un mundo más limpio y responsable.
-      </p>
-    </div>
-  </section>
-
-  <footer>
-    &copy; 2025 FACASX. Todos los derechos reservados.
+  <main>
+    <h2>Bienvenido a Facas X</h2>
+    <p>
+      Facas X es una empresa dedicada a la investigación, educación y divulgación sobre los plásticos y su impacto en nuestro entorno.
+      Nuestro objetivo es proporcionar información precisa, actualizada y de fácil comprensión para fomentar un uso responsable de los materiales plásticos.
+    </p>
+    <p>
+      Con un equipo de expertos en química, ingeniería ambiental y educación, ofrecemos recursos multimedia, guías prácticas y asesoría para que individuos y organizaciones puedan contribuir a la reducción del impacto ambiental.
+    </p>
+    <p>
+      Nuestra misión es ser un referente en el conocimiento del plástico, promoviendo el reciclaje, la innovación sostenible y el compromiso social.
+    </p>
+  </main>
+</body>
+</html>

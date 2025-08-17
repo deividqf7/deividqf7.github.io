@@ -1,199 +1,133 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Descubre el impacto ambiental del plástico y cómo afecta a los ecosistemas y al cambio climático." />
-  <title>FACAS X - Impacto Ambiental del Plástico</title>
-  <style>
+<cabeza>
+  <meta juego de caracteres="UTF-8" />
+  <meta nombre="ventana gráfica" contenido="ancho=ancho del dispositivo, escala inicial=1" />
+  <título>Facas X - Impacto Ambiental</título>
+  <estilo>
     * {
-      box-sizing: border-box;
+      tamaño de caja: border-box;
     }
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #fff;
-      color: #111;
-      line-height: 1.8;
-      font-size: 1.2rem;
-      transition: margin-left 0.3s;
+    cuerpo {
+      margen: 0;
+      familia de fuentes: 'Segoe UI', Tahoma, Ginebra, Verdana, sans-serif;
+      color de fondo: #fff;
+      color: #000;
+      acolchado izquierdo: 220px;
+      acolchado: 60px;
     }
-
-    header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 70px;
-      background-color: #001f3f;
-      color: white;
-      display: flex;
-      align-items: center;
-      padding: 0 20px;
-      font-size: 2rem;
-      font-weight: bold;
-      z-index: 1001;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      justify-content: space-between;
+    encabezado {
+      posición: arreglado;
+      arriba: 0;
+      izquierda: 220px;
+      correcto: 0;
+      altura: 60px;
+      color de fondo: #001f3f;
+      color: blanco;
+      pantalla: flexionar;
+      alinear elementos: centro;
+      acolchado: 0 20px;
+      tamaño de fuente: 1.5rem;
+      peso de fuente: negrita;
+      índice z: 1001;
     }
-
-    /* 🔹 Botón hamburguesa */
-    .menu-btn {
-      font-size: 1.5rem;
-      background: none;
-      border: none;
-      color: white;
-      cursor: pointer;
-    }
-
-    /* 🔹 Menú lateral oculto */
     nav.biblioteca {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 240px;
-      height: 100vh;
-      background-color: #111;
-      display: flex;
-      flex-direction: column;
-      padding-top: 70px;
-      box-shadow: 3px 0 6px rgba(0,0,0,0.4);
-      z-index: 1000;
-
-      transform: translateX(-100%); /* Oculto por defecto */
-      transition: transform 0.3s ease;
+      posición: arreglado;
+      arriba: 0;
+      izquierda: 0;
+      ancho: 220px;
+      altura: 100vh;
+      color de fondo: #111;
+      pantalla: flexionar;
+      dirección flexible: columna;
+      acolchado: 60px;
+      sombra de caja: 2px 0 5px rgba(0,0,0,0,3);
+      índice z: 1000;
     }
-    nav.biblioteca.open {
-      transform: translateX(0); /* Se abre */
-    }
-
     nav.biblioteca a {
-      color: white;
-      text-decoration: none;
-      padding: 18px 25px;
-      font-weight: bold;
-      font-size: 1.2rem;
-      border-left: 6px solid transparent;
-      transition: background-color 0.3s, border-color 0.3s;
-      display: block;
+      color: blanco;
+      decoración de texto: ninguno;
+      acolchado: 15px 20px;
+      peso de fuente: negrita;
+      tamaño de fuente: 1rem;
+      frontera izquierda: 5px solid transparent;
+      transición: color de fondo 0,3s, color borde 0,3s;
+      pantalla: bloc;
     }
-    nav.biblioteca a:hover,
-    nav.biblioteca a.active {
-      background-color: #003366;
-      border-left-color: #00aaff;
+    nav.biblioteca a:flotar,
+    nav.biblioteca a.activo {
+      color de fondo: #003366;
+      borde-color izquierdo: #00aaff;
     }
-
-    /* 🔹 Hero */
-    .hero {
-      position: relative;
-      width: 100%;
-      height: 350px;
-      background: url('https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=1500&q=80') no-repeat center center/cover;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      color: white;
-      z-index: 1;
-      margin-top: 70px; /* espacio debajo del header */
-    }
-    .hero::after {
-      content: "";
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.55);
-    }
-    .hero h1 {
-      position: relative;
-      font-size: 3.5rem;
-      z-index: 2;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-    }
-
-    main {
-      max-width: 950px;
-      margin: 30px auto 60px auto;
-      padding: 25px;
+    principal {
+      ancho máximo: 900px;
+      margen: 0 auto 50px auto;
+      acolchado: 20px;
     }
     h2 {
       color: #003366;
-      font-size: 2rem;
-      border-bottom: 3px solid #00aaff;
-      padding-bottom: 10px;
-    }
-    p {
-      margin-bottom: 20px;
-      text-align: justify;
+      margen superior: 0;
     }
     iframe {
-      width: 100%;
-      height: 350px;
-      border: none;
-      margin-top: 25px;
-      border-radius: 12px;
-      box-shadow: 0px 4px 12px rgba(0,0,0,0.3);
+      ancho: 100%;
+      altura: 315px;
+      frontera: ninguno;
+      margen superior: 20px;
     }
-
-    /* 🔹 Responsive */
-    @media (max-width: 768px) {
-      header {
-        font-size: 1.5rem;
+    @media (ancho máximo: 768px) {
+      cuerpo {
+        acolchado izquierdo: 0;
+        acolchado: 140px;
       }
-      .hero {
-        height: 250px;
+      encabezado {
+        izquierda: 0;
+        ancho: 100%;
       }
-      .hero h1 {
-        font-size: 2rem;
+      nav.biblioteca {
+        posición: arreglado;
+        arriba: 60px;
+        izquierda: 0;
+        ancho: 100%;
+        altura: auto;
+        dirección flexible: fila;
+        acolchado: 0;
+        sombra de caja: ninguno;
+      }
+      nav.biblioteca a {
+        flexionar: 1;
+        acolchado: 10px 5px;
+        frontera izquierda: ninguno;
+        borde inferior: 3px solid transparent;
+      }
+      nav.biblioteca a:flotar,
+      nav.biblioteca a.activo {
+        color inferior del borde: #00aaff;
+        color de fondo: transparente;
       }
     }
-  </style>
-</head>
-<body>
-  <header>
-    FACAS X
-    <button class="menu-btn" onclick="toggleMenu()" aria-label="Abrir menú de navegación" tabindex="0">☰</button>
-  </header>
-
-  <!-- 🔹 Menú lateral -->
-  <nav class="biblioteca" id="menu">
+  </estilo>
+</cabeza>
+<cuerpo>
+  <nav clase="biblioteca">
     <a href="inicio.html">Inicio</a>
-    <a href="que-es.html">¿Qué es el plástico?</a>
+    <a href="que-es.html">¿Que es el plástico?</a>
     <a href="tipos.html">Tipos de Plástico</a>
-    <a href="reciclaje.html">Cómo Reciclar</a>
-    <a href="impacto.html" class="active">Impacto Ambiental</a>
-    <a href="ayuda.html">Ayuda</a>
+    <a href="reciclaje.html">Como Reciclar</a>
+    <a href="impacto.html" clase="activo">Impacto Ambiental</a>
+    <a href="ayuda.html">ayuda</a>
   </nav>
 
-  <!-- 🔹 Hero con imagen -->
-  <section class="hero">
-    <h1>Impacto Ambiental del Plástico</h1>
-  </section>
+  <encabezado>Facas X</encabezado>
 
-  <main>
-    <h2>¿Por qué es un problema?</h2>
+  <principal>
+    <h2>Impacto Ambiental del Plástico</h2>
     <p>
-      El <strong>plástico</strong> es uno de los principales contaminantes del planeta debido a su enorme resistencia a la degradación. Una simple bolsa puede tardar cientos de años en desaparecer, acumulándose en calles, ríos, mares y bosques.
+      El plástico es uno de los principales contaminantes en el medio ambiente debido a su resistencia a la degradación. Su acumulación afecta tanto a ecosistemas terrestres como acuáticos, haciendo la vida silvestre y la calidad del suelo y agua.
     </p>
     <p>
-      Su presencia en los <strong>ecosistemas terrestres y acuáticos</strong> genera un grave daño: los animales lo ingieren confundiéndolo con alimento, lo que afecta su salud y pone en riesgo la biodiversidad. Además, los microplásticos ya están presentes en el agua que bebemos y en la cadena alimenticia.
+      Además, la producción y eliminación inadecuada de plásticos contribuyen a la emisión de gases de efecto invernadero, acelerando el cambio climático.
     </p>
-    <p>
-      A esto se suma que la <strong>producción y quema inadecuada</strong> de plásticos libera grandes cantidades de gases de efecto invernadero, contribuyendo al <em>cambio climático</em> y acelerando el calentamiento global.
-    </p>
-    <iframe src="https://www.youtube.com/embed/7zEyFPukF-c" title="Video Impacto Ambiental" allowfullscreen></iframe>
-  </main>
-
-  <script>
-    function toggleMenu() {
-      document.getElementById("menu").classList.toggle("open");
-    }
-    // Cierra el menú al hacer clic en un enlace
-    document.addEventListener('DOMContentLoaded', function() {
-      document.querySelectorAll('.biblioteca a').forEach(link => {
-        link.addEventListener('click', () => {
-          document.getElementById("menu").classList.remove("open");
-        });
-      });
-    });
+    <iframe src="https://www.youtube.com/embed/7zEyFPukF-c" título="Vídeo Impacto Ambiental" permitir pantalla completa></iframe>
+  </principal>
+</cuerpo>
+</html>

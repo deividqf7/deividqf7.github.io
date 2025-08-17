@@ -1,185 +1,132 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Facas X: Ayuda y contacto para dudas, colaboración y recursos sobre plásticos y sostenibilidad." />
-  <title>Facas X - Ayuda</title>
-  <style>
+<cabeza>
+  <meta juego de caracteres="UTF-8" />
+  <meta nombre="ventana gráfica" contenido="ancho=ancho del dispositivo, escala inicial=1" />
+  <título>Facas X - Ayuda</título>
+  <estilo>
     * {
-      box-sizing: border-box;
+      tamaño de caja: border-box;
     }
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #fff;
+    cuerpo {
+      margen: 0;
+      familia de fuentes: 'Segoe UI', Tahoma, Ginebra, Verdana, sans-serif;
+      color de fondo: #fff;
       color: #000;
-      padding-left: 220px;
-      padding-top: 60px;
-      transition: padding-left 0.3s ease;
+      acolchado izquierdo: 220px;
+      acolchado: 60px;
     }
-    header {
-      position: fixed;
-      top: 0;
-      left: 220px;
-      right: 0;
-      height: 60px;
-      background-color: #001f3f;
-      color: white;
-      display: flex;
-      align-items: center;
-      padding: 0 20px;
-      font-size: 1.5rem;
-      font-weight: bold;
-      z-index: 1001;
-      justify-content: space-between;
-      transition: left 0.3s ease;
-    }
-    .menu-btn {
-      display: none;
-      background: none;
-      border: none;
-      color: white;
-      font-size: 2rem;
-      cursor: pointer;
-      margin-right: 10px;
+    encabezado {
+      posición: arreglado;
+      arriba: 0;
+      izquierda: 220px;
+      correcto: 0;
+      altura: 60px;
+      color de fondo: #001f3f;
+      color: blanco;
+      pantalla: flexionar;
+      alinear elementos: centro;
+      acolchado: 0 20px;
+      tamaño de fuente: 1.5rem;
+      peso de fuente: negrita;
+      índice z: 1001;
     }
     nav.biblioteca {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 220px;
-      height: 100vh;
-      background-color: #111;
-      display: flex;
-      flex-direction: column;
-      padding-top: 60px;
-      box-shadow: 2px 0 5px rgba(0,0,0,0.3);
-      z-index: 1000;
-      transition: transform 0.3s ease;
-    }
-    nav.biblioteca.closed {
-      transform: translateX(-100%);
+      posición: arreglado;
+      arriba: 0;
+      izquierda: 0;
+      ancho: 220px;
+      altura: 100vh;
+      color de fondo: #111;
+      pantalla: flexionar;
+      dirección flexible: columna;
+      acolchado: 60px;
+      sombra de caja: 2px 0 5px rgba(0,0,0,0,3);
+      índice z: 1000;
     }
     nav.biblioteca a {
-      color: white;
-      text-decoration: none;
-      padding: 15px 20px;
-      font-weight: bold;
-      font-size: 1rem;
-      border-left: 5px solid transparent;
-      transition: background-color 0.3s, border-color 0.3s;
-      display: block;
+      color: blanco;
+      decoración de texto: ninguno;
+      acolchado: 15px 20px;
+      peso de fuente: negrita;
+      tamaño de fuente: 1rem;
+      frontera izquierda: 5px solid transparent;
+      transición: color de fondo 0,3s, color borde 0,3s;
+      pantalla: bloc;
     }
-    nav.biblioteca a:hover,
-    nav.biblioteca a.active {
-      background-color: #003366;
-      border-left-color: #00aaff;
+    nav.biblioteca a:flotar,
+    nav.biblioteca a.activo {
+      color de fondo: #003366;
+      borde-color izquierdo: #00aaff;
     }
-    main {
-      max-width: 900px;
-      margin: 0 auto 50px auto;
-      padding: 20px;
+    principal {
+      ancho máximo: 900px;
+      margen: 0 auto 50px auto;
+      acolchado: 20px;
     }
     h2 {
       color: #003366;
-      margin-top: 0;
+      margen superior: 0;
     }
     p {
-      line-height: 1.6;
+      altura de la línea: 1.6;
     }
-    @media (max-width: 768px) {
-      body {
-        padding-left: 0;
-        padding-top: 100px;
+    @media (ancho máximo: 768px) {
+      cuerpo {
+        acolchado izquierdo: 0;
+        acolchado: 140px;
       }
-      header {
-        left: 0;
-        width: 100%;
-        font-size: 1.2rem;
-        padding-left: 50px;
-      }
-      .menu-btn {
-        display: block;
+      encabezado {
+        izquierda: 0;
+        ancho: 100%;
       }
       nav.biblioteca {
-        position: fixed;
-        top: 60px;
-        left: 0;
-        width: 100%;
-        height: auto;
-        flex-direction: row;
-        padding-top: 0;
-        box-shadow: none;
-        background-color: #111;
-        transform: translateY(-100%);
-      }
-      nav.biblioteca.open {
-        transform: translateY(0);
+        posición: arreglado;
+        arriba: 60px;
+        izquierda: 0;
+        ancho: 100%;
+        altura: auto;
+        dirección flexible: fila;
+        acolchado: 0;
+        sombra de caja: ninguno;
       }
       nav.biblioteca a {
-        flex: 1;
-        padding: 10px 5px;
-        border-left: none;
-        border-bottom: 3px solid transparent;
+        flexionar: 1;
+        acolchado: 10px 5px;
+        frontera izquierda: ninguno;
+        borde inferior: 3px solid transparent;
       }
-      nav.biblioteca a:hover,
-      nav.biblioteca a.active {
-        border-bottom-color: #00aaff;
-        background-color: #222;
-      }
-      nav.biblioteca.closed {
-        transform: translateY(-100%);
+      nav.biblioteca a:flotar,
+      nav.biblioteca a.activo {
+        color inferior del borde: #00aaff;
+        color de fondo: transparente;
       }
     }
-  </style>
-</head>
-<body>
-  <header>
-    <button class="menu-btn" aria-label="Abrir menú de navegación" onclick="toggleMenu()">☰</button>
-    Facas X
-  </header>
-
-  <nav class="biblioteca" id="menu">
-    <a href="inicio.html" aria-label="Ir a Inicio">Inicio</a>
-    <a href="que-es.html" aria-label="¿Qué es el plástico?">¿Qué es el plástico?</a>
-    <a href="tipos.html" aria-label="Tipos de Plástico">Tipos de Plástico</a>
-    <a href="reciclaje.html" aria-label="Cómo Reciclar">Cómo Reciclar</a>
-    <a href="impacto.html" aria-label="Impacto Ambiental">Impacto Ambiental</a>
-    <a href="ayuda.html" class="active" aria-label="Ayuda">Ayuda</a>
+  </estilo>
+</cabeza>
+<cuerpo>
+  <nav clase="biblioteca">
+    <a href="inicio.html">Inicio</a>
+    <a href="que-es.html">¿Que es el plástico?</a>
+    <a href="tipos.html">Tipos de Plástico</a>
+    <a href="reciclaje.html">Como Reciclar</a>
+    <a href="impacto.html">Impacto Ambiental</a>
+    <a href="ayuda.html" clase="activo">ayuda</a>
   </nav>
 
-  <main>
+  <encabezado>Facas X</encabezado>
+
+  <principal>
     <h2>Ayuda y Contacto</h2>
     <p>
-      Si tienes dudas o quieres colaborar con Facas X, puedes contactarnos a través del correo electrónico: <a href="mailto:contacto@facasx.com">contacto@facasx.com</a>.
+      Si tienes dudas o preguntas colaborar con Facas X, piedras contactarnos a viajes del correo electrónico: <a href="mailto:contacto@facasx.com">contacto@facasx.com</a>.
     </p>
     <p>
-      También puedes seguirnos en nuestras redes sociales para estar al día con nuestras novedades, eventos y recursos educativos.
+      También piedras seguirnos en nuestras redes sociales para estar al día con nuestras novedades, eventos y recursos educativos.
     </p>
     <p>
-      Gracias por tu interés en promover un mundo más sostenible y responsable con el uso del plástico.
+      Gracias por tu intereses en promoción un mundo más sostenible y responsable con el uso del plástico.
     </p>
-  </main>
-
-  <script>
-    function toggleMenu() {
-      const menu = document.getElementById('menu');
-      menu.classList.toggle('open');
-    }
-    // Cierra el menú al cambiar de tamaño si es necesario
-    window.addEventListener('resize', function() {
-      if (window.innerWidth > 768) {
-        document.getElementById('menu').classList.remove('open');
-      }
-    });
-    // Cierra el menú al hacer clic en un enlace en móvil
-    document.addEventListener('DOMContentLoaded', function() {
-      document.querySelectorAll('.biblioteca a').forEach(link => {
-        link.addEventListener('click', () => {
-          if (window.innerWidth <= 768) {
-            document.getElementById('menu').classList.remove('open');
-          }
-        });
-      });
-    });
+  </principal>
+</cuerpo>
+</html>

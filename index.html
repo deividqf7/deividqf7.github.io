@@ -1,238 +1,315 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Facas X: Educación ambiental sobre plásticos, reciclaje y sostenibilidad. Descubre cómo puedes contribuir a un mundo más limpio y responsable." />
-  <title>Facas X - Educación Ambiental</title>
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f5f7fa;
-      color: #222;
-      padding-left: 250px;
-      padding-top: 70px;
-      transition: padding-left 0.3s ease;
+<cabeza>
+  <meta juego de caracteres="UTF-8" />
+  <meta nombre="ventana gráfica" contenido="ancho=ancho del dispositivo, escala inicial=1" />
+  <título>Facas X - Todo sobre el Plástico</título>
+  <estilo>
+    /* Reset y estilos básicos */
+    * {
+      tamaño de caja: border-box;
+    }
+    cuerpo {
+      margen: 0;
+      familia de fuentes: 'Segoe UI', Tahoma, Ginebra, Verdana, sans-serif;
+      color de fondo: #fff;
+      color: #000;
+      acolchado izquierdo: 220px; /* espacio para la biblioteca fija */
+      acolchado: 60px; /* espacio para el encabezado fijo */
+      transición: acolchado izquierdo 0,3s facilidad;
     }
 
-    /* --- HEADER --- */
-    header {
-      position: fixed;
-      top: 0;
-      left: 250px;
-      right: 0;
-      height: 70px;
-      background: linear-gradient(90deg, #002b5c, #005f99);
-      color: #fff;
-      display: flex;
-      align-items: center;
-      padding: 0 20px;
-      font-size: 1.6rem;
-      font-weight: bold;
-      z-index: 1001;
-      letter-spacing: 1px;
-      justify-content: space-between;
+    /* Encabezado fijo arriba */
+    encabezado {
+      posición: arreglado;
+      arriba: 0;
+      izquierda: 220px;
+      correcto: 0;
+      altura: 60px;
+      color de fondo: #001f3f;
+      color: blanco;
+      pantalla: flexionar;
+      alinear elementos: centro;
+      acolchado: 0 20px;
+      tamaño de fuente: 1.5rem;
+      peso de fuente: negrita;
+      índice z: 1001;
+      transición: izquierda 0,3s facilidad;
     }
 
-    .menu-btn {
-      display: none;
-      background: none;
-      border: none;
-      color: #fff;
-      font-size: 2rem;
-      cursor: pointer;
-      margin-right: 15px;
-    }
-
-    /* --- SIDEBAR --- */
+    /* Biblioteca lateral fija */
     nav.biblioteca {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 250px;
-      height: 100vh;
-      background-color: #111;
-      display: flex;
-      flex-direction: column;
-      padding-top: 70px;
-      z-index: 1000;
-      box-shadow: 3px 0 10px rgba(0,0,0,0.3);
-      transition: transform 0.3s ease;
-    }
-    nav.biblioteca.closed { transform: translateX(-100%); }
-
-    nav.biblioteca .logo {
-      position: absolute;
-      top: 0;
-      left: 0;
-      height: 70px;
-      width: 100%;
-      background: #002b5c;
-      color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: bold;
-      font-size: 1.2rem;
-      letter-spacing: 2px;
+      posición: arreglado;
+      arriba: 0;
+      izquierda: 0;
+      ancho: 220px;
+      altura: 100vh;
+      color de fondo: #111;
+      pantalla: flexionar;
+      dirección flexible: columna;
+      acolchado: 60px;
+      índice z: 1000;
+      sombra de caja: 2px 0 5px rgba(0,0,0,0,3);
     }
 
-    nav.biblioteca button {
-      background: none;
-      border: none;
-      color: #fff;
-      padding: 15px 20px;
-      text-align: left;
-      font-weight: 500;
-      font-size: 1rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      border-left: 4px solid transparent;
-      transition: background 0.3s, border-color 0.3s, padding-left 0.2s;
+    nav.biblioteca botón {
+      fondo: ninguno;
+      frontera: ninguno;
+      color: blanco;
+      acolchado: 15px 20px;
+      alineación de texto: izquierda;
+      peso de fuente: negrita;
+      tamaño de fuente: 1rem;
+      cursor: puntero;
+      frontera izquierda: 5px solid transparent;
+      transición: color de fondo 0,3s, color borde 0,3s;
     }
 
-    nav.biblioteca button:hover,
-    nav.biblioteca button.active {
-      background: #003366;
-      border-left-color: #00aaff;
-      padding-left: 25px;
+    nav.biblioteca botón:flotar,
+    nav.biblioteca botón.activo {
+      color de fondo: #003366;
+      borde-color izquierdo: #00aaff;
+      esquema: ninguno;
     }
 
-    /* --- MAIN CONTENT --- */
-    main {
-      max-width: 900px;
-      margin: 0 auto 50px auto;
-      padding: 20px;
+    /* Contenido principal */
+    principal {
+      ancho máximo: 900px;
+      margen: 0 auto 50px auto;
+      acolchado: 20px;
     }
 
-    section { display: none; }
-    section.active { display: block; }
+    sección {
+      pantalla: ninguno;
+    }
+    sección.activo {
+      pantalla: bloc;
+    }
 
     h2 {
       color: #003366;
-      margin-bottom: 15px;
+      margen superior: 0;
     }
 
-    .hero {
-      background: url("https://cdn.pixabay.com/photo/2017/03/27/14/56/plastic-2180165_960_720.jpg") center/cover no-repeat;
-      border-radius: 10px;
-      padding: 60px 30px;
-      color: #fff;
-      text-align: center;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-      margin-bottom: 30px;
-      position: relative;
-      overflow: hidden;
-    }
-    .hero::after {
-      content: "";
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.45);
-      z-index: 1;
-      border-radius: 10px;
-    }
-    .hero-content {
-      position: relative;
-      z-index: 2;
-    }
-    .hero h1 { font-size: 2.5rem; margin-bottom: 15px; }
-    .hero p { font-size: 1.2rem; max-width: 700px; margin: auto; }
-
-    .btn-principal {
-      display: inline-block;
-      margin-top: 25px;
-      padding: 12px 32px;
-      background: #00aaff;
-      color: #fff;
-      font-size: 1.1rem;
-      font-weight: bold;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-      transition: background 0.3s;
-      text-decoration: none;
-    }
-    .btn-principal:hover {
-      background: #005f99;
+    /* Imágenes y vídeos responsivos */
+    img.responsivo, iframe {
+      ancho máximo: 100%;
+      altura: auto;
+      margen: 15px 0;
+      radio fronterizo: 5px;
+      sombra de caja: 0 0 8px rgba(0,0,0,0,2);
     }
 
-    img.responsive, iframe {
-      max-width: 100%;
-      height: auto;
-      margin: 15px 0;
-      border-radius: 8px;
-      box-shadow: 0 0 8px rgba(0,0,0,0.2);
+    /* Imagen fondo de la biblioteca con oscuridad */
+    nav.biblioteca::antes {
+      contenido: "";
+      posición: arreglado;
+      arriba: 0;
+      izquierda: 0;
+      ancho: 220px;
+      altura: 100vh;
+      imagen de fondo: URL('https://2.bp.blogspot.com/-9WyHcmw7Xds/UgbBmvANAHI/AAAAAAAAD9k/9kpfys_Sat4/s1600/Nitrocellulose3d.jpg');
+      tamaño de fondo: acoperire;
+      posición de fondo: centro;
+      filtro: brillo(0,4);
+      índice z: -1;
     }
 
     footer {
-      text-align: center;
-      padding: 20px;
-      background: #002b5c;
-      color: #fff;
-      font-size: 0.9rem;
+      alineación de texto: centro;
+      acolchado: 15px;
+      color de fondo: #001f3f;
+      color: blanco;
+      margen superior: 50px;
+      tamaño de fuente: 0.9rem;
     }
 
-    /* --- RESPONSIVE --- */
-    @media (max-width: 900px) {
-      main { padding: 10px; }
-      .hero { padding: 40px 10px; }
-    }
-    @media (max-width: 768px) {
-      body { padding-left: 0; padding-top: 70px; }
-      header { left: 0; }
-      .menu-btn { display: block; }
-      nav.biblioteca { width: 200px; transform: translateX(-100%); }
-      nav.biblioteca.open { transform: translateX(0); }
-      .hero h1 { font-size: 1.5rem; }
+    /* Responsive */
+    @media (ancho máximo: 768px) {
+      cuerpo {
+        padding-left: 0;
+        padding-top: 140px;
+      }
+      header {
+        left: 0;
+        width: 100%;
+      }
+      nav.biblioteca {
+        position: fixed;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        height: auto;
+        flex-direction: row;
+        padding-top: 0;
+        box-shadow: none;
+      }
+      nav.biblioteca button {
+        flex: 1;
+        padding: 10px 5px;
+        border-left: none;
+        border-bottom: 3px solid transparent;
+      }
+      nav.biblioteca button:hover,
+      nav.biblioteca button.active {
+        border-bottom-color: #00aaff;
+        background-color: transparent;
+      }
     }
   </style>
 </head>
 <body>
+  <nav class="biblioteca">
+    <button class="active" onclick="mostrarSeccion('inicio', this)">Inicio</button>
+    <button onclick="mostrarSeccion('que-es', this)">¿Qué es el plástico?</button>
+    <button onclick="mostrarSeccion('tipos', this)">Tipos de Plástico</button>
+    <button onclick="mostrarSeccion('reciclaje', this)">Cómo Reciclar</button>
+    <button onclick="mostrarSeccion('impacto', this)">Impacto Ambiental</button>
+    <button onclick="mostrarSeccion('ayuda', this)">Ayuda</button>
+  </nav>
+
   <header>
-    <button class="menu-btn" onclick="toggleMenu()" aria-label="Abrir menú de navegación">☰</button>
     Facas X
   </header>
-
-  <nav class="biblioteca" id="menu">
-    <div class="logo">🌍 FACAS X</div>
-    <button class="active" onclick="mostrarSeccion('inicio', this)" aria-label="Ir a Inicio">🏠 Inicio</button>
-    <button onclick="mostrarSeccion('que-es', this)" aria-label="¿Qué es el plástico?">ℹ️ ¿Qué es?</button>
-    <button onclick="mostrarSeccion('tipos', this)" aria-label="Tipos de Plástico">♻️ Tipos</button>
-    <button onclick="mostrarSeccion('reciclaje', this)" aria-label="Cómo Reciclar">🔄 Reciclaje</button>
-    <button onclick="mostrarSeccion('impacto', this)" aria-label="Impacto Ambiental">⚠️ Impacto</button>
-    <button onclick="mostrarSeccion('ayuda', this)" aria-label="Ayuda">💡 Ayuda</button>
-  </nav>
 
   <main>
     <!-- Inicio -->
     <section id="inicio" class="active">
-      <div class="hero">
-        <div class="hero-content">
-          <h1>Bienvenido a Facas X</h1>
-          <p>Conoce el impacto de los plásticos en nuestro mundo y cómo podemos transformarlo hacia un futuro más sostenible.</p>
-          <a href="impacto.html" class="btn-principal">Descubre el impacto ambiental</a>
-        </div>
-      </div>
-      <h2>¿Quiénes somos?</h2>
+      <h2>Bienvenido a Facas X</h2>
       <p>
-        En Facas X nos enfocamos en la investigación, educación y divulgación sobre plásticos y su impacto ambiental. 
-        Nuestro propósito es entregar información clara y útil para fomentar un uso responsable.
+        Facas X es una empresa dedicada a la investigación, educación y divulgación sobre los plásticos y su impacto en nuestro entorno.
+        Nuestro objetivo es proporcionar información precisa, actualizada y de fácil comprensión para fomentar un uso responsable de los materiales plásticos.
       </p>
       <p>
-        Con la colaboración de expertos en química, ingeniería ambiental y educación, ofrecemos recursos multimedia, guías prácticas 
-        y asesoría para que todos podamos contribuir a un futuro más verde.
+        Con un equipo de expertos en química, ingeniería ambiental y educación, ofrecemos recursos multimedia, guías prácticas y asesoría para que individuos y organizaciones puedan contribuir a la reducción del impacto ambiental.
       </p>
       <p>
-        Nuestra misión es ser un referente en sostenibilidad, promoviendo el reciclaje, la innovación y la conciencia social.
+        Nuestra misión es ser un referente en el conocimiento del plástico, promoviendo el reciclaje, la innovación sostenible y el compromiso social.
       </p>
     </section>
 
-    <!-- Puedes agregar aquí las demás secciones si lo deseas -->
+    <!-- Qué es el plástico -->
+    <section id="que-es">
+      <h2>¿Qué es el Plástico?</h2>
+      <p>
+        El plástico es un material sintético elaborado principalmente a partir de polímeros derivados del petróleo y el gas natural. Gracias a su versatilidad, durabilidad y bajo costo, se ha convertido en un elemento esencial en numerosas industrias y aplicaciones cotidianas.
+      </p>
+      <p>
+        Su estructura molecular permite moldearlo en diversas formas y tamaños, facilitando su uso en embalajes, componentes electrónicos, automóviles, textiles, y muchos otros productos.
+      </p>
+      <p>
+        Sin embargo, el plástico también representa un gran desafío ambiental debido a su lenta degradación y la generación de residuos que afectan ecosistemas y la salud humana.
+      </p>
+      <iframe
+        class="responsive"
+        width="560"
+        height="315"
+        src="https://www.youtube.com/embed/ZIqsLguLkEY"
+        title="¿Qué es el plástico?"
+        frameborder="0"
+        allowfullscreen
+      ></iframe>
+    </section>
+
+    <!-- Tipos de plástico -->
+    <section id="tipos">
+      <h2>Tipos de Plásticos</h2>
+      <p>
+        Existen múltiples tipos de plásticos, cada uno con características específicas que determinan su uso y reciclabilidad:
+      </p>
+      <ul>
+        <li><strong>PET (Tereftalato de polietileno):</strong> comúnmente usado en botellas y envases de alimentos.</li>
+        <li><strong>HDPE (Polietileno de alta densidad):</strong> utilizado en envases resistentes, tuberías y juguetes.</li>
+        <li><strong>PVC (Policloruro de vinilo):</strong> presente en tuberías, ventanas y suelos.</li>
+        <li><strong>LDPE (Polietileno de baja densidad):</strong> usado en bolsas plásticas y envolturas.</li>
+        <li><strong>PP (Polipropileno):</strong> empleado en tapas, recipientes y piezas automotrices.</li>
+        <li><strong>PS (Poliestireno):</strong> común en envases desechables y embalajes.</li>
+      </ul>
+      <img
+        class="responsive"
+        src="https://tse2.mm.bing.net/th/id/OIP.MDyrsWME4pop1snzkMUMBQHaDn?pid=Api&P=0&h=180"
+        alt="Tipos de plástico"
+      />
+      <iframe
+        class="responsive"
+        width="560"
+        height="315"
+        src="https://www.youtube.com/embed/4XtGdxS4E7U"
+        title="Tipos de Plásticos"
+        frameborder="0"
+        allowfullscreen
+      ></iframe>
+      <p>
+        La correcta identificación y clasificación de los diferentes tipos de plástico es fundamental para facilitar su reciclaje y minimizar su impacto ambiental.
+      </p>
+    </section>
+
+    <!-- Cómo reciclar -->
+    <section id="reciclaje">
+      <h2>Cómo Reciclar</h2>
+      <p>
+        El reciclaje es una de las principales herramientas para reducir el impacto ambiental del plástico. Consiste en recolectar, procesar y transformar los materiales plásticos usados en nuevos productos.
+      </p>
+      <p>
+        Para reciclar correctamente, es importante separar los residuos según su tipo y asegurarse de que estén limpios y secos. Además, es recomendable conocer los códigos de reciclaje que identifican cada tipo de plástico.
+      </p>
+      <img
+        class="responsive"
+        src="https://www.ecured.cu/images/a/a7/Reciclajee.jpg"
+        alt="Reciclaje de plástico"
+      />
+      <iframe
+        class="responsive"
+        width="560"
+        height="315"
+        src="https://www.youtube.com/embed/YiHTNfKJwAw"
+        title="Cómo reciclar plástico"
+        frameborder="0"
+        allowfullscreen
+      ></iframe>
+      <p>
+        Fomentar el reciclaje contribuye a conservar recursos naturales, reducir la contaminación y disminuir la cantidad de residuos que llegan a los vertederos y océanos.
+      </p>
+    </section>
+
+    <!-- Impacto ambiental -->
+    <section id="impacto">
+      <h2>Impacto Ambiental</h2>
+      <p>
+        El impacto ambiental derivado del uso y desecho inadecuado de materiales plásticos representa una amenaza significativa para los ecosistemas terrestres y marinos. La acumulación de residuos plásticos contribuye a la contaminación del suelo, ríos y océanos, afectando la biodiversidad y la salud humana.
+      </p>
+      <p>
+        Los microplásticos, fragmentos diminutos de plástico que resultan de la degradación de materiales mayores, se han detectado en organismos marinos y terrestres, ingresando a la cadena alimentaria y provocando consecuencias negativas para la fauna y la flora. Además, la producción masiva de plásticos se asocia con la emisión de gases de efecto invernadero, que agravan el cambio climático.
+      </p>
+      <p>
+        Es fundamental implementar estrategias de gestión sostenible, fomentar el reciclaje y promover la educación ambiental para minimizar estos impactos y garantizar un futuro más saludable para el planeta y las generaciones venideras.
+      </p>
+      <img
+        class="responsive"
+        src="https://tse2.mm.bing.net/th/id/OIP.okqvQSGIKK9uqGcupmjUUQHaEv?pid=Api&P=0&h=180&w=320&c=7&rs=1"
+        alt="Impacto ambiental"
+      />
+      <iframe
+        class="responsive"
+        width="560"
+        height="315"
+        src="https://www.youtube.com/embed/7zEyFPukF-c"
+        title="Impacto Ambiental del Hombre"
+        frameborder="0"
+        allowfullscreen
+      ></iframe>
+    </section>
+
+    <!-- Ayuda -->
+    <section id="ayuda">
+      <h2>Ayuda</h2>
+      <p>Próximamente encontrarás recursos y soporte para aprender más y contribuir con el cuidado ambiental relacionado con los plásticos.</p>
+      <img
+        class="responsive"
+        src="https://cdn.pixabay.com/animation/2022/07/29/10/29/10-29-08-608__480.png"
+        alt="Animación ayuda"
+      />
+    </section>
   </main>
 
   <footer>
@@ -241,22 +318,22 @@
 
   <script>
     function mostrarSeccion(id, btn) {
-      document.querySelectorAll('main section').forEach(sec => sec.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
-      document.querySelectorAll('nav.biblioteca button').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      if (window.innerWidth <= 768) document.getElementById('menu').classList.remove('open');
-    }
-    function toggleMenu() { document.getElementById('menu').classList.toggle('open'); }
-    // Accesibilidad: cierra el menú al hacer clic en un botón en móvil
-    document.addEventListener('DOMContentLoaded', function() {
-      document.querySelectorAll('nav.biblioteca button').forEach(btn => {
-        btn.addEventListener('click', () => {
-          if (window.innerWidth <= 768) {
-            document.getElementById('menu').classList.remove('open');
-          }
-        });
+      // Ocultar todas las secciones
+      document.querySelectorAll('main section').forEach(sec => {
+        sec.classList.remove('active');
       });
-    });
+      // Mostrar la sección seleccionada
+      const seccion = document.getElementById(id);
+      if (seccion) {
+        seccion.classList.add('active');
+      }
+
+      // Marcar botón activo y desmarcar los demás
+      document.querySelectorAll('nav.biblioteca button').forEach(button => {
+        button.classList.remove('active');
+      });
+      btn.classList.add('active');
+    }
   </script>
 </body>
+</html>
