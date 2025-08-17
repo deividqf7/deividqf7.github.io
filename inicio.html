@@ -1,192 +1,218 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Facas X: Información, educación y recursos sobre plásticos, reciclaje y su impacto ambiental. Aprende a identificar, reciclar y reducir el uso de plásticos." />
-  <title>Facas X - Inicio</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FACAS X - Inicio</title>
   <style>
-    * {
-      box-sizing: border-box;
+    :root {
+      --blanco: #FFFFFF;
+      --azul-pastel: #ADD8E6;
+      --negro: #000000;
+      --azul-oscuro: #0A5A9D;
     }
+
     body {
       margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #fff;
-      color: #000;
-      padding-left: 220px;
-      padding-top: 60px;
-      transition: padding-left 0.3s ease;
+      font-family: Arial, Helvetica, sans-serif;
+      background-color: var(--blanco);
+      color: var(--negro);
+      overflow-x: hidden;
     }
-    header {
+
+    /* Sidebar oculto */
+    .sidebar {
+      height: 100%;
+      width: 250px;
       position: fixed;
       top: 0;
-      left: 220px;
-      right: 0;
-      height: 60px;
-      background-color: #001f3f;
-      color: #fff;
+      left: -250px; /* escondido */
+      background-color: var(--azul-oscuro);
+      overflow-x: hidden;
+      padding-top: 60px;
+      z-index: 1000;
       display: flex;
-      align-items: center;
-      padding: 0 20px;
-      font-size: 1.5rem;
-      font-weight: bold;
-      z-index: 1001;
-      letter-spacing: 1px;
-      justify-content: space-between;
-      transition: left 0.3s ease;
+      flex-direction: column;
+      opacity: 0;
+      transition: left 0.4s ease, opacity 0.4s ease;
     }
-    .menu-btn {
-      display: none;
-      background: none;
-      border: none;
-      color: white;
-      font-size: 2rem;
+
+    .sidebar.show {
+      left: 0;
+      opacity: 1;
+    }
+
+    .sidebar h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: var(--blanco);
+    }
+
+    /* Animación de links */
+    .sidebar a {
+      padding: 12px 20px;
+      text-decoration: none;
+      font-size: 18px;
+      color: var(--blanco);
+      display: block;
+      border-radius: 8px;
+      margin: 5px 10px;
+      opacity: 0;
+      transform: translateX(-20px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+
+    .sidebar.show a {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    /* Delay progresivo en los enlaces */
+    .sidebar.show a:nth-child(3) { transition-delay: 0.1s; }
+    .sidebar.show a:nth-child(4) { transition-delay: 0.2s; }
+    .sidebar.show a:nth-child(5) { transition-delay: 0.3s; }
+    .sidebar.show a:nth-child(6) { transition-delay: 0.4s; }
+    .sidebar.show a:nth-child(7) { transition-delay: 0.5s; }
+    .sidebar.show a:nth-child(8) { transition-delay: 0.6s; }
+    .sidebar.show a:nth-child(9) { transition-delay: 0.7s; }
+
+    .sidebar a:hover {
+      background-color: var(--azul-pastel);
+      color: var(--negro);
+    }
+
+    .sidebar .closebtn {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      font-size: 30px;
       cursor: pointer;
-      margin-right: 10px;
+      color: var(--blanco);
     }
-    nav.biblioteca {
+
+    /* Botón hamburguesa */
+    .openbtn {
+      font-size: 20px;
+      cursor: pointer;
+      background-color: var(--azul-oscuro);
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 8px;
+      margin: 15px;
+      position: relative;
+      z-index: 1100;
+    }
+
+    .openbtn:hover {
+      background-color: var(--azul-pastel);
+      color: var(--negro);
+    }
+
+    /* Capa oscura de fondo */
+    #overlay {
       position: fixed;
       top: 0;
       left: 0;
-      width: 220px;
-      height: 100vh;
-      background-color: #111;
-      display: flex;
-      flex-direction: column;
-      padding-top: 60px;
-      box-shadow: 2px 0 5px rgba(0,0,0,0.3);
-      z-index: 1000;
-      transition: transform 0.3s ease;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.5);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.4s ease;
+      z-index: 900;
     }
-    nav.biblioteca.closed {
-      transform: translateX(-100%);
+
+    #overlay.show {
+      opacity: 1;
+      visibility: visible;
     }
-    nav.biblioteca a {
-      color: white;
-      text-decoration: none;
-      padding: 15px 20px;
-      font-weight: bold;
-      font-size: 1rem;
-      border-left: 5px solid transparent;
-      transition: background-color 0.3s, border-color 0.3s;
-      display: block;
-    }
-    nav.biblioteca a:hover,
-    nav.biblioteca a.active {
-      background-color: #003366;
-      border-left-color: #00aaff;
-      outline: none;
-    }
-    main {
-      max-width: 900px;
-      margin: 0 auto 50px auto;
+
+    /* Contenido */
+    .content {
       padding: 20px;
     }
-    h2 {
-      color: #003366;
-      margin-top: 0;
+
+    .content h1 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      color: var(--azul-oscuro);
     }
-    @media (max-width: 768px) {
-      body {
-        padding-left: 0;
-        padding-top: 100px;
-      }
-      header {
-        left: 0;
-        width: 100%;
-        font-size: 1.2rem;
-        padding-left: 50px;
-      }
-      .menu-btn {
-        display: block;
-      }
-      nav.biblioteca {
-        position: fixed;
-        top: 60px;
-        left: 0;
-        width: 100%;
-        height: auto;
-        flex-direction: row;
-        padding-top: 0;
-        box-shadow: none;
-        background-color: #111;
-        transform: translateY(-100%);
-      }
-      nav.biblioteca.open {
-        transform: translateY(0);
-      }
-      nav.biblioteca a {
-        flex: 1;
-        padding: 10px 5px;
-        border-left: none;
-        border-bottom: 3px solid transparent;
-      }
-      nav.biblioteca a:hover,
-      nav.biblioteca a.active {
-        border-bottom-color: #00aaff;
-        background-color: #222;
-      }
-      nav.biblioteca.closed {
-        transform: translateY(-100%);
-      }
+
+    .content p {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      max-width: 900px;
+      text-align: justify;
+    }
+
+    .welcome-card {
+      background-color: var(--azul-pastel);
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+      margin-top: 30px;
     }
   </style>
 </head>
 <body>
-  <header>
-    <button class="menu-btn" aria-label="Abrir menú de navegación" onclick="toggleMenu()">☰</button>
-    Facas X
-  </header>
 
-  <nav class="biblioteca" id="menu">
-    <a href="inicio.html" class="active" aria-label="Ir a Inicio">Inicio</a>
-    <a href="que-es.html" aria-label="¿Qué es el plástico?">¿Qué es el plástico?</a>
-    <a href="tipos.html" aria-label="Tipos de Plástico">Tipos de Plástico</a>
-    <a href="reciclaje.html" aria-label="Cómo Reciclar">Cómo Reciclar</a>
-    <a href="impacto.html" aria-label="Impacto Ambiental">Impacto Ambiental</a>
-    <a href="ayuda.html" aria-label="Ayuda">Ayuda</a>
-  </nav>
+  <!-- Sidebar -->
+  <div id="mySidebar" class="sidebar">
+    <span class="closebtn" onclick="closeNav()">&times;</span>
+    <h2>FACAS X</h2>
+    <a href="index.html">Portada</a>
+    <a href="inicio.html">Inicio</a>
+    <a href="que-es.html">¿Qué es el plástico?</a>
+    <a href="tipos.html">Tipos de plástico</a>
+    <a href="reciclaje.html">Cómo reciclar</a>
+    <a href="impacto.html">Impacto ambiental</a>
+    <a href="ayuda.html">Ayuda y contacto</a>
+  </div>
 
-  <main>
-    <h2>Bienvenido a Facas X</h2>
-    <p>
-      Facas X es una empresa dedicada a la investigación, educación y divulgación sobre los plásticos y su impacto en nuestro entorno.
-      Nuestro objetivo es proporcionar información precisa, actualizada y de fácil comprensión para fomentar un uso responsable de los materiales plásticos.
-    </p>
-    <p>
-      Con un equipo de expertos en química, ingeniería ambiental y educación, ofrecemos recursos multimedia, guías prácticas y asesoría para que individuos y organizaciones puedan contribuir a la reducción del impacto ambiental.
-    </p>
-    <p>
-      Nuestra misión es ser un referente en el conocimiento del plástico, promoviendo el reciclaje, la innovación sostenible y el compromiso social.
-    </p>
-  </main>
+  <!-- Capa oscura -->
+  <div id="overlay" onclick="closeNav()"></div>
 
-  <footer>
-    <p>&copy; 2025 Facas X. Todos los derechos reservados.</p>
-  </footer>
+  <!-- Botón abrir menú -->
+  <button class="openbtn" onclick="openNav()">☰ Menú</button>
+
+  <!-- Contenido -->
+  <div class="content">
+    <h1>Bienvenido a FACAS X</h1>
+    <p>
+      En <b>Facas X</b> nos enfocamos en la investigación, educación y divulgación sobre
+      los plásticos y su impacto ambiental. Nuestro propósito es entregar información clara
+      y útil para fomentar un uso responsable.
+    </p>
+
+    <div class="welcome-card">
+      <p>
+        Con la colaboración de expertos en química, ingeniería ambiental y educación,
+        trabajamos para brindar recursos accesibles a estudiantes, empresas y público
+        en general. Creemos firmemente que el conocimiento es la mejor herramienta para
+        cambiar el mundo, y por eso compartimos materiales que ayudan a entender mejor
+        el ciclo de vida del plástico, sus riesgos y también las oportunidades para
+        reutilizarlo y transformarlo en nuevas soluciones sostenibles.
+      </p>
+      <p>
+        Te invitamos a explorar nuestras secciones, descubrir datos curiosos, aprender
+        sobre los distintos tipos de plásticos, y encontrar maneras prácticas de aportar
+        tu granito de arena al reciclaje. 🌎♻️
+      </p>
+    </div>
+  </div>
 
   <script>
-    function toggleMenu() {
-      const menu = document.getElementById('menu');
-      menu.classList.toggle('open');
+    function openNav() {
+      document.getElementById("mySidebar").classList.add("show");
+      document.getElementById("overlay").classList.add("show");
     }
-    // Cierra el menú al cambiar de tamaño si es necesario
-    window.addEventListener('resize', function() {
-      if (window.innerWidth > 768) {
-        document.getElementById('menu').classList.remove('open');
-      }
-    });
-    // Cierra el menú al hacer clic en un enlace en móvil
-    document.addEventListener('DOMContentLoaded', function() {
-      document.querySelectorAll('.biblioteca a').forEach(link => {
-        link.addEventListener('click', () => {
-          if (window.innerWidth <= 768) {
-            document.getElementById('menu').classList.remove('open');
-          }
-          });
-      });
-    });
+
+    function closeNav() {
+      document.getElementById("mySidebar").classList.remove("show");
+      document.getElementById("overlay").classList.remove("show");
+    }
   </script>
+
 </body>
 </html>
