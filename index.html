@@ -3,107 +3,81 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FACASX - Portada</title>
+  <title>FACAS X - Portada</title>
   <style>
     body {
       margin: 0;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #FFFFFF;
-      color: #000000;
+      background-color: #ffffff;
+      color: #000;
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: 100vh;
-      overflow-x: hidden;
+      height: 100vh;
+      overflow: hidden;
     }
 
-    .menu-btn {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      font-size: 30px;
-      cursor: pointer;
-      background: #0A5A9D;
-      color: white;
-      padding: 10px 15px;
-      border-radius: 8px;
-      z-index: 1001;
-      border: none;
-    }
-
-    .sidebar {
-      height: 100%;
-      width: 250px;
-      position: fixed;
-      top: 0;
-      left: -250px;
-      background-color: #0A5A9D;
-      padding-top: 60px;
-      transition: left 0.3s ease;
-      z-index: 1000;
-    }
-
-    .sidebar a {
-      padding: 15px 20px;
-      text-decoration: none;
-      font-size: 18px;
-      color: white;
-      display: block;
-      transition: background 0.3s;
-    }
-
-    .sidebar a:hover {
-      background-color: #ADD8E6;
-      color: #000000;
-    }
-
-    .sidebar.active {
-      left: 0;
-    }
-
-    .container {
-      background-color: #ADD8E6;
-      padding: 40px;
-      border-radius: 15px;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-      width: 100%;
-      max-width: 600px;
+    /* Contenedor central como botón */
+    .portada-button {
+      width: 400px;
+      padding: 50px 30px;
       text-align: center;
+      background-color: #ffffff;
+      border: 4px solid #004080;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      cursor: pointer;
+      transition: all 0.5s ease;
+      animation: glow 2s infinite alternate;
+      text-decoration: none;
+      color: #002b5c;
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    /* Animación tipo video (brillo constante) */
+    @keyframes glow {
+      0% {
+        box-shadow: 0 0 15px #004080, 0 0 25px #00aaff;
+        transform: scale(1);
+      }
+      50% {
+        box-shadow: 0 0 30px #004080, 0 0 50px #00aaff;
+        transform: scale(1.02);
+      }
+      100% {
+        box-shadow: 0 0 15px #004080, 0 0 25px #00aaff;
+        transform: scale(1);
+      }
+    }
+
+    .portada-button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 50px #004080, 0 0 70px #00aaff;
     }
 
     h1 {
-      color: #0A5A9D;
       margin-bottom: 20px;
+      font-size: 32px;
+      color: #002b5c;
     }
+
+    p {
+      font-size: 18px;
+      line-height: 1.6;
+    }
+
+    /* No mostrar menú lateral ni hamburguesa en la portada */
   </style>
 </head>
 <body>
 
-  <!-- Botón menú -->
-  <button class="menu-btn" onclick="toggleMenu()">☰</button>
+  <!-- Botón central que lleva a inicio.html -->
+  <a href="inicio.html" class="portada-button">
+    <h1>FACAS X</h1>
+    <p>Bienvenido a nuestra plataforma sobre plásticos y reciclaje</p>
+    <p>Haz clic aquí para comenzar</p>
+  </a>
 
-  <!-- Menú lateral -->
-  <div id="mySidebar" class="sidebar">
-  <a href="inicio.html">Inicio</a>
-  <a href="escaner.html">Escáner</a>
-  <a href="plastico.html">Cómo se hace el plástico</a>
-  <a href="reciclaje.html">Maneras de reciclar</a>
-  <a href="tipos.html">Tipos de plásticos</a>
-  <a href="caracteristicas.html">Características</a>
-  <a href="impacto.html">Impacto Ambiental</a> <!-- corregido -->
-  <a href="ayuda.html">Ayuda</a>
-</div>
-
-  <!-- Contenido principal -->
-  <div class="container">
-    <h1>FACASX</h1>
-    <p>Innovación y sostenibilidad en el mundo de los plásticos.</p>
-  </div>
-
-  <script>
-    function toggleMenu() {
-      document.getElementById("sidebar").classList.toggle("active");
-    }
-  </script>
 </body>
 </html>
