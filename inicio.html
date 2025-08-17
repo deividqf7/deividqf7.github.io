@@ -3,216 +3,214 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FACAS X - Inicio</title>
+  <title>Inicio - FACAS X</title>
   <style>
-    :root {
-      --blanco: #FFFFFF;
-      --azul-pastel: #ADD8E6;
-      --negro: #000000;
-      --azul-oscuro: #0A5A9D;
-    }
-
     body {
       margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background-color: var(--blanco);
-      color: var(--negro);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f7fa;
+      color: #000;
       overflow-x: hidden;
     }
 
-    /* Sidebar oculto */
+    header {
+      background: linear-gradient(90deg, #002b5c, #004080);
+      padding: 15px;
+      text-align: center;
+      color: white;
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    /* Menú lateral */
     .sidebar {
       height: 100%;
       width: 250px;
       position: fixed;
       top: 0;
-      left: -250px; /* escondido */
-      background-color: var(--azul-oscuro);
+      left: -260px;
+      background-color: #111;
       overflow-x: hidden;
+      transition: left 0.5s ease;
       padding-top: 60px;
       z-index: 1000;
-      display: flex;
-      flex-direction: column;
-      opacity: 0;
-      transition: left 0.4s ease, opacity 0.4s ease;
     }
 
-    .sidebar.show {
+    .sidebar.active {
       left: 0;
-      opacity: 1;
     }
 
-    .sidebar h2 {
-      text-align: center;
-      margin-bottom: 20px;
-      color: var(--blanco);
-    }
-
-    /* Animación de links */
     .sidebar a {
-      padding: 12px 20px;
+      padding: 12px 24px;
       text-decoration: none;
       font-size: 18px;
-      color: var(--blanco);
+      color: #f1f1f1;
       display: block;
-      border-radius: 8px;
-      margin: 5px 10px;
+      transition: 0.3s;
       opacity: 0;
       transform: translateX(-20px);
-      transition: opacity 0.4s ease, transform 0.4s ease;
     }
 
-    .sidebar.show a {
+    .sidebar.active a {
       opacity: 1;
       transform: translateX(0);
+      transition: all 0.4s ease;
     }
-
-    /* Delay progresivo en los enlaces */
-    .sidebar.show a:nth-child(3) { transition-delay: 0.1s; }
-    .sidebar.show a:nth-child(4) { transition-delay: 0.2s; }
-    .sidebar.show a:nth-child(5) { transition-delay: 0.3s; }
-    .sidebar.show a:nth-child(6) { transition-delay: 0.4s; }
-    .sidebar.show a:nth-child(7) { transition-delay: 0.5s; }
-    .sidebar.show a:nth-child(8) { transition-delay: 0.6s; }
-    .sidebar.show a:nth-child(9) { transition-delay: 0.7s; }
 
     .sidebar a:hover {
-      background-color: var(--azul-pastel);
-      color: var(--negro);
-    }
-
-    .sidebar .closebtn {
-      position: absolute;
-      top: 15px;
-      right: 20px;
-      font-size: 30px;
-      cursor: pointer;
-      color: var(--blanco);
+      background-color: #004080;
     }
 
     /* Botón hamburguesa */
-    .openbtn {
-      font-size: 20px;
+    .hamburger {
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      width: 35px;
+      height: 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
       cursor: pointer;
-      background-color: var(--azul-oscuro);
-      color: white;
-      padding: 10px 15px;
-      border: none;
-      border-radius: 8px;
-      margin: 15px;
-      position: relative;
       z-index: 1100;
     }
 
-    .openbtn:hover {
-      background-color: var(--azul-pastel);
-      color: var(--negro);
-    }
-
-    /* Capa oscura de fondo */
-    #overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
+    .bar {
+      height: 4px;
       width: 100%;
-      height: 100%;
-      background-color: rgba(0,0,0,0.5);
+      background-color: white;
+      border-radius: 4px;
+      transition: 0.4s;
+    }
+
+    .hamburger.active .bar:nth-child(1) {
+      transform: rotate(45deg) translate(6px, 6px);
+    }
+
+    .hamburger.active .bar:nth-child(2) {
       opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.4s ease;
-      z-index: 900;
     }
 
-    #overlay.show {
-      opacity: 1;
-      visibility: visible;
+    .hamburger.active .bar:nth-child(3) {
+      transform: rotate(-45deg) translate(6px, -6px);
     }
 
-    /* Contenido */
-    .content {
-      padding: 20px;
-    }
-
-    .content h1 {
-      font-size: 2.5rem;
-      margin-bottom: 20px;
-      color: var(--azul-oscuro);
-    }
-
-    .content p {
-      font-size: 1.2rem;
-      line-height: 1.6;
+    /* Contenido principal */
+    .container {
       max-width: 900px;
-      text-align: justify;
+      margin: 80px auto;
+      padding: 30px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      text-align: center;
     }
 
-    .welcome-card {
-      background-color: var(--azul-pastel);
-      padding: 25px;
-      border-radius: 15px;
-      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-      margin-top: 30px;
+    h1 {
+      color: #002b5c;
+      margin-bottom: 15px;
+    }
+
+    p {
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    .highlight {
+      color: #004080;
+      font-weight: bold;
+    }
+
+    footer {
+      background-color: #002b5c;
+      color: white;
+      text-align: center;
+      padding: 12px;
+      margin-top: 40px;
+    }
+
+    /* Animación de párrafos */
+    .fade {
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeInUp 0.8s forwards;
+    }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
   </style>
 </head>
 <body>
 
-  <!-- Sidebar -->
+  <!-- Botón hamburguesa -->
+  <div class="hamburger" id="hamburger">
+    <div class="bar"></div>
+    <div class="bar"></div>
+    <div class="bar"></div>
+  </div>
+
+  <!-- Menú lateral -->
   <div id="mySidebar" class="sidebar">
-    <span class="closebtn" onclick="closeNav()">&times;</span>
-    <h2>FACAS X</h2>
-    <a href="index.html">Portada</a>
-    <a href="inicio.html">Inicio</a>
-    <a href="que-es.html">¿Qué es el plástico?</a>
-    <a href="tipos.html">Tipos de plástico</a>
-    <a href="reciclaje.html">Cómo reciclar</a>
-    <a href="impacto.html">Impacto ambiental</a>
-    <a href="ayuda.html">Ayuda y contacto</a>
-  </div>
+  <a href="inicio.html">Inicio</a>
+  <a href="escaner.html">Escáner</a>
+  <a href="plastico.html">Cómo se hace el plástico</a>
+  <a href="reciclaje.html">Maneras de reciclar</a>
+  <a href="tipos.html">Tipos de plásticos</a>
+  <a href="caracteristicas.html">Características</a>
+  <a href="impacto.html">Impacto Ambiental</a> <!-- corregido -->
+  <a href="ayuda.html">Ayuda</a>
+</div>
 
-  <!-- Capa oscura -->
-  <div id="overlay" onclick="closeNav()"></div>
+  <!-- Encabezado -->
+  <header>
+    FACAS X - Bienvenido
+  </header>
 
-  <!-- Botón abrir menú -->
-  <button class="openbtn" onclick="openNav()">☰ Menú</button>
-
-  <!-- Contenido -->
-  <div class="content">
-    <h1>Bienvenido a FACAS X</h1>
-    <p>
-      En <b>Facas X</b> nos enfocamos en la investigación, educación y divulgación sobre
-      los plásticos y su impacto ambiental. Nuestro propósito es entregar información clara
-      y útil para fomentar un uso responsable.
+  <!-- Contenido principal -->
+  <div class="container">
+    <h1 class="fade">¡Bienvenido a FACAS X!</h1>
+    <p class="fade" style="animation-delay: 0.2s;">
+      En <span class="highlight">FACAS X</span> nos enfocamos en la investigación, educación y divulgación sobre plásticos y su impacto ambiental.
+      Nuestro objetivo es entregar información clara y útil para fomentar un uso responsable de los recursos.
     </p>
-
-    <div class="welcome-card">
-      <p>
-        Con la colaboración de expertos en química, ingeniería ambiental y educación,
-        trabajamos para brindar recursos accesibles a estudiantes, empresas y público
-        en general. Creemos firmemente que el conocimiento es la mejor herramienta para
-        cambiar el mundo, y por eso compartimos materiales que ayudan a entender mejor
-        el ciclo de vida del plástico, sus riesgos y también las oportunidades para
-        reutilizarlo y transformarlo en nuevas soluciones sostenibles.
-      </p>
-      <p>
-        Te invitamos a explorar nuestras secciones, descubrir datos curiosos, aprender
-        sobre los distintos tipos de plásticos, y encontrar maneras prácticas de aportar
-        tu granito de arena al reciclaje. 🌎♻️
-      </p>
-    </div>
+    <p class="fade" style="animation-delay: 0.4s;">
+      Con la colaboración de expertos en química, ingeniería ambiental y educación, queremos ayudarte a comprender cómo se producen los plásticos,
+      cómo reciclarlos y cómo tomar decisiones más sostenibles en tu vida diaria.
+    </p>
+    <p class="fade" style="animation-delay: 0.6s;">
+      Nuestro sitio te ofrece información detallada sobre los diferentes tipos de plásticos, sus características, y cómo se transforman en productos útiles.
+      También encontrarás guías prácticas sobre el reciclaje y consejos para reducir el consumo de plásticos innecesarios.
+    </p>
+    <p class="fade" style="animation-delay: 0.8s;">
+      Además, contamos con secciones interactivas como el <span class="highlight">escáner de plásticos</span> para identificar materiales y facilitar su reciclaje correctamente.
+      Queremos que cada persona que visite FACAS X pueda convertirse en un agente de cambio positivo para el medio ambiente.
+    </p>
+    <p class="fade" style="animation-delay: 1s;">
+      Nos apasiona la educación ambiental y creemos que la información es poder. Por eso, ponemos a tu disposición recursos, noticias y artículos
+      actualizados sobre innovación en reciclaje y nuevas técnicas sostenibles en la producción de plásticos.
+    </p>
+    <p class="fade" style="animation-delay: 1.2s;">
+      ¡Explora nuestra página y descubre cómo pequeñas acciones pueden generar un gran impacto! Juntos podemos cuidar el planeta
+      y promover un futuro más limpio y consciente.
+    </p>
   </div>
+
+  <footer>
+    © 2025 FACAS X. Todos los derechos reservados.
+  </footer>
 
   <script>
-    function openNav() {
-      document.getElementById("mySidebar").classList.add("show");
-      document.getElementById("overlay").classList.add("show");
-    }
+    const sidebar = document.getElementById("mySidebar");
+    const hamburger = document.getElementById("hamburger");
 
-    function closeNav() {
-      document.getElementById("mySidebar").classList.remove("show");
-      document.getElementById("overlay").classList.remove("show");
-    }
+    hamburger.addEventListener("click", () => {
+      hamburger.classList.toggle("active");
+      sidebar.classList.toggle("active");
+    });
   </script>
-
 </body>
 </html>

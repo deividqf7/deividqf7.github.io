@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ayuda - FACAS X</title>
+  <title>Maneras de reciclar - FACAS X</title>
   <style>
     body {
       margin: 0;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f4f7fa;
+      background-color: #ffffff;
       color: #000;
       overflow-x: hidden;
     }
@@ -22,13 +22,12 @@
       font-weight: bold;
     }
 
-    /* Menú lateral */
     .sidebar {
       height: 100%;
       width: 250px;
       position: fixed;
       top: 0;
-      left: -260px; /* oculto fuera de la pantalla */
+      left: -260px;
       background-color: #111;
       overflow-x: hidden;
       transition: left 0.5s ease;
@@ -37,7 +36,7 @@
     }
 
     .sidebar.active {
-      left: 0; /* se desliza hacia dentro */
+      left: 0;
     }
 
     .sidebar a {
@@ -51,7 +50,6 @@
       transform: translateX(-20px);
     }
 
-    /* Animación al entrar cada link */
     .sidebar.active a {
       opacity: 1;
       transform: translateX(0);
@@ -62,7 +60,6 @@
       background-color: #004080;
     }
 
-    /* Botón hamburguesa */
     .hamburger {
       position: fixed;
       top: 15px;
@@ -79,12 +76,11 @@
     .bar {
       height: 4px;
       width: 100%;
-      background-color: white;
+      background-color: #004080;
       border-radius: 4px;
       transition: 0.4s;
     }
 
-    /* Animación al convertir en X */
     .hamburger.active .bar:nth-child(1) {
       transform: rotate(45deg) translate(6px, 6px);
     }
@@ -97,41 +93,52 @@
       transform: rotate(-45deg) translate(6px, -6px);
     }
 
-    /* Contenido principal */
     .container {
       max-width: 800px;
       margin: 80px auto;
-      padding: 20px;
-      background: white;
+      padding: 30px;
+      background: #ffffff;
       border-radius: 12px;
+      text-align: center;
+      border: 2px solid #004080;
+      animation: fadeInUp 1s forwards;
       box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-      opacity: 0;
-      transform: translateY(40px);
-      animation: fadeInUp 1s ease forwards;
     }
 
     @keyframes fadeInUp {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     h2 {
       color: #002b5c;
-      text-align: center;
-      margin-bottom: 15px;
+      margin-bottom: 20px;
     }
 
     p {
       font-size: 16px;
       line-height: 1.6;
-      text-align: center;
+      margin-bottom: 15px;
     }
 
-    .correo {
-      font-weight: bold;
+    .highlight {
       color: #004080;
+      font-weight: bold;
+    }
+
+    /* Estilo para el video con efecto brillo */
+    .video-frame {
+      width: 100%;
+      height: 450px;
+      border-radius: 12px;
+      margin-top: 20px;
+      border: 4px solid #004080;
+      box-shadow: 0 0 15px #004080;
+      transition: box-shadow 0.5s, transform 0.3s;
+    }
+
+    .video-frame:hover {
+      box-shadow: 0 0 40px #00aaff, 0 0 60px #00aaff, 0 0 80px #004080;
+      transform: scale(1.02);
     }
 
     footer {
@@ -152,33 +159,44 @@
     <div class="bar"></div>
   </div>
 
-  <!-- Menú lateral SIN portada -->
-<div id="mySidebar" class="sidebar">
-  <a href="inicio.html">Inicio</a>
-  <a href="escaner.html">Escáner</a>
-  <a href="plastico.html">Cómo se hace el plástico</a>
-  <a href="reciclaje.html">Maneras de reciclar</a>
-  <a href="tipos.html">Tipos de plásticos</a>
-  <a href="caracteristicas.html">Características</a>
-  <a href="impacto.html">Impacto Ambiental</a> <!-- corregido -->
-  <a href="ayuda.html">Ayuda</a>
-</div>
+  <!-- Menú lateral -->
+  <div id="mySidebar" class="sidebar">
+    <a href="inicio.html">Inicio</a>
+    <a href="escaner.html">Escáner</a>
+    <a href="plastico.html">Cómo se hace el plástico</a>
+    <a href="reciclaje.html">Maneras de reciclar</a>
+    <a href="tipos.html">Tipos de plásticos</a>
+    <a href="caracteristicas.html">Características</a>
+    <a href="impacto.html">Impacto Ambiental</a>
+    <a href="ayuda.html">Ayuda</a>
+  </div>
 
   <!-- Encabezado -->
   <header>
-    FACAS X - Ayuda
+    FACAS X - Maneras de reciclar
   </header>
 
-  <!-- Contenido -->
+  <!-- Contenido principal -->
   <div class="container">
-    <h2>¿Necesitas Ayuda?</h2>
+    <h2>Cómo reciclar de forma efectiva</h2>
     <p>
-      Si tienes alguna duda, puedes <span class="correo">contactarnos al correo:</span><br>
-      <span class="correo">facasx@gmail.com</span>
+      El reciclaje es clave para reducir la contaminación y conservar recursos naturales. Existen varias formas de reciclar los plásticos y otros materiales.
     </p>
     <p>
-      También puedes dejarnos tu sugerencia y con gusto la revisaremos para seguir mejorando.
+      <span class="highlight">Reciclaje doméstico:</span> Separar los residuos en orgánicos, plásticos, papel y vidrio. Lavar los envases antes de depositarlos en los contenedores correspondientes.
     </p>
+    <p>
+      <span class="highlight">Reciclaje industrial:</span> Las empresas recolectan grandes cantidades de plástico, lo trituran y funden para crear nuevos productos.
+    </p>
+    <p>
+      <span class="highlight">Reutilización:</span> Muchos envases pueden tener una segunda vida si los usamos varias veces antes de desecharlos.
+    </p>
+    <p>
+      Participar en programas comunitarios y talleres de reciclaje ayuda a crear conciencia y reducir la contaminación ambiental.
+    </p>
+
+    <!-- Video con efecto brillo -->
+    <iframe class="video-frame" src="https://www.youtube.com/embed/YiHTNfKJwAw" title="Video Maneras de Reciclar" allowfullscreen></iframe>
   </div>
 
   <footer>
@@ -194,5 +212,6 @@
       sidebar.classList.toggle("active");
     });
   </script>
+
 </body>
 </html>

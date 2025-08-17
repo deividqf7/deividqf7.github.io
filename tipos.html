@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Impacto Ambiental - FACAS X</title>
+  <title>Tipos de Plásticos - FACAS X</title>
   <style>
     body {
       margin: 0;
@@ -106,6 +106,7 @@
     }
 
     @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(40px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
@@ -118,6 +119,7 @@
       font-size: 16px;
       line-height: 1.6;
       margin-bottom: 15px;
+      text-align: justify;
     }
 
     .highlight {
@@ -125,7 +127,7 @@
       font-weight: bold;
     }
 
-    /* Estilo para el video con efecto brillo */
+    /* Video con efecto de brillo y animación */
     .video-frame {
       width: 100%;
       height: 450px;
@@ -134,6 +136,10 @@
       border: 4px solid #004080;
       box-shadow: 0 0 15px #004080;
       transition: box-shadow 0.5s, transform 0.3s;
+      opacity: 0;
+      transform: translateY(40px);
+      animation: fadeInUp 1s forwards;
+      animation-delay: 0.5s; /* empieza después del contenido */
     }
 
     .video-frame:hover {
@@ -173,21 +179,39 @@
 
   <!-- Encabezado -->
   <header>
-    FACAS X - Impacto Ambiental
+    FACAS X - Tipos de Plásticos
   </header>
 
   <!-- Contenido principal -->
   <div class="container">
-    <h2>Impacto Ambiental del Plástico</h2>
+    <h2>Tipos de Plásticos</h2>
     <p>
-      El uso excesivo de plásticos afecta gravemente nuestro entorno. Su descomposición tarda cientos de años y contamina suelos, ríos y océanos.
+      Existen varios tipos de plásticos, cada uno con propiedades y usos diferentes. Es importante conocerlos para reciclar correctamente.
     </p>
     <p>
-      La acumulación de residuos plásticos amenaza la vida marina, la salud humana y contribuye al cambio climático.
+      <span class="highlight">PET (Polietileno Tereftalato):</span> Usado en botellas de bebidas y envases de alimentos. Es reciclable y se utiliza para fabricar fibras y nuevos envases.
+    </p>
+    <p>
+      <span class="highlight">HDPE (Polietileno de Alta Densidad):</span> Común en envases de detergentes, bolsas resistentes y tuberías. Es reciclable y reutilizable.
+    </p>
+    <p>
+      <span class="highlight">PVC (Policloruro de Vinilo):</span> Se encuentra en tuberías, ventanas y embalajes. Su reciclaje es más complejo pero se puede reutilizar en algunos productos.
+    </p>
+    <p>
+      <span class="highlight">LDPE (Polietileno de Baja Densidad):</span> Usado en bolsas plásticas, envoltorios y algunos envases. Se puede reciclar y convertir en bolsas o tuberías nuevas.
+    </p>
+    <p>
+      <span class="highlight">PP (Polipropileno):</span> Presente en tapas, pajillas y envases de yogurt. Es resistente y reciclable en productos como mobiliario y componentes automotrices.
+    </p>
+    <p>
+      <span class="highlight">PS (Poliestireno):</span> Común en envases de comida rápida y vasos desechables. Puede reciclarse, aunque su manejo requiere procesos especiales.
+    </p>
+    <p>
+      <span class="highlight">Otros (Plásticos mezclados):</span> Incluye plásticos de diferentes composiciones. Su reciclaje es más difícil y a menudo se destina a productos menos nobles.
     </p>
 
-    <!-- Video con efecto brillo -->
-    <iframe class="video-frame" src="https://www.youtube.com/embed/7zEyFPukF-c" title="Video Impacto Ambiental" allowfullscreen></iframe>
+    <!-- Video ilustrativo con animación -->
+    <iframe class="video-frame" src="https://www.youtube.com/embed/Z9U1A1J0OaY" title="Video Tipos de Plásticos" allowfullscreen></iframe>
   </div>
 
   <footer>

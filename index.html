@@ -1,109 +1,109 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FACAS X - Portada</title>
-    <style>
-        /* Paleta de colores:
-           - Blanco: #FFFFFF (fondo principal)
-           - Azul claro (pastel): #ADD8E6 (para destacar elementos)
-           - Negro: #000000 (para texto y detalles)
-           - Azul oscuro: #0A5A9D (como color secundario de acento)
-        */
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            color: #000000;
-            background-color: #FFFFFF;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-        
-        .section {
-            padding: 60px 20px;
-            text-align: center;
-            background-color: #ADD8E6;
-            min-height: 100vh;
-            width: 100%;
-        }
-        
-        .container {
-            max-width: 1000px;
-            margin: auto;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .card {
-            background-color: #FFFFFF;
-            border-radius: 20px;
-            padding: 40px;
-            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
-            max-width: 800px;
-            text-align: center;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 25px rgba(0, 0, 0, 0.2);
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FACASX - Portada</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #FFFFFF;
+      color: #000000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
 
-        .card-link {
-            text-decoration: none;
-            color: inherit;
-            display: block;
-        }
+    .menu-btn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      font-size: 30px;
+      cursor: pointer;
+      background: #0A5A9D;
+      color: white;
+      padding: 10px 15px;
+      border-radius: 8px;
+      z-index: 1001;
+      border: none;
+    }
 
-        .card-title {
-            font-size: 2.5rem;
-            font-weight: bold;
-            margin-bottom: 1.2rem;
-            color: #0A5A9D;
-        }
+    .sidebar {
+      height: 100%;
+      width: 250px;
+      position: fixed;
+      top: 0;
+      left: -250px;
+      background-color: #0A5A9D;
+      padding-top: 60px;
+      transition: left 0.3s ease;
+      z-index: 1000;
+    }
 
-        .card-text {
-            font-size: 1.3rem;
-            line-height: 1.6;
-            color: #000000;
-        }
+    .sidebar a {
+      padding: 15px 20px;
+      text-decoration: none;
+      font-size: 18px;
+      color: white;
+      display: block;
+      transition: background 0.3s;
+    }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            .card {
-                padding: 25px;
-            }
-            .card-title {
-                font-size: 2rem;
-            }
-            .card-text {
-                font-size: 1.1rem;
-            }
-        }
-    </style>
+    .sidebar a:hover {
+      background-color: #ADD8E6;
+      color: #000000;
+    }
+
+    .sidebar.active {
+      left: 0;
+    }
+
+    .container {
+      background-color: #ADD8E6;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 600px;
+      text-align: center;
+    }
+
+    h1 {
+      color: #0A5A9D;
+      margin-bottom: 20px;
+    }
+  </style>
 </head>
 <body>
 
-    <!-- Portada -->
-    <section class="section">
-        <div class="container">
-            <a href="inicio.html" class="card-link">
-                <div class="card">
-                    <h1 class="card-title">Bienvenido a FACAS X</h1>
-                    <p class="card-text">
-                        Únete a nuestra misión. Descubre el poder del reciclaje y cómo cada pequeño gesto puede reescribir el futuro de nuestro planeta. 
-                        Juntos, podemos transformar la contaminación en una oportunidad y construir un mundo más limpio, un paso a la vez. 
-                        <br><br>
-                        👉 Haz clic aquí para comenzar en <b>INICIO</b>.
-                    </p>
-                </div>
-            </a>
-        </div>
-    </section>
+  <!-- Botón menú -->
+  <button class="menu-btn" onclick="toggleMenu()">☰</button>
 
+  <!-- Menú lateral -->
+  <div id="mySidebar" class="sidebar">
+  <a href="inicio.html">Inicio</a>
+  <a href="escaner.html">Escáner</a>
+  <a href="plastico.html">Cómo se hace el plástico</a>
+  <a href="reciclaje.html">Maneras de reciclar</a>
+  <a href="tipos.html">Tipos de plásticos</a>
+  <a href="caracteristicas.html">Características</a>
+  <a href="impacto.html">Impacto Ambiental</a> <!-- corregido -->
+  <a href="ayuda.html">Ayuda</a>
+</div>
+
+  <!-- Contenido principal -->
+  <div class="container">
+    <h1>FACASX</h1>
+    <p>Innovación y sostenibilidad en el mundo de los plásticos.</p>
+  </div>
+
+  <script>
+    function toggleMenu() {
+      document.getElementById("sidebar").classList.toggle("active");
+    }
+  </script>
 </body>
 </html>

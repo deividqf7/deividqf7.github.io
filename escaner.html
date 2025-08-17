@@ -3,14 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ayuda - FACAS X</title>
+  <title>Escáner - FACAS X</title>
   <style>
+    /* Fondo dinámico */
     body {
       margin: 0;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f4f7fa;
+      background: linear-gradient(-45deg, #f4f7fa, #d0e4f7, #b0d4f7, #e0f0ff);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
       color: #000;
       overflow-x: hidden;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
     header {
@@ -28,7 +37,7 @@
       width: 250px;
       position: fixed;
       top: 0;
-      left: -260px; /* oculto fuera de la pantalla */
+      left: -260px;
       background-color: #111;
       overflow-x: hidden;
       transition: left 0.5s ease;
@@ -37,7 +46,7 @@
     }
 
     .sidebar.active {
-      left: 0; /* se desliza hacia dentro */
+      left: 0;
     }
 
     .sidebar a {
@@ -51,7 +60,6 @@
       transform: translateX(-20px);
     }
 
-    /* Animación al entrar cada link */
     .sidebar.active a {
       opacity: 1;
       transform: translateX(0);
@@ -84,7 +92,6 @@
       transition: 0.4s;
     }
 
-    /* Animación al convertir en X */
     .hamburger.active .bar:nth-child(1) {
       transform: rotate(45deg) translate(6px, 6px);
     }
@@ -101,13 +108,13 @@
     .container {
       max-width: 800px;
       margin: 80px auto;
-      padding: 20px;
+      padding: 30px;
       background: white;
       border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-      opacity: 0;
-      transform: translateY(40px);
-      animation: fadeInUp 1s ease forwards;
+      text-align: center;
+      border: 2px solid #004080;
+      animation: fadeInUp 1s forwards, floatShadowBorder 3s ease-in-out infinite;
+      transition: border-color 1.5s ease-in-out;
     }
 
     @keyframes fadeInUp {
@@ -117,21 +124,30 @@
       }
     }
 
+    @keyframes floatShadowBorder {
+      0%, 100% { transform: translateY(0); box-shadow: 0 4px 12px rgba(0,0,0,0.15); border-color: #004080; }
+      50% { transform: translateY(-10px); box-shadow: 0 12px 20px rgba(0,0,0,0.25); border-color: #002b5c; }
+    }
+
     h2 {
       color: #002b5c;
-      text-align: center;
       margin-bottom: 15px;
     }
 
     p {
       font-size: 16px;
       line-height: 1.6;
-      text-align: center;
     }
 
-    .correo {
-      font-weight: bold;
+    .highlight {
       color: #004080;
+      font-weight: bold;
+      animation: blink 1.2s infinite;
+    }
+
+    @keyframes blink {
+      0%, 50%, 100% { opacity: 1; }
+      25%, 75% { opacity: 0.3; }
     }
 
     footer {
@@ -152,32 +168,28 @@
     <div class="bar"></div>
   </div>
 
-  <!-- Menú lateral SIN portada -->
-<div id="mySidebar" class="sidebar">
-  <a href="inicio.html">Inicio</a>
-  <a href="escaner.html">Escáner</a>
-  <a href="plastico.html">Cómo se hace el plástico</a>
-  <a href="reciclaje.html">Maneras de reciclar</a>
-  <a href="tipos.html">Tipos de plásticos</a>
-  <a href="caracteristicas.html">Características</a>
-  <a href="impacto.html">Impacto Ambiental</a> <!-- corregido -->
-  <a href="ayuda.html">Ayuda</a>
-</div>
+  <!-- Menú lateral -->
+  <div id="mySidebar" class="sidebar">
+    <a href="inicio.html">Inicio</a>
+    <a href="escaner.html">Escáner</a>
+    <a href="plastico.html">Cómo se hace el plástico</a>
+    <a href="reciclaje.html">Maneras de reciclar</a>
+    <a href="tipos.html">Tipos de plásticos</a>
+    <a href="caracteristicas.html">Características</a>
+    <a href="ayuda.html">Ayuda</a>
+  </div>
 
   <!-- Encabezado -->
   <header>
-    FACAS X - Ayuda
+    FACAS X - Escáner
   </header>
 
-  <!-- Contenido -->
+  <!-- Contenido principal -->
   <div class="container">
-    <h2>¿Necesitas Ayuda?</h2>
+    <h2>Escáner de Plásticos</h2>
     <p>
-      Si tienes alguna duda, puedes <span class="correo">contactarnos al correo:</span><br>
-      <span class="correo">facasx@gmail.com</span>
-    </p>
-    <p>
-      También puedes dejarnos tu sugerencia y con gusto la revisaremos para seguir mejorando.
+      <span class="highlight">Próximamente</span> podrás utilizar nuestro escáner interactivo para identificar distintos tipos de plásticos
+      y aprender cómo reciclarlos correctamente.
     </p>
   </div>
 
