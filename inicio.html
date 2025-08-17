@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Facas X - Inicio</title>
+  <meta name="description" content="Facas X: Información, educación y recursos sobre plásticos, reciclaje y su impacto ambiental. Aprende a identificar, reciclar y reducir el uso de plásticos." />
+  <title>Facas X - Información y Educación sobre Plásticos</title>
   <style>
     * {
       box-sizing: border-box;
@@ -15,6 +16,7 @@
       color: #000;
       padding-left: 220px;
       padding-top: 60px;
+      transition: padding-left 0.3s ease;
     }
     header {
       position: fixed;
@@ -30,6 +32,18 @@
       font-size: 1.5rem;
       font-weight: bold;
       z-index: 1001;
+      letter-spacing: 1px;
+      justify-content: space-between;
+      transition: left 0.3s ease;
+    }
+    .menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 2rem;
+      cursor: pointer;
+      margin-right: 10px;
     }
     nav.biblioteca {
       position: fixed;
@@ -43,6 +57,10 @@
       padding-top: 60px;
       box-shadow: 2px 0 5px rgba(0,0,0,0.3);
       z-index: 1000;
+      transition: transform 0.3s ease;
+    }
+    nav.biblioteca.closed {
+      transform: translateX(-100%);
     }
     nav.biblioteca a {
       color: white;
@@ -58,6 +76,7 @@
     nav.biblioteca a.active {
       background-color: #003366;
       border-left-color: #00aaff;
+      outline: none;
     }
     main {
       max-width: 900px;
@@ -71,11 +90,16 @@
     @media (max-width: 768px) {
       body {
         padding-left: 0;
-        padding-top: 140px;
+        padding-top: 100px;
       }
       header {
         left: 0;
         width: 100%;
+        font-size: 1.2rem;
+        padding-left: 50px;
+      }
+      .menu-btn {
+        display: block;
       }
       nav.biblioteca {
         position: fixed;
@@ -86,6 +110,11 @@
         flex-direction: row;
         padding-top: 0;
         box-shadow: none;
+        background-color: #111;
+        transform: translateY(-100%);
+      }
+      nav.biblioteca.open {
+        transform: translateY(0);
       }
       nav.biblioteca a {
         flex: 1;
@@ -96,22 +125,28 @@
       nav.biblioteca a:hover,
       nav.biblioteca a.active {
         border-bottom-color: #00aaff;
-        background-color: transparent;
+        background-color: #222;
+      }
+      nav.biblioteca.closed {
+        transform: translateY(-100%);
       }
     }
   </style>
 </head>
 <body>
-  <nav class="biblioteca">
-    <a href="inicio.html" class="active">Inicio</a>
-    <a href="que-es.html">¿Qué es el plástico?</a>
-    <a href="tipos.html">Tipos de Plástico</a>
-    <a href="reciclaje.html">Cómo Reciclar</a>
-    <a href="impacto.html">Impacto Ambiental</a>
-    <a href="ayuda.html">Ayuda</a>
-  </nav>
+  <header>
+    <button class="menu-btn" aria-label="Abrir menú de navegación" onclick="toggleMenu()">☰</button>
+    Facas X
+  </header>
 
-  <header>Facas X</header>
+  <nav class="biblioteca" id="menu">
+    <a href="inicio.html" class="active" aria-label="Ir a Inicio">Inicio</a>
+    <a href="que-es.html" aria-label="¿Qué es el plástico?">¿Qué es el plástico?</a>
+    <a href="tipos.html" aria-label="Tipos de Plástico">Tipos de Plástico</a>
+    <a href="reciclaje.html" aria-label="Cómo Reciclar">Cómo Reciclar</a>
+    <a href="impacto.html" aria-label="Impacto Ambiental">Impacto Ambiental</a>
+    <a href="ayuda.html" aria-label="Ayuda">Ayuda</a>
+  </nav>
 
   <main>
     <h2>Bienvenido a Facas X</h2>
@@ -126,5 +161,27 @@
       Nuestra misión es ser un referente en el conocimiento del plástico, promoviendo el reciclaje, la innovación sostenible y el compromiso social.
     </p>
   </main>
+
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById('menu');
+      menu.classList.toggle('open');
+    }
+    // Cierra el menú al cambiar de tamaño si es necesario
+    window.addEventListener('resize', function() {
+      if (window.innerWidth > 768) {
+        document.getElementById('menu').classList.remove('open');
+      }
+    });
+    // Cierra el menú al hacer clic en un enlace en móvil
+    document.addEventListener('DOMContentLoaded', function() {
+      document.querySelectorAll('.biblioteca a').forEach(link => {
+        link.addEventListener('click', () => {
+          if (window.innerWidth <= 768) {
+            document.getElementById('menu').classList.remove('open');
+          }
+        });
+      });
+    });
+  </script>
 </body>
-</html>
