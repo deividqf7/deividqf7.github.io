@@ -1,138 +1,133 @@
 <!DOCTYPE html>
 <html lang="es">
-<cabeza>
-  <meta juego de caracteres="UTF-8" />
-  <meta nombre="ventana gráfica" contenido="ancho=ancho del dispositivo, escala inicial=1" />
-  <título>Facas X - Todo sobre el Plástico</título>
-  <estilo>
-    /* Reset y estilos básicos */
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Facas X: Información, educación y recursos sobre plásticos, reciclaje y su impacto ambiental. Aprende a identificar, reciclar y reducir el uso de plásticos." />
+  <title>Facas X - Todo sobre el Plástico</title>
+  <style>
     * {
-      tamaño de caja: border-box;
+      box-sizing: border-box;
     }
-    cuerpo {
-      margen: 0;
-      familia de fuentes: 'Segoe UI', Tahoma, Ginebra, Verdana, sans-serif;
-      color de fondo: #fff;
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #fff;
       color: #000;
-      acolchado izquierdo: 220px; /* espacio para la biblioteca fija */
-      acolchado: 60px; /* espacio para el encabezado fijo */
-      transición: acolchado izquierdo 0,3s facilidad;
+      padding-left: 220px;
+      padding-top: 60px;
+      transition: padding-left 0.3s ease;
     }
-
-    /* Encabezado fijo arriba */
-    encabezado {
-      posición: arreglado;
-      arriba: 0;
-      izquierda: 220px;
-      correcto: 0;
-      altura: 60px;
-      color de fondo: #001f3f;
-      color: blanco;
-      pantalla: flexionar;
-      alinear elementos: centro;
-      acolchado: 0 20px;
-      tamaño de fuente: 1.5rem;
-      peso de fuente: negrita;
-      índice z: 1001;
-      transición: izquierda 0,3s facilidad;
+    header {
+      position: fixed;
+      top: 0;
+      left: 220px;
+      right: 0;
+      height: 60px;
+      background-color: #001f3f;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      font-size: 1.7rem;
+      font-weight: bold;
+      z-index: 1001;
+      transition: left 0.3s ease;
+      letter-spacing: 1px;
     }
-
-    /* Biblioteca lateral fija */
+    .menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 2rem;
+      cursor: pointer;
+      margin-right: 10px;
+    }
     nav.biblioteca {
-      posición: arreglado;
-      arriba: 0;
-      izquierda: 0;
-      ancho: 220px;
-      altura: 100vh;
-      color de fondo: #111;
-      pantalla: flexionar;
-      dirección flexible: columna;
-      acolchado: 60px;
-      índice z: 1000;
-      sombra de caja: 2px 0 5px rgba(0,0,0,0,3);
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 220px;
+      height: 100vh;
+      background-color: #111;
+      display: flex;
+      flex-direction: column;
+      padding-top: 60px;
+      z-index: 1000;
+      box-shadow: 2px 0 5px rgba(0,0,0,0.3);
+      transition: transform 0.3s ease;
     }
-
-    nav.biblioteca botón {
-      fondo: ninguno;
-      frontera: ninguno;
-      color: blanco;
-      acolchado: 15px 20px;
-      alineación de texto: izquierda;
-      peso de fuente: negrita;
-      tamaño de fuente: 1rem;
-      cursor: puntero;
-      frontera izquierda: 5px solid transparent;
-      transición: color de fondo 0,3s, color borde 0,3s;
+    nav.biblioteca.closed {
+      transform: translateX(-100%);
     }
-
-    nav.biblioteca botón:flotar,
-    nav.biblioteca botón.activo {
-      color de fondo: #003366;
-      borde-color izquierdo: #00aaff;
-      esquema: ninguno;
+    nav.biblioteca button {
+      background: none;
+      border: none;
+      color: #fff;
+      padding: 15px 20px;
+      text-align: left;
+      font-weight: bold;
+      font-size: 1rem;
+      cursor: pointer;
+      border-left: 5px solid transparent;
+      transition: background-color 0.3s, border-color 0.3s;
+      outline: none;
     }
-
-    /* Contenido principal */
-    principal {
-      ancho máximo: 900px;
-      margen: 0 auto 50px auto;
-      acolchado: 20px;
+    nav.biblioteca button:hover,
+    nav.biblioteca button.active {
+      background-color: #003366;
+      border-left-color: #00aaff;
     }
-
-    sección {
-      pantalla: ninguno;
+    main {
+      max-width: 900px;
+      margin: 0 auto 50px auto;
+      padding: 20px;
     }
-    sección.activo {
-      pantalla: bloc;
-    }
-
     h2 {
       color: #003366;
-      margen superior: 0;
+      margin-top: 0;
     }
-
-    /* Imágenes y vídeos responsivos */
-    img.responsivo, iframe {
-      ancho máximo: 100%;
-      altura: auto;
-      margen: 15px 0;
-      radio fronterizo: 5px;
-      sombra de caja: 0 0 8px rgba(0,0,0,0,2);
+    img.responsive, iframe {
+      max-width: 100%;
+      height: auto;
+      border-radius: 5px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.2);
     }
-
-    /* Imagen fondo de la biblioteca con oscuridad */
-    nav.biblioteca::antes {
-      contenido: "";
-      posición: arreglado;
-      arriba: 0;
-      izquierda: 0;
-      ancho: 220px;
-      altura: 100vh;
-      imagen de fondo: URL('https://2.bp.blogspot.com/-9WyHcmw7Xds/UgbBmvANAHI/AAAAAAAAD9k/9kpfys_Sat4/s1600/Nitrocellulose3d.jpg');
-      tamaño de fondo: acoperire;
-      posición de fondo: centro;
-      filtro: brillo(0,4);
-      índice z: -1;
+    nav.biblioteca::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 220px;
+      height: 100vh;
+      background-image: url('https://2.bp.blogspot.com/-9WyHcmw7Xds/UgbBmvANAHI/AAAAAAAAD9k/9kpfys_Sat4/s1600/Nitrocellulose3d.jpg');
+      background-size: cover;
+      background-position: center;
+      filter: brightness(0.4);
+      z-index: -1;
     }
-
     footer {
-      alineación de texto: centro;
-      acolchado: 15px;
-      color de fondo: #001f3f;
-      color: blanco;
-      margen superior: 50px;
-      tamaño de fuente: 0.9rem;
+      text-align: center;
+      padding: 15px;
+      background-color: #002b5c;
+      color: #fff;
+      margin-top: 50px;
+      font-size: 0.9rem;
     }
-
-    /* Responsive */
-    @media (ancho máximo: 768px) {
-      cuerpo {
+    @media (max-width: 768px) {
+      body {
         padding-left: 0;
-        padding-top: 140px;
+        padding-top: 100px;
       }
       header {
         left: 0;
         width: 100%;
+        font-size: 1.2rem;
+        padding-left: 50px;
+      }
+      .menu-btn {
+        display: block;
       }
       nav.biblioteca {
         position: fixed;
@@ -143,6 +138,11 @@
         flex-direction: row;
         padding-top: 0;
         box-shadow: none;
+        background-color: #111;
+        transform: translateY(-100%);
+      }
+      nav.biblioteca.open {
+        transform: translateY(0);
       }
       nav.biblioteca button {
         flex: 1;
@@ -153,24 +153,28 @@
       nav.biblioteca button:hover,
       nav.biblioteca button.active {
         border-bottom-color: #00aaff;
-        background-color: transparent;
+        background-color: #222;
+      }
+      nav.biblioteca.closed {
+        transform: translateY(-100%);
       }
     }
   </style>
 </head>
 <body>
-  <nav class="biblioteca">
-    <button class="active" onclick="mostrarSeccion('inicio', this)">Inicio</button>
-    <button onclick="mostrarSeccion('que-es', this)">¿Qué es el plástico?</button>
-    <button onclick="mostrarSeccion('tipos', this)">Tipos de Plástico</button>
-    <button onclick="mostrarSeccion('reciclaje', this)">Cómo Reciclar</button>
-    <button onclick="mostrarSeccion('impacto', this)">Impacto Ambiental</button>
-    <button onclick="mostrarSeccion('ayuda', this)">Ayuda</button>
-  </nav>
-
   <header>
+    <button class="menu-btn" aria-label="Abrir menú de navegación" onclick="toggleMenu()">☰</button>
     Facas X
   </header>
+
+  <nav class="biblioteca" id="menu">
+    <button class="active" onclick="mostrarSeccion('inicio', this)" aria-label="Ir a Inicio">Inicio</button>
+    <button onclick="mostrarSeccion('que-es', this)" aria-label="¿Qué es el plástico?">¿Qué es el plástico?</button>
+    <button onclick="mostrarSeccion('tipos', this)" aria-label="Tipos de Plástico">Tipos de Plástico</button>
+    <button onclick="mostrarSeccion('reciclaje', this)" aria-label="Cómo Reciclar">Cómo Reciclar</button>
+    <button onclick="mostrarSeccion('impacto', this)" aria-label="Impacto Ambiental">Impacto Ambiental</button>
+    <button onclick="mostrarSeccion('ayuda', this)" aria-label="Ayuda">Ayuda</button>
+  </nav>
 
   <main>
     <!-- Inicio -->
@@ -186,6 +190,14 @@
       <p>
         Nuestra misión es ser un referente en el conocimiento del plástico, promoviendo el reciclaje, la innovación sostenible y el compromiso social.
       </p>
+      <iframe
+        class="responsive"
+        width="560"
+        height="315"
+        src="https://www.youtube.com/embed/ZIqsLguLkEY"
+        title="¿Qué es el plástico?"
+        allowfullscreen
+      ></iframe>
     </section>
 
     <!-- Qué es el plástico -->
@@ -206,7 +218,6 @@
         height="315"
         src="https://www.youtube.com/embed/ZIqsLguLkEY"
         title="¿Qué es el plástico?"
-        frameborder="0"
         allowfullscreen
       ></iframe>
     </section>
@@ -228,7 +239,7 @@
       <img
         class="responsive"
         src="https://tse2.mm.bing.net/th/id/OIP.MDyrsWME4pop1snzkMUMBQHaDn?pid=Api&P=0&h=180"
-        alt="Tipos de plástico"
+        alt="Ejemplo de diferentes tipos de plástico en envases y productos"
       />
       <iframe
         class="responsive"
@@ -236,7 +247,6 @@
         height="315"
         src="https://www.youtube.com/embed/4XtGdxS4E7U"
         title="Tipos de Plásticos"
-        frameborder="0"
         allowfullscreen
       ></iframe>
       <p>
@@ -256,7 +266,7 @@
       <img
         class="responsive"
         src="https://www.ecured.cu/images/a/a7/Reciclajee.jpg"
-        alt="Reciclaje de plástico"
+        alt="Proceso de reciclaje de plástico con separación y limpieza"
       />
       <iframe
         class="responsive"
@@ -264,7 +274,6 @@
         height="315"
         src="https://www.youtube.com/embed/YiHTNfKJwAw"
         title="Cómo reciclar plástico"
-        frameborder="0"
         allowfullscreen
       ></iframe>
       <p>
@@ -287,7 +296,7 @@
       <img
         class="responsive"
         src="https://tse2.mm.bing.net/th/id/OIP.okqvQSGIKK9uqGcupmjUUQHaEv?pid=Api&P=0&h=180&w=320&c=7&rs=1"
-        alt="Impacto ambiental"
+        alt="Contaminación ambiental por plásticos en ríos y océanos"
       />
       <iframe
         class="responsive"
@@ -295,7 +304,6 @@
         height="315"
         src="https://www.youtube.com/embed/7zEyFPukF-c"
         title="Impacto Ambiental del Hombre"
-        frameborder="0"
         allowfullscreen
       ></iframe>
     </section>
@@ -307,7 +315,7 @@
       <img
         class="responsive"
         src="https://cdn.pixabay.com/animation/2022/07/29/10/29/10-29-08-608__480.png"
-        alt="Animación ayuda"
+        alt="Animación de ayuda y soporte ambiental"
       />
     </section>
   </main>
@@ -318,22 +326,36 @@
 
   <script>
     function mostrarSeccion(id, btn) {
-      // Ocultar todas las secciones
       document.querySelectorAll('main section').forEach(sec => {
         sec.classList.remove('active');
       });
-      // Mostrar la sección seleccionada
       const seccion = document.getElementById(id);
       if (seccion) {
         seccion.classList.add('active');
       }
-
-      // Marcar botón activo y desmarcar los demás
       document.querySelectorAll('nav.biblioteca button').forEach(button => {
         button.classList.remove('active');
       });
       btn.classList.add('active');
+      if (window.innerWidth <= 768) {
+        document.getElementById('menu').classList.remove('open');
+      }
     }
-  </script>
-</body>
-</html>
+    function toggleMenu() {
+      const menu = document.getElementById('menu');
+      menu.classList.toggle('open');
+    }
+    window.addEventListener('resize', function() {
+      if (window.innerWidth > 768) {
+        document.getElementById('menu').classList.remove('open');
+      }
+    });
+    document.addEventListener('DOMContentLoaded', function() {
+      document.querySelectorAll('nav.biblioteca button').forEach(btn => {
+        btn.addEventListener('click', () => {
+          if (window.innerWidth <= 768) {
+            document.getElementById('menu').classList.remove('open');
+          }
+        });
+      });
+    });
