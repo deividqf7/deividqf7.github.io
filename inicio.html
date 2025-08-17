@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Facas X: Información, educación y recursos sobre plásticos, reciclaje y su impacto ambiental. Aprende a identificar, reciclar y reducir el uso de plásticos." />
-  <title>Facas X - Información y Educación sobre Plásticos</title>
+  <title>FACAS X - Impacto Ambiental</title>
   <style>
     * {
       box-sizing: border-box;
@@ -13,62 +12,68 @@
       margin: 0;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background-color: #fff;
-      color: #000;
-      padding-left: 220px;
-      padding-top: 60px;
-      transition: padding-left 0.3s ease;
+      color: #111;
+      line-height: 1.8;
+      font-size: 1.2rem;
+      transition: margin-left 0.3s;
     }
+
     header {
       position: fixed;
       top: 0;
-      left: 220px;
+      left: 0;
       right: 0;
-      height: 60px;
+      height: 70px;
       background-color: #001f3f;
       color: white;
       display: flex;
       align-items: center;
       padding: 0 20px;
-      font-size: 1.5rem;
+      font-size: 2rem;
       font-weight: bold;
       z-index: 1001;
-      letter-spacing: 1px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
       justify-content: space-between;
-      transition: left 0.3s ease;
     }
+
+    /* 🔹 Botón hamburguesa */
     .menu-btn {
-      display: none;
+      font-size: 1.5rem;
       background: none;
       border: none;
       color: white;
-      font-size: 2rem;
       cursor: pointer;
-      margin-right: 10px;
     }
+
+    /* 🔹 Menú lateral oculto */
     nav.biblioteca {
       position: fixed;
       top: 0;
       left: 0;
-      width: 220px;
+      width: 240px;
       height: 100vh;
       background-color: #111;
       display: flex;
       flex-direction: column;
-      padding-top: 60px;
-      box-shadow: 2px 0 5px rgba(0,0,0,0.3);
+      padding-top: 70px;
+      box-shadow: 3px 0 6px rgba(0,0,0,0.4);
       z-index: 1000;
+
+      transform: translateX(-100%); /* Oculto por defecto */
       transition: transform 0.3s ease;
     }
-    nav.biblioteca.closed {
-      transform: translateX(-100%);
+    nav.biblioteca.open {
+      transform: translateX(0); /* Se abre */
     }
+
     nav.biblioteca a {
       color: white;
       text-decoration: none;
-      padding: 15px 20px;
+      padding: 18px 25px;
       font-weight: bold;
-      font-size: 1rem;
-      border-left: 5px solid transparent;
+      font-size: 1.2rem;
+      border-left: 6px solid transparent;
       transition: background-color 0.3s, border-color 0.3s;
       display: block;
     }
@@ -76,112 +81,113 @@
     nav.biblioteca a.active {
       background-color: #003366;
       border-left-color: #00aaff;
-      outline: none;
     }
+
+    /* 🔹 Hero */
+    .hero {
+      position: relative;
+      width: 100%;
+      height: 350px;
+      background: url('https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=1500&q=80') no-repeat center center/cover;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+      z-index: 1;
+      margin-top: 70px; /* espacio debajo del header */
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.55);
+    }
+    .hero h1 {
+      position: relative;
+      font-size: 3.5rem;
+      z-index: 2;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
     main {
-      max-width: 900px;
-      margin: 0 auto 50px auto;
-      padding: 20px;
+      max-width: 950px;
+      margin: 30px auto 60px auto;
+      padding: 25px;
     }
     h2 {
       color: #003366;
-      margin-top: 0;
+      font-size: 2rem;
+      border-bottom: 3px solid #00aaff;
+      padding-bottom: 10px;
     }
+    p {
+      margin-bottom: 20px;
+      text-align: justify;
+    }
+    iframe {
+      width: 100%;
+      height: 350px;
+      border: none;
+      margin-top: 25px;
+      border-radius: 12px;
+      box-shadow: 0px 4px 12px rgba(0,0,0,0.3);
+    }
+
+    /* 🔹 Responsive */
     @media (max-width: 768px) {
-      body {
-        padding-left: 0;
-        padding-top: 100px;
-      }
       header {
-        left: 0;
-        width: 100%;
-        font-size: 1.2rem;
-        padding-left: 50px;
+        font-size: 1.5rem;
       }
-      .menu-btn {
-        display: block;
+      .hero {
+        height: 250px;
       }
-      nav.biblioteca {
-        position: fixed;
-        top: 60px;
-        left: 0;
-        width: 100%;
-        height: auto;
-        flex-direction: row;
-        padding-top: 0;
-        box-shadow: none;
-        background-color: #111;
-        transform: translateY(-100%);
-      }
-      nav.biblioteca.open {
-        transform: translateY(0);
-      }
-      nav.biblioteca a {
-        flex: 1;
-        padding: 10px 5px;
-        border-left: none;
-        border-bottom: 3px solid transparent;
-      }
-      nav.biblioteca a:hover,
-      nav.biblioteca a.active {
-        border-bottom-color: #00aaff;
-        background-color: #222;
-      }
-      nav.biblioteca.closed {
-        transform: translateY(-100%);
+      .hero h1 {
+        font-size: 2rem;
       }
     }
   </style>
 </head>
 <body>
   <header>
-    <button class="menu-btn" aria-label="Abrir menú de navegación" onclick="toggleMenu()">☰</button>
-    Facas X
+    FACAS X
+    <button class="menu-btn" onclick="toggleMenu()">☰</button>
   </header>
 
+  <!-- 🔹 Menú lateral -->
   <nav class="biblioteca" id="menu">
-    <a href="inicio.html" class="active" aria-label="Ir a Inicio">Inicio</a>
-    <a href="que-es.html" aria-label="¿Qué es el plástico?">¿Qué es el plástico?</a>
-    <a href="tipos.html" aria-label="Tipos de Plástico">Tipos de Plástico</a>
-    <a href="reciclaje.html" aria-label="Cómo Reciclar">Cómo Reciclar</a>
-    <a href="impacto.html" aria-label="Impacto Ambiental">Impacto Ambiental</a>
-    <a href="ayuda.html" aria-label="Ayuda">Ayuda</a>
+    <a href="inicio.html">Inicio</a>
+    <a href="que-es.html">¿Qué es el plástico?</a>
+    <a href="tipos.html">Tipos de Plástico</a>
+    <a href="reciclaje.html">Cómo Reciclar</a>
+    <a href="impacto.html" class="active">Impacto Ambiental</a>
+    <a href="ayuda.html">Ayuda</a>
   </nav>
 
+  <!-- 🔹 Hero con imagen -->
+  <section class="hero">
+    <h1>Impacto Ambiental del Plástico</h1>
+  </section>
+
   <main>
-    <h2>Bienvenido a Facas X</h2>
+    <h2>¿Por qué es un problema?</h2>
     <p>
-      Facas X es una empresa dedicada a la investigación, educación y divulgación sobre los plásticos y su impacto en nuestro entorno.
-      Nuestro objetivo es proporcionar información precisa, actualizada y de fácil comprensión para fomentar un uso responsable de los materiales plásticos.
+      El <strong>plástico</strong> es uno de los principales contaminantes del planeta debido a su enorme resistencia a la degradación. Una simple bolsa puede tardar cientos de años en desaparecer, acumulándose en calles, ríos, mares y bosques.
     </p>
     <p>
-      Con un equipo de expertos en química, ingeniería ambiental y educación, ofrecemos recursos multimedia, guías prácticas y asesoría para que individuos y organizaciones puedan contribuir a la reducción del impacto ambiental.
+      Su presencia en los <strong>ecosistemas terrestres y acuáticos</strong> genera un grave daño: los animales lo ingieren confundiéndolo con alimento, lo que afecta su salud y pone en riesgo la biodiversidad. Además, los microplásticos ya están presentes en el agua que bebemos y en la cadena alimenticia.
     </p>
     <p>
-      Nuestra misión es ser un referente en el conocimiento del plástico, promoviendo el reciclaje, la innovación sostenible y el compromiso social.
+      A esto se suma que la <strong>producción y quema inadecuada</strong> de plásticos libera grandes cantidades de gases de efecto invernadero, contribuyendo al <em>cambio climático</em> y acelerando el calentamiento global.
     </p>
+    <iframe src="https://www.youtube.com/embed/7zEyFPukF-c" title="Video Impacto Ambiental" allowfullscreen></iframe>
   </main>
 
   <script>
     function toggleMenu() {
-      const menu = document.getElementById('menu');
-      menu.classList.toggle('open');
+      document.getElementById("menu").classList.toggle("open");
     }
-    // Cierra el menú al cambiar de tamaño si es necesario
-    window.addEventListener('resize', function() {
-      if (window.innerWidth > 768) {
-        document.getElementById('menu').classList.remove('open');
-      }
-    });
-    // Cierra el menú al hacer clic en un enlace en móvil
-    document.addEventListener('DOMContentLoaded', function() {
-      document.querySelectorAll('.biblioteca a').forEach(link => {
-        link.addEventListener('click', () => {
-          if (window.innerWidth <= 768) {
-            document.getElementById('menu').classList.remove('open');
-          }
-        });
-      });
-    });
   </script>
 </body>
+</html>
