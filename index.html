@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Facas X: Información, educación y recursos sobre plásticos, reciclaje y su impacto ambiental." />
+  <meta name="description" content="Facas X: Educación ambiental sobre plásticos, reciclaje y sostenibilidad. Descubre cómo puedes contribuir a un mundo más limpio y responsable." />
   <title>Facas X - Educación Ambiental</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -32,6 +32,7 @@
       font-weight: bold;
       z-index: 1001;
       letter-spacing: 1px;
+      justify-content: space-between;
     }
 
     .menu-btn {
@@ -123,9 +124,42 @@
       text-align: center;
       box-shadow: 0 4px 15px rgba(0,0,0,0.4);
       margin-bottom: 30px;
+      position: relative;
+      overflow: hidden;
     }
-    .hero h1 { font-size: 2.2rem; margin-bottom: 15px; }
+    .hero::after {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.45);
+      z-index: 1;
+      border-radius: 10px;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+    }
+    .hero h1 { font-size: 2.5rem; margin-bottom: 15px; }
     .hero p { font-size: 1.2rem; max-width: 700px; margin: auto; }
+
+    .btn-principal {
+      display: inline-block;
+      margin-top: 25px;
+      padding: 12px 32px;
+      background: #00aaff;
+      color: #fff;
+      font-size: 1.1rem;
+      font-weight: bold;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      transition: background 0.3s;
+      text-decoration: none;
+    }
+    .btn-principal:hover {
+      background: #005f99;
+    }
 
     img.responsive, iframe {
       max-width: 100%;
@@ -144,38 +178,47 @@
     }
 
     /* --- RESPONSIVE --- */
+    @media (max-width: 900px) {
+      main { padding: 10px; }
+      .hero { padding: 40px 10px; }
+    }
     @media (max-width: 768px) {
       body { padding-left: 0; padding-top: 70px; }
       header { left: 0; }
       .menu-btn { display: block; }
       nav.biblioteca { width: 200px; transform: translateX(-100%); }
       nav.biblioteca.open { transform: translateX(0); }
+      .hero h1 { font-size: 1.5rem; }
     }
   </style>
 </head>
 <body>
   <header>
-    <button class="menu-btn" onclick="toggleMenu()">☰</button>
+    <button class="menu-btn" onclick="toggleMenu()" aria-label="Abrir menú de navegación">☰</button>
     Facas X
   </header>
 
   <nav class="biblioteca" id="menu">
     <div class="logo">🌍 FACAS X</div>
-    <button class="active" onclick="mostrarSeccion('inicio', this)">🏠 Inicio</button>
-    <button onclick="mostrarSeccion('que-es', this)">ℹ️ ¿Qué es?</button>
-    <button onclick="mostrarSeccion('tipos', this)">♻️ Tipos</button>
-    <button onclick="mostrarSeccion('reciclaje', this)">🔄 Reciclaje</button>
-    <button onclick="mostrarSeccion('impacto', this)">⚠️ Impacto</button>
-    <button onclick="mostrarSeccion('ayuda', this)">💡 Ayuda</button>
+    <button class="active" onclick="mostrarSeccion('inicio', this)" aria-label="Ir a Inicio">🏠 Inicio</button>
+    <button onclick="mostrarSeccion('que-es', this)" aria-label="¿Qué es el plástico?">ℹ️ ¿Qué es?</button>
+    <button onclick="mostrarSeccion('tipos', this)" aria-label="Tipos de Plástico">♻️ Tipos</button>
+    <button onclick="mostrarSeccion('reciclaje', this)" aria-label="Cómo Reciclar">🔄 Reciclaje</button>
+    <button onclick="mostrarSeccion('impacto', this)" aria-label="Impacto Ambiental">⚠️ Impacto</button>
+    <button onclick="mostrarSeccion('ayuda', this)" aria-label="Ayuda">💡 Ayuda</button>
   </nav>
 
   <main>
     <!-- Inicio -->
     <section id="inicio" class="active">
       <div class="hero">
-        <h1>Bienvenido a Facas X</h1>
-        <p>Conoce el impacto de los plásticos en nuestro mundo y cómo podemos transformarlo hacia un futuro más sostenible.</p>
+        <div class="hero-content">
+          <h1>Bienvenido a Facas X</h1>
+          <p>Conoce el impacto de los plásticos en nuestro mundo y cómo podemos transformarlo hacia un futuro más sostenible.</p>
+          <a href="impacto.html" class="btn-principal">Descubre el impacto ambiental</a>
+        </div>
       </div>
+      <h2>¿Quiénes somos?</h2>
       <p>
         En Facas X nos enfocamos en la investigación, educación y divulgación sobre plásticos y su impacto ambiental. 
         Nuestro propósito es entregar información clara y útil para fomentar un uso responsable.
@@ -189,8 +232,7 @@
       </p>
     </section>
 
-    <!-- Las demás secciones se mantienen como ya las tenías -->
-    <!-- ... -->
+    <!-- Puedes agregar aquí las demás secciones si lo deseas -->
   </main>
 
   <footer>
@@ -206,6 +248,15 @@
       if (window.innerWidth <= 768) document.getElementById('menu').classList.remove('open');
     }
     function toggleMenu() { document.getElementById('menu').classList.toggle('open'); }
+    // Accesibilidad: cierra el menú al hacer clic en un botón en móvil
+    document.addEventListener('DOMContentLoaded', function() {
+      document.querySelectorAll('nav.biblioteca button').forEach(btn => {
+        btn.addEventListener('click', () => {
+          if (window.innerWidth <= 768) {
+            document.getElementById('menu').classList.remove('open');
+          }
+        });
+      });
+    });
   </script>
 </body>
-</html>
