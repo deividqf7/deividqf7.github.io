@@ -3,89 +3,126 @@
 <head>
   <meta charset="UTF-8" />
   <title>FACAS X - Impacto Ambiental</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    /* Barrera superior con imagen oscura */
+    .hero {
+      position: relative;
+      width: 100%;
+      height: 300px;
+      background: url("https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=1500&q=80") 
+                  no-repeat center center/cover;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      text-align: center;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.5); /* Oscurece la imagen */
+    }
+    .hero-content {
+      position: relative;
+      z-index: 1;
+    }
+    .hero-content h1 {
+      font-size: 3em;
+      margin: 0;
+    }
+    .hero-content p {
+      font-size: 1.2em;
+    }
+
+    /* Menú lateral que se desplaza */
+    .menu {
+      height: 100%;
+      width: 0;
+      position: fixed;
+      top: 0;
+      left: 0;
+      background-color: #111;
+      overflow-x: hidden;
+      transition: 0.5s;
+      padding-top: 60px;
+    }
+    .menu a {
+      padding: 10px 20px;
+      text-decoration: none;
+      font-size: 18px;
+      color: #fff;
+      display: block;
+      transition: 0.3s;
+    }
+    .menu a:hover {
+      background: #575757;
+    }
+    .menu-btn {
+      font-size: 30px;
+      cursor: pointer;
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      color: white;
+      z-index: 2;
+    }
+
+    /* Contenido principal */
+    main {
+      padding: 20px;
+    }
+  </style>
 </head>
 <body>
 
-  <!-- Encabezado -->
-  <header>
-    <h1>FACAS X</h1>
-    <nav>
-      <ul>
-        <li><a href="inicio.html">Inicio</a></li>
-        <li><a href="que-es.html">¿Qué es el plástico?</a></li>
-        <li><a href="tipos.html">Tipos de Plástico</a></li>
-        <li><a href="reciclaje.html">Cómo Reciclar</a></li>
-        <li><a href="impacto.html">Impacto Ambiental</a></li>
-        <li><a href="ayuda.html">Ayuda</a></li>
-      </ul>
-    </nav>
-  </header>
+  <!-- Menú -->
+  <div id="menu" class="menu">
+    <a href="javascript:void(0)" onclick="closeMenu()">Cerrar ×</a>
+    <a href="inicio.html">Inicio</a>
+    <a href="que-es.html">¿Qué es el plástico?</a>
+    <a href="tipos.html">Tipos de Plástico</a>
+    <a href="reciclaje.html">Cómo Reciclar</a>
+    <a href="impacto.html">Impacto Ambiental</a>
+    <a href="ayuda.html">Ayuda</a>
+  </div>
 
-  <hr>
+  <!-- Barrera con imagen oscura -->
+  <div class="hero">
+    <span class="menu-btn" onclick="openMenu()">☰</span>
+    <div class="hero-content">
+      <h1>FACAS X</h1>
+      <p>Conciencia, educación y acción para un mundo más limpio</p>
+    </div>
+  </div>
 
-  <!-- Barrera superior (hero simple solo con HTML) -->
-  <section>
-    <figure>
-      <!-- Imagen ancha; sin estilos no puedo oscurecerla -->
-      <img src="https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=1500&q=80"
-           alt="Paisaje con contaminación plástica en la naturaleza" />
-      <figcaption>
-        <h2>Impacto Ambiental del Plástico</h2>
-        <p>Conciencia, educación y acción para un mundo más limpio.</p>
-      </figcaption>
-    </figure>
-  </section>
-
-  <hr>
-
-  <!-- Inicio con más texto -->
+  <!-- Inicio -->
   <main>
-    <section>
-      <h3>Bienvenido a FACAS X</h3>
-      <p>
-        En FACAS X creemos que el cambio comienza con la información. El plástico es útil,
-        pero su mal manejo está dañando gravemente al planeta. Aquí encontrarás qué es,
-        cómo se fabrica, sus tipos y, sobre todo, cómo darle una segunda vida mediante el reciclaje.
-      </p>
-      <p>
-        Nuestro objetivo es formar una comunidad consciente que convierta los residuos en oportunidades.
-        Reciclar correctamente reduce la contaminación, protege la biodiversidad y mejora la calidad del agua y del suelo.
-      </p>
-      <p>
-        Explora nuestras secciones para conocer procesos, consejos prácticos y acciones sencillas
-        que puedes aplicar hoy mismo en tu casa, colegio o trabajo.
-      </p>
-      <p>
-        ¿Listo para comenzar? Visita la sección <a href="reciclaje.html">Cómo Reciclar</a> para aprender
-        a separar, limpiar y disponer los materiales de forma adecuada.
-      </p>
-    </section>
-
-    <section>
-      <h3>¿Por qué es un problema?</h3>
-      <p>
-        El plástico tarda muchos años en degradarse y termina acumulándose en ríos, mares, bosques y ciudades.
-        Los animales pueden confundirlo con comida y los microplásticos ya están presentes en el agua que consumimos.
-      </p>
-      <p>
-        Además, la producción y la quema inadecuada de plásticos liberan gases de efecto invernadero
-        que aceleran el cambio climático.
-      </p>
-    </section>
-
-    <section>
-      <h3>Video recomendado</h3>
-      <p>Conoce más sobre el impacto del plástico en el planeta:</p>
-      <iframe src="https://www.youtube.com/embed/7zEyFPukF-c"
-              title="Video Impacto Ambiental" allowfullscreen></iframe>
-    </section>
+    <h2>Bienvenido a FACAS X</h2>
+    <p>
+      En FACAS X creemos que el cambio comienza con la información. 
+      El plástico es útil, pero su mal manejo está dañando gravemente al planeta. 
+      Aquí encontrarás qué es, cómo se fabrica, sus tipos y, sobre todo, cómo darle una segunda vida mediante el reciclaje.
+    </p>
+    <p>
+      Nuestro objetivo es formar una comunidad consciente que convierta los residuos en oportunidades. 
+      Reciclar correctamente reduce la contaminación, protege la biodiversidad y mejora la calidad del agua y del suelo.
+    </p>
   </main>
 
-  <hr>
-
-  <footer>
-    <p>&copy; FACAS X • Educación y reciclaje para un futuro sostenible</p>
-  </footer>
+  <script>
+    function openMenu() {
+      document.getElementById("menu").style.width = "250px";
+    }
+    function closeMenu() {
+      document.getElementById("menu").style.width = "0";
+    }
+  </script>
 
 </body>
 </html>
