@@ -1,128 +1,159 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <title>FACAS X - Impacto Ambiental</title>
+  <meta charset="UTF-8">
+  <title>FACASX</title>
   <style>
     body {
       margin: 0;
       font-family: Arial, sans-serif;
+      background-color: #ffffff;
+      color: #333;
+      line-height: 1.6;
     }
 
-    /* Barrera superior con imagen oscura */
-    .hero {
-      position: relative;
-      width: 100%;
-      height: 300px;
-      background: url("https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=1500&q=80") 
-                  no-repeat center center/cover;
+    /* Barra superior */
+    header {
       display: flex;
       align-items: center;
-      justify-content: center;
-      color: white;
-      text-align: center;
-    }
-    .hero::after {
-      content: "";
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.5); /* Oscurece la imagen */
-    }
-    .hero-content {
-      position: relative;
-      z-index: 1;
-    }
-    .hero-content h1 {
-      font-size: 3em;
-      margin: 0;
-    }
-    .hero-content p {
-      font-size: 1.2em;
-    }
-
-    /* Menú lateral que se desplaza */
-    .menu {
-      height: 100%;
-      width: 0;
+      justify-content: space-between;
+      padding: 10px 20px;
+      background-color: #000; /* negro */
       position: fixed;
       top: 0;
       left: 0;
-      background-color: #111;
-      overflow-x: hidden;
-      transition: 0.5s;
-      padding-top: 60px;
-    }
-    .menu a {
-      padding: 10px 20px;
-      text-decoration: none;
-      font-size: 18px;
-      color: #fff;
-      display: block;
-      transition: 0.3s;
-    }
-    .menu a:hover {
-      background: #575757;
-    }
-    .menu-btn {
-      font-size: 30px;
-      cursor: pointer;
-      position: absolute;
-      top: 20px;
-      left: 20px;
-      color: white;
-      z-index: 2;
+      width: 100%;
+      z-index: 1000;
     }
 
-    /* Contenido principal */
-    main {
+    /* Logo */
+    .logo img {
+      height: 50px;
+      cursor: pointer;
+    }
+
+    /* Nombre empresa */
+    .titulo {
+      font-size: 24px;
+      font-weight: bold;
+      color: #1e90ff; /* azul */
+      margin-left: 10px;
+    }
+
+    /* Menú */
+    nav {
+      display: flex;
+      gap: 20px;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: #1e90ff;
+    }
+
+    /* Secciones */
+    section {
+      padding: 80px 20px;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    /* Inicio con imagen */
+    .inicio {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+                  url("https://picsum.photos/1600/900") no-repeat center center/cover;
+      text-align: center;
+      color: white;
       padding: 20px;
+    }
+
+    .inicio h1 {
+      font-size: 48px;
+      margin-bottom: 20px;
+    }
+
+    .inicio p {
+      font-size: 20px;
+      max-width: 800px;
+      margin: 0 auto;
     }
   </style>
 </head>
 <body>
 
-  <!-- Menú -->
-  <div id="menu" class="menu">
-    <a href="javascript:void(0)" onclick="closeMenu()">Cerrar ×</a>
-    <a href="inicio.html">Inicio</a>
-    <a href="que-es.html">¿Qué es el plástico?</a>
-    <a href="tipos.html">Tipos de Plástico</a>
-    <a href="reciclaje.html">Cómo Reciclar</a>
-    <a href="impacto.html">Impacto Ambiental</a>
-    <a href="ayuda.html">Ayuda</a>
-  </div>
-
-  <!-- Barrera con imagen oscura -->
-  <div class="hero">
-    <span class="menu-btn" onclick="openMenu()">☰</span>
-    <div class="hero-content">
-      <h1>FACAS X</h1>
-      <p>Conciencia, educación y acción para un mundo más limpio</p>
+  <!-- Barra con logo y menú -->
+  <header>
+    <div class="logo" onclick="location.href='#inicio'">
+      <img src="c7acf41f-ef52-4faf-90cd-649319cf4562.png" alt="Logo FACASX">
     </div>
-  </div>
+    <div class="titulo">FACASX</div>
+    <nav>
+      <a href="#inicio">Inicio</a>
+      <a href="#nosotros">Nosotros</a>
+      <a href="#servicios">Servicios</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+  </header>
 
-  <!-- Inicio -->
-  <main>
-    <h2>Bienvenido a FACAS X</h2>
+  <!-- Sección inicio -->
+  <section id="inicio" class="inicio">
+    <div>
+      <h1>Bienvenidos a FACASX</h1>
+      <p>
+        En FACASX nos dedicamos a transformar el futuro del plástico.  
+        Creemos en la importancia de reciclar, producir y reutilizar, para construir un planeta más limpio y sostenible.  
+        Nuestro compromiso es con la innovación, la calidad y, sobre todo, con el medio ambiente.
+      </p>
+    </div>
+  </section>
+
+  <!-- Sección Nosotros -->
+  <section id="nosotros">
+    <h2>Sobre Nosotros</h2>
     <p>
-      En FACAS X creemos que el cambio comienza con la información. 
-      El plástico es útil, pero su mal manejo está dañando gravemente al planeta. 
-      Aquí encontrarás qué es, cómo se fabrica, sus tipos y, sobre todo, cómo darle una segunda vida mediante el reciclaje.
+      FACASX nació con la visión de reducir el impacto ambiental del plástico, ofreciendo soluciones sostenibles para empresas y comunidades.  
+      Nuestro equipo está conformado por profesionales comprometidos con la economía circular, trabajando día a día para dar una segunda vida a los materiales.
     </p>
     <p>
-      Nuestro objetivo es formar una comunidad consciente que convierta los residuos en oportunidades. 
-      Reciclar correctamente reduce la contaminación, protege la biodiversidad y mejora la calidad del agua y del suelo.
+      Creemos que cada acción cuenta. Por eso, diseñamos procesos de reciclaje que no solo ayudan al planeta, sino que también generan oportunidades de desarrollo en la sociedad.
     </p>
-  </main>
+  </section>
 
-  <script>
-    function openMenu() {
-      document.getElementById("menu").style.width = "250px";
-    }
-    function closeMenu() {
-      document.getElementById("menu").style.width = "0";
-    }
-  </script>
+  <!-- Sección Servicios -->
+  <section id="servicios">
+    <h2>Servicios</h2>
+    <p>
+      En FACASX ofrecemos un portafolio completo de servicios relacionados con la producción y reciclaje de plásticos:
+    </p>
+    <ul>
+      <li><b>Reciclaje de plásticos:</b> Recolectamos y procesamos plásticos usados para darles una nueva utilidad.</li>
+      <li><b>Producción responsable:</b> Fabricamos productos plásticos de alta calidad, reduciendo el desperdicio.</li>
+      <li><b>Asesoría ambiental:</b> Ayudamos a las empresas a implementar estrategias sostenibles en sus procesos.</li>
+      <li><b>Educación y sensibilización:</b> Realizamos campañas para fomentar la cultura del reciclaje en comunidades.</li>
+    </ul>
+  </section>
+
+  <!-- Sección Contacto -->
+  <section id="contacto">
+    <h2>Contacto</h2>
+    <p>
+      ¿Quieres conocer más sobre FACASX o trabajar con nosotros?  
+      Escríbenos y te responderemos lo más pronto posible.
+    </p>
+    <p><b>Email:</b> contacto@facasx.com</p>
+    <p><b>Teléfono:</b> +57 300 123 4567</p>
+    <p><b>Dirección:</b> Bogotá, Colombia</p>
+  </section>
 
 </body>
 </html>
