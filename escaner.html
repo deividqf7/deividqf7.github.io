@@ -3,151 +3,311 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Escáner de Materiales | FACASX</title>
+  <title>FACAS X - Escáner de Materiales</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background-color: #f4f6f9;
       margin: 0;
-      padding: 0;
-      text-align: center;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(-45deg, #f4f7fa, #d0e4f7, #b0d4f7, #e0f0ff);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+      color: #000;
+      overflow-x: hidden;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
     header {
-      background-color: #0a3d62;
-      color: white;
+      background: linear-gradient(90deg, #002b5c, #004080);
       padding: 15px;
+      text-align: center;
+      color: white;
+      font-size: 22px;
+      font-weight: bold;
     }
 
-    h1 {
-      margin: 0;
-      font-size: 1.8em;
+    .sidebar {
+      height: 100%;
+      width: 250px;
+      position: fixed;
+      top: 0;
+      left: -260px;
+      background-color: #111;
+      overflow-x: hidden;
+      transition: left 0.5s ease;
+      padding-top: 60px;
+      z-index: 1000;
+    }
+
+    .sidebar.active { left: 0; }
+
+    .sidebar a {
+      padding: 12px 24px;
+      text-decoration: none;
+      font-size: 18px;
+      color: #f1f1f1;
+      display: block;
+      transition: 0.3s;
+      opacity: 0;
+      transform: translateX(-20px);
+    }
+
+    .sidebar.active a {
+      opacity: 1;
+      transform: translateX(0);
+      transition: all 0.4s ease;
+    }
+
+    .sidebar a:hover { background-color: #004080; }
+
+    .hamburger {
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      width: 35px;
+      height: 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      cursor: pointer;
+      z-index: 1100;
+    }
+
+    .bar {
+      height: 4px;
+      width: 100%;
+      background-color: white;
+      border-radius: 4px;
+      transition: 0.4s;
+    }
+
+    .hamburger.active .bar:nth-child(1) { transform: rotate(45deg) translate(6px, 6px); }
+    .hamburger.active .bar:nth-child(2) { opacity: 0; }
+    .hamburger.active .bar:nth-child(3) { transform: rotate(-45deg) translate(6px, -6px); }
+
+    .container {
+      max-width: 800px;
+      margin: 80px auto;
+      padding: 30px;
+      background: white;
+      border-radius: 12px;
+      text-align: center;
+      border: 2px solid #004080;
+      animation: fadeInUp 1s forwards, floatShadowBorder 3s ease-in-out infinite;
+      transition: border-color 1.5s ease-in-out;
+    }
+
+    @keyframes fadeInUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes floatShadowBorder {
+      0%, 100% { transform: translateY(0); box-shadow: 0 4px 12px rgba(0,0,0,0.15); border-color: #004080; }
+      50% { transform: translateY(-10px); box-shadow: 0 12px 20px rgba(0,0,0,0.25); border-color: #002b5c; }
     }
 
     #scanner-container {
-      margin: 20px auto;
+      position: relative;
+      width: 90%;
       max-width: 400px;
+      margin: 20px auto;
+      border: 3px solid #004080;
+      border-radius: 15px;
+      overflow: hidden;
+      background-color: black;
     }
 
-    video {
-      width: 100%;
-      border-radius: 10px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-    }
+    #interactive { width: 100%; }
 
-    #info-card {
-      margin: 20px auto;
-      max-width: 400px;
-      background: white;
+    #result {
+      margin-top: 20px;
+      padding: 15px;
+      background: #e3f2fd;
       border-radius: 10px;
-      padding: 20px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
       display: none;
-      text-align: left;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
 
-    #info-card h2 {
-      color: #0a3d62;
-      margin-top: 0;
+    #result img {
+      width: 150px;
+      margin-top: 10px;
+      border-radius: 8px;
     }
+
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      background-color: #004080;
+      color: white;
+      cursor: pointer;
+    }
+
+    button:hover { background-color: #002b5c; }
 
     footer {
-      background-color: #0a3d62;
+      background-color: #002b5c;
       color: white;
-      padding: 10px;
-      font-size: 0.9em;
+      text-align: center;
+      padding: 12px;
       margin-top: 40px;
-    }
-
-    .btn {
-      background-color: #0a3d62;
-      color: white;
-      border: none;
-      padding: 10px 15px;
-      border-radius: 5px;
-      cursor: pointer;
-      margin-top: 15px;
-    }
-
-    .btn:hover {
-      background-color: #145a8d;
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Escáner de Materiales</h1>
-    <p>Escanea el código de barras de una botella para saber cómo reciclarla correctamente</p>
-  </header>
 
-  <div id="scanner-container">
-    <video id="preview"></video>
+  <div class="hamburger" id="hamburger">
+    <div class="bar"></div>
+    <div class="bar"></div>
+    <div class="bar"></div>
   </div>
 
-  <button class="btn" onclick="startScanner()">Activar Cámara</button>
-
-  <div id="info-card">
-    <h2 id="product-name"></h2>
-    <p><strong>Tipo de plástico:</strong> <span id="plastic-type"></span></p>
-    <p><strong>Cómo reciclarla:</strong> <span id="recycle-info"></span></p>
+  <div id="mySidebar" class="sidebar">
+    <a href="inicio.html">Nosotros</a>
+    <a href="escaner.html">Escáner de materiales</a>
+    <a href="plastico.html">Cómo se hace el plástico</a>
+    <a href="reciclaje.html">Maneras de reciclar</a>
+    <a href="tipos.html">Tipos de plásticos</a>
+    <a href="caracteristicas.html">Características</a>
+    <a href="ayuda.html">Ayuda</a>
   </div>
 
-  <footer>
-    <p>FACASX © 2025 | Promoviendo el reciclaje responsable</p>
-  </footer>
+  <header>FACAS X - Escáner de Materiales</header>
 
-  <script src="https://unpkg.com/@zxing/library@latest"></script>
+  <div class="container">
+    <h2>Escáner de Botellas</h2>
+    <p>Apunta tu cámara hacia el código de barras del producto y descubre qué tipo de plástico tiene y cómo reciclarlo correctamente.</p>
+
+    <div id="scanner-container">
+      <div id="interactive" class="viewport"></div>
+    </div>
+
+    <button id="start-scan">Iniciar escaneo</button>
+
+    <div id="result"></div>
+  </div>
+
+  <footer>© 2025 FACAS X. Todos los derechos reservados.</footer>
+
+  <audio id="beep-sound" src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg" preload="auto"></audio>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
   <script>
-    const codeReader = new ZXing.BrowserBarcodeReader();
-    const previewElem = document.getElementById('preview');
-    const infoCard = document.getElementById('info-card');
-    const nameElem = document.getElementById('product-name');
-    const typeElem = document.getElementById('plastic-type');
-    const recycleElem = document.getElementById('recycle-info');
+    const sidebar = document.getElementById("mySidebar");
+    const hamburger = document.getElementById("hamburger");
+    hamburger.addEventListener("click", () => {
+      hamburger.classList.toggle("active");
+      sidebar.classList.toggle("active");
+    });
 
-    const productos = {
-      "7702003001234": {
-        nombre: "Agua Cristal 600 ml",
-        plastico: "PET 1 (Polietileno Tereftalato)",
-        reciclaje: "Enjuaga la botella y deposítala en el contenedor de plásticos reciclables."
-      },
-      "7701234567890": {
-        nombre: "Gaseosa Postobón 1.5 L",
-        plastico: "PET 1 (Polietileno Tereftalato)",
-        reciclaje: "Enjuaga la botella y aplástala ligeramente antes de reciclarla."
-      },
-      "7709998887776": {
-        nombre: "Botella de Leche Colanta 1 L",
-        plastico: "HDPE 2 (Polietileno de alta densidad)",
-        reciclaje: "Lávalo y retira la tapa. Llévalo al contenedor de plásticos duros reciclables."
-      },
-      "7704567891234": {
-        nombre: "Volt Energizante 300 ml",
-        plastico: "PET 1 (Polietileno Tereftalato)",
-        reciclaje: "Enjuaga la botella, retira la etiqueta si es posible y deposítala en el contenedor de plásticos reciclables."
+    const button = document.getElementById('start-scan');
+    const result = document.getElementById('result');
+    const beep = document.getElementById('beep-sound');
+    let scanning = false;
+
+    button.addEventListener('click', () => {
+      if (scanning) {
+        Quagga.stop();
+        button.textContent = "Iniciar escaneo";
+        scanning = false;
+      } else {
+        startScanner();
+        button.textContent = "Detener escaneo";
+        scanning = true;
       }
-    };
+    });
 
     function startScanner() {
-      codeReader.decodeOnceFromVideoDevice(undefined, previewElem).then(result => {
-        const codigo = result.text.trim();
-        if (productos[codigo]) {
-          const producto = productos[codigo];
-          nameElem.textContent = producto.nombre;
-          typeElem.textContent = producto.plastico;
-          recycleElem.textContent = producto.reciclaje;
-          infoCard.style.display = "block";
-        } else {
-          nameElem.textContent = "Producto no encontrado";
-          typeElem.textContent = "Desconocido";
-          recycleElem.textContent = "Este código no está registrado. Intenta con otro.";
-          infoCard.style.display = "block";
-        }
-        startScanner(); // vuelve a escanear automáticamente
-      }).catch(err => {
-        console.error(err);
-        alert("Error al acceder a la cámara. Asegúrate de dar permisos.");
-      });
+      navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
+        .then(() => {
+          Quagga.init({
+            inputStream: {
+              name: "Live",
+              type: "LiveStream",
+              target: document.querySelector('#interactive'),
+              constraints: { facingMode: "environment", width: 640, height: 480 }
+            },
+            decoder: { readers: ["ean_reader"] }
+          }, function(err) {
+            if (err) {
+              console.error(err);
+              alert("Error al iniciar la cámara: " + err.message);
+              return;
+            }
+            Quagga.start();
+          });
+
+          Quagga.onDetected(function(data) {
+            const code = data.codeResult.code;
+            vibrarYBeep();
+            mostrarInfo(code);
+            Quagga.stop();
+            button.textContent = "Iniciar escaneo";
+            scanning = false;
+          });
+        })
+        .catch(err => {
+          alert("Permiso de cámara denegado o no disponible.");
+          console.error(err);
+        });
+    }
+
+    function vibrarYBeep() {
+      beep.play();
+      if (navigator.vibrate) {
+        navigator.vibrate(200);
+      }
+    }
+
+    function mostrarInfo(code) {
+      let info = "";
+      switch (code) {
+        case "7709947664513":
+          info = `
+            <h2>Volt Energizante 300 ml</h2>
+            <img src="https://i.imgur.com/sChTFeT.png" alt="Volt 300 ml">
+            <p><strong>Tipo:</strong> PET 1</p>
+            <p><strong>Reciclaje:</strong> Lava la botella, retira la etiqueta y deposítala en el contenedor plástico.</p>`;
+          break;
+        case "7702001111008":
+          info = `
+            <h2>Coca-Cola 400 ml</h2>
+            <img src="https://i.imgur.com/NqVzM89.png" alt="Coca-Cola 400 ml">
+            <p><strong>Tipo:</strong> PET 1</p>
+            <p><strong>Reciclaje:</strong> Retira la tapa y etiqueta, enjuaga y deposita en el contenedor de reciclaje.</p>`;
+          break;
+        case "7702001011001":
+          info = `
+            <h2>Postobón Manzana 500 ml</h2>
+            <img src="https://i.imgur.com/KZIDkZf.png" alt="Postobón Manzana 500 ml">
+            <p><strong>Tipo:</strong> PET 1</p>
+            <p><strong>Reciclaje:</strong> Enjuaga la botella y sepárala de otros materiales no reciclables.</p>`;
+          break;
+        case "7702011011015":
+          info = `
+            <h2>Agua Cristal 600 ml</h2>
+            <img src="https://i.imgur.com/JbzI4mg.png" alt="Agua Cristal 600 ml">
+            <p><strong>Tipo:</strong> PET 1</p>
+            <p><strong>Reciclaje:</strong> Lava la botella, retira la etiqueta y aplástala ligeramente para ahorrar espacio.</p>`;
+          break;
+        case "7709992001008":
+          info = `
+            <h2>Pepsi 400 ml</h2>
+            <img src="https://i.imgur.com/mIL5PYr.png" alt="Pepsi 400 ml">
+            <p><strong>Tipo:</strong> PET 1</p>
+            <p><strong>Reciclaje:</strong> Lava la botella y deposítala junto con otros plásticos reciclables.</p>`;
+          break;
+        default:
+          info = `<p>No se encontró información para el código <strong>${code}</strong>.</p>`;
+      }
+      result.innerHTML = info;
+      result.style.display = 'block';
     }
   </script>
 </body>
