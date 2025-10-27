@@ -1,573 +1,316 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FACAS X - Escáner de Materiales</title>
-<style>
-body {
-  margin: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(-45deg, #001f3f, #003366, #000, #00f0ff);
-  background-size: 400% 400%;
-  animation: gradientBG 15s ease infinite;
-  color: #fff;
-  overflow-x: hidden;
-  text-align: center;
-}
-
-@keyframes gradientBG {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-header {
-  background: linear-gradient(90deg, #001f3f, #003366);
-  padding: 15px;
-  font-size: 22px;
-  font-weight: bold;
-  color: #00f0ff;
-  text-align: center;
-}
-
-.sidebar {
-  height: 100%;
-  width: 280px;
-  position: fixed;
-  top: 0;
-  left: -290px;
-  background-color: #111;
-  overflow-x: hidden;
-  transition: left 0.5s ease;
-  padding-top: 60px;
-  z-index: 1000;
-}
-.sidebar.active { left: 0; }
-.sidebar a {
-  padding: 12px 24px;
-  text-decoration: none;
-  font-size: 16px;
-  color: #f1f1f1;
-  display: block;
-  transition: 0.3s;
-}
-.sidebar a:hover { background-color: #004080; }
-
-.hamburger {
-  position: fixed;
-  top: 15px;
-  left: 15px;
-  width: 35px;
-  height: 28px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  cursor: pointer;
-  z-index: 1100;
-}
-.bar {
-  height: 4px;
-  width: 100%;
-  background-color: white;
-  border-radius: 4px;
-  transition: 0.4s;
-}
-.hamburger.active .bar:nth-child(1) {
-  transform: rotate(45deg) translate(6px, 6px);
-}
-.hamburger.active .bar:nth-child(2) { opacity: 0; }
-.hamburger.active .bar:nth-child(3) {
-  transform: rotate(-45deg) translate(6px, -6px);
-}
-
-.container {
-  max-width: 800px;
-  margin: 100px auto;
-  padding: 30px;
-  background: #001f3f;
-  border-radius: 12px;
-  border: 2px solid #00f0ff;
-  box-shadow: 0 0 25px #00f0ff;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-h2 {
-  color: #00f0ff;
-  margin-bottom: 15px;
-}
-
-#button-group {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 20px;
-}
-
-#image-container {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 80%;
-  max-width: 400px;
-  height: 300px;
-  margin: 0 auto 20px auto;
-  border: 2px solid #00f0ff;
-  border-radius: 12px;
-  background-color: #003366;
-  overflow: hidden;
-}
-
-#preview {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: none;
-}
-
-#cameraPlaceholder {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 80px;
-  opacity: 0.6;
-}
-
-#scan-line {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 4px;
-  background: #00f0ff;
-  border-radius: 2px;
-  animation: scanAnim 2s linear infinite;
-  display: none;
-  z-index: 2;
-  box-shadow: 0 0 20px #00f0ff;
-}
-
-@keyframes scanAnim {
-  0% { top: 0%; opacity: 1; }
-  50% { top: 90%; opacity: 0.6; }
-  100% { top: 0%; opacity: 1; }
-}
-
-#resultado {
-  margin-top: 20px;
-  padding: 15px;
-  background: #001f3f;
-  border-radius: 10px;
-  border: 1px solid #00f0ff;
-  display: none;
-  text-align: left;
-}
-
-.custom-button, #photoButton, #resetButton {
-  background: linear-gradient(90deg, #001f3f, #003366);
-  color: #00f0ff;
-  border: none;
-  padding: 12px 0;
-  width: 150px;
-  margin: 5px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: bold;
-  box-shadow: 0 0 15px #00f0ff;
-  transition: 0.3s;
-  font-family: Arial, sans-serif;
-  font-size: 16px;
-}
-.custom-button:hover, #photoButton:hover, #resetButton:hover {
-  background: linear-gradient(90deg, #00f0ff, #00cfff);
-  color: #001f3f;
-  box-shadow: 0 0 25px #00f0ff;
-}
-
-footer {
-  background-color: #001f3f;
-  color: #00f0ff;
-  text-align: center;
-  padding: 12px;
-  margin-top: 40px;
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Escáner Futurista FACASX</title>
+  <script src="https://unpkg.com/@zxing/library@latest"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: radial-gradient(circle at center, #0a0f2c, #000);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      overflow: hidden;
+    }
+    h1 {
+      color: #00aaff;
+      text-shadow: 0 0 15px #00aaff;
+    }
+    #scanner {
+      border: 3px solid #00aaff;
+      border-radius: 20px;
+      width: 320px;
+      height: 240px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(145deg, #0d1b2a, #1b263b);
+      box-shadow: 0 0 20px #00aaff;
+      position: relative;
+      overflow: hidden;
+    }
+    #preview {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: none;
+    }
+    #camera-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #ccc;
+    }
+    #camera-placeholder img {
+      width: 80px;
+      opacity: 0.7;
+    }
+    #scan-line {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #00ffff, transparent);
+      animation: scan 2s infinite;
+      display: none;
+    }
+    @keyframes scan {
+      0% { top: 0; }
+      50% { top: calc(100% - 3px); }
+      100% { top: 0; }
+    }
+    #resultado {
+      margin-top: 20px;
+      padding: 10px;
+      width: 320px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 10px;
+      box-shadow: 0 0 10px #00aaff;
+      display: none;
+    }
+    button {
+      background: #00aaff;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      padding: 10px 20px;
+      margin: 10px;
+      cursor: pointer;
+      font-size: 1em;
+      transition: background 0.3s, transform 0.2s;
+    }
+    button:hover {
+      background: #0077cc;
+      transform: scale(1.05);
+    }
+    #resetButton {
+      display: none;
+    }
+  </style>
 </head>
 <body>
-<div class="hamburger" id="hamburger">
-  <div class="bar"></div>
-  <div class="bar"></div>
-  <div class="bar"></div>
-</div>
+  <h1>Escáner Futurista FACASX</h1>
 
-<div id="mySidebar" class="sidebar">
-  <a href="#">Nosotros</a>
-  <a href="#">Escáner de Materiales</a>
-  <a href="#">Proceso del Plástico</a>
-  <a href="#">Métodos de Reciclaje</a>
-  <a href="#">Tipos de Plásticos</a>
-  <a href="#">Características del Material</a>
-  <a href="#">Impacto Ambiental</a>
-  <a href="#">Formación y Educación Ambiental</a>
-  <a href="#">Creaciones con Plástico Reciclado</a>
-  <a href="#">Curiosidades y Datos Útiles</a>
-  <a href="#">Noticias Ambientales</a>
-  <a href="#">Evaluación y Retroalimentación</a>
-  <a href="#">Ayuda</a>
-</div>
-
-<header>FACAS X - Escáner de Materiales</header>
-
-<div class="container">
-  <h2>Escáner de Botellas</h2>
-  <p>Sube o toma una foto del código de barras del producto para identificarlo y conocer cómo reciclarlo.</p>
-
-  <div id="button-group">
-    <label for="fileInput" class="custom-button">Subir Imagen</label>
-    <input type="file" accept="image/*" id="fileInput" style="display:none">
-    <button id="photoButton">Tomar Foto</button>
-  </div>
-
-  <div id="image-container">
-    <img id="preview" alt="Vista previa">
-    <img id="cameraPlaceholder" src="https://static.vecteezy.com/system/resources/previews/009/266/389/non_2x/camera-icon-design-free-png.png" alt="Camera placeholder">
+  <div id="scanner">
+    <video id="camera" autoplay playsinline style="width:100%;height:100%;border-radius:20px;"></video>
+    <img id="preview" alt="Foto del producto">
+    <div id="camera-placeholder">
+      <img src="https://static.vecteezy.com/system/resources/previews/009/266/389/non_2x/camera-icon-design-free-png.png" alt="Cámara">
+      <p>Escanea el código</p>
+    </div>
     <div id="scan-line"></div>
   </div>
 
   <div id="resultado"></div>
-  <button id="resetButton" style="display:none;">Intentar otro escaneo</button>
-</div>
 
-<footer>© 2025 FACAS X. Todos los derechos reservados.</footer>
+  <button id="resetButton">Reiniciar</button>
 
-<!-- 🔊 Sonidos -->
-<audio id="success-sound" src="https://actions.google.com/sounds/v1/cartoon/clang_and_wobble.ogg" preload="auto"></audio>
-<audio id="error-sound" src="https://actions.google.com/sounds/v1/cartoon/wood_plank_flicks.ogg" preload="auto"></audio>
+  <audio id="success-sound" src="https://actions.google.com/sounds/v1/cartoon/clang_and_wobble.ogg" preload="auto"></audio>
+  <audio id="error-sound" src="https://actions.google.com/sounds/v1/cartoon/wood_plank_flicks.ogg" preload="auto"></audio>
 
-<script src="https://unpkg.com/@zxing/library@latest"></script>
-<script>
-/* ============================
-   Mejora de decodificación JS
-   ============================ */
+  <script>
+    const productos = {
+      "7709947664513": {
+        nombre: "Volt Energizante 300 ml",
+        tipo: "PET 1",
+        reciclaje: "Lávalo, retira etiqueta y deposítala en contenedor de plásticos reciclables.",
+        descripcion: "Bebida energética popular en envase PET transparente.",
+        impacto: "Reciclar esta botella ahorra suficiente energía para encender un bombillo 6 horas.",
+        calorias: "110 kcal",
+        ingredientes: "Agua, azúcar, cafeína, saborizantes"
+      },
+      "7702001111008": {
+        nombre: "Coca-Cola 400 ml",
+        tipo: "PET 1",
+        reciclaje: "Retira la tapa y etiqueta, enjuaga y deposita en contenedor de reciclaje.",
+        descripcion: "Refresco clásico de cola en envase PET.",
+        impacto: "Cada botella reciclada evita emisión de CO₂ y residuos en océanos.",
+        calorias: "140 kcal",
+        ingredientes: "Agua carbonatada, azúcar, colorante, saborizantes"
+      },
+      "7702001011001": {
+        nombre: "Postobón Manzana 500 ml",
+        tipo: "PET 1",
+        reciclaje: "Enjuaga y separa de materiales no reciclables.",
+        descripcion: "Refresco de manzana en envase PET.",
+        impacto: "Reciclar ayuda a reducir residuos y consumo de energía.",
+        calorias: "120 kcal",
+        ingredientes: "Agua, azúcar, saborizante de manzana"
+      },
+      "7702011011015": {
+        nombre: "Agua Cristal 600 ml",
+        tipo: "PET 1",
+        reciclaje: "Lava la botella, retira etiqueta y aplástala para ahorrar espacio.",
+        descripcion: "Agua mineral embotellada.",
+        impacto: "Reciclar una botella ahorra energía para encender bombillo 6 horas.",
+        calorias: "0 kcal",
+        ingredientes: "Agua mineral"
+      },
+      "7709992001008": {
+        nombre: "Pepsi 400 ml",
+        tipo: "PET 1",
+        reciclaje: "Lava la botella y deposítala junto con otros plásticos reciclables.",
+        descripcion: "Refresco de cola en envase PET.",
+        impacto: "Reciclar reduce residuos y CO₂.",
+        calorias: "140 kcal",
+        ingredientes: "Agua carbonatada, azúcar, colorante, saborizantes"
+      },
+      "7701234567890": {
+        nombre: "Gatorade Naranja 500 ml",
+        tipo: "PET 1",
+        reciclaje: "Enjuaga la botella y deposítala en el contenedor de reciclaje de plásticos.",
+        descripcion: "Bebida hidratante con electrolitos, ideal para deportistas.",
+        impacto: "Reciclar ayuda a reducir el uso de petróleo en nuevos envases.",
+        calorias: "80 kcal",
+        ingredientes: "Agua, azúcar, electrolitos, saborizantes naturales"
+      },
+      "7708887776661": {
+        nombre: "Milo Botella 240 ml",
+        tipo: "PET 1",
+        reciclaje: "Lava la botella y separa la tapa para reciclarla correctamente.",
+        descripcion: "Bebida de malta y cacao con alto valor energético.",
+        impacto: "Reciclar esta botella evita que el plástico llegue al océano.",
+        calorias: "130 kcal",
+        ingredientes: "Leche, malta, cacao, azúcar"
+      },
+      "7705554443332": {
+        nombre: "Bon Ice Fresa 300 ml",
+        tipo: "PET 1",
+        reciclaje: "Deposítalo en el contenedor de plásticos tras enjuagarlo.",
+        descripcion: "Refresco sabor fresa con gas ligero.",
+        impacto: "Reciclar una botella reduce el consumo de energía industrial.",
+        calorias: "100 kcal",
+        ingredientes: "Agua, azúcar, saborizantes artificiales de fresa"
+      },
+      "7709998887773": {
+        nombre: "Hit Mora Azul 500 ml",
+        tipo: "PET 1",
+        reciclaje: "Lava el envase y deposítalo en el contenedor de reciclaje.",
+        descripcion: "Jugo de mora azul con alto contenido en vitamina C.",
+        impacto: "Reciclar ayuda a conservar recursos naturales.",
+        calorias: "90 kcal",
+        ingredientes: "Agua, azúcar, concentrado de mora azul, vitamina C"
+      },
+      "7703332221114": {
+        nombre: "Colombiana 400 ml",
+        tipo: "PET 1",
+        reciclaje: "Retira la etiqueta, enjuaga y aplasta para reciclarla.",
+        descripcion: "Refresco tradicional colombiano de sabor único.",
+        impacto: "Reciclar ayuda a mantener limpios los ríos y mares.",
+        calorias: "145 kcal",
+        ingredientes: "Agua carbonatada, azúcar, colorante, saborizantes"
+      },
 
-// Elementos DOM (sin tocar diseño)
-const fileInput = document.getElementById('fileInput');
-const preview = document.getElementById('preview');
-const cameraPlaceholder = document.getElementById('cameraPlaceholder');
-const scanLine = document.getElementById('scan-line');
-const resultado = document.getElementById('resultado');
-const photoButton = document.getElementById('photoButton');
-const resetButton = document.getElementById('resetButton');
-const successSound = document.getElementById('success-sound');
-const errorSound = document.getElementById('error-sound');
-
-// Productos (mantener igual)
-const productos = {
-  "7709947664513":{nombre:"Volt Energizante 300 ml",tipo:"PET 1",reciclaje:"Lávalo, retira etiqueta y deposítala en contenedor de plásticos reciclables.",descripcion:"Bebida energética popular en envase PET transparente.",impacto:"Reciclar esta botella ahorra suficiente energía para encender un bombillo 6 horas.",calorias:"110 kcal",ingredientes:"Agua, azúcar, cafeína, saborizantes"},
-  "7702001111008":{nombre:"Coca-Cola 400 ml",tipo:"PET 1",reciclaje:"Retira la tapa y etiqueta, enjuaga y deposítala en contenedor de reciclaje.",descripcion:"Refresco clásico de cola en envase PET.",impacto:"Cada botella reciclada evita emisión de CO₂ y residuos en océanos.",calorias:"140 kcal",ingredientes:"Agua carbonatada, azúcar, colorante, saborizantes"},
-  "7702001011001":{nombre:"Postobón Manzana 500 ml",tipo:"PET 1",reciclaje:"Enjuaga y separa de materiales no reciclables.",descripcion:"Refresco de manzana en envase PET.",impacto:"Reciclar ayuda a reducir residuos y consumo de energía.",calorias:"120 kcal",ingredientes:"Agua, azúcar, saborizante de manzana"},
-  "7702011011015":{nombre:"Agua Cristal 600 ml",tipo:"PET 1",reciclaje:"Lava la botella, retira etiqueta y aplástala para ahorrar espacio.",descripcion:"Agua mineral embotellada.",impacto:"Reciclar una botella ahorra energía para encender bombillo 6 horas.",calorias:"0 kcal",ingredientes:"Agua mineral"},
-  "7709992001008":{nombre:"Pepsi 400 ml",tipo:"PET 1",reciclaje:"Lava la botella y deposítala junto con otros plásticos reciclables.",descripcion:"Refresco de cola en envase PET.",impacto:"Reciclar reduce residuos y CO₂.",calorias:"140 kcal",ingredientes:"Agua carbonatada, azúcar, colorante, saborizantes"}
-};
-
-// Reusar una instancia ZXing para evitar instancias repetidas
-let zxingReader = null;
-function getZXReader(){
-  if(!zxingReader){
-    zxingReader = new ZXing.BrowserMultiFormatReader();
-  }
-  return zxingReader;
-}
-
-/* Normaliza código leído para comparar mejor:
-   - elimina no dígitos
-   - quita ceros a la izquierda para comparar con versiones sin ceros
-*/
-function normalizeCode(code){
-  if(!code) return '';
-  const digits = code.replace(/\D/g,''); // solo dígitos
-  // también devolver versión sin ceros a la izquierda
-  const noLeading = digits.replace(/^0+/, '') || digits;
-  return { raw: digits, noLeading };
-}
-
-/* Intenta decodificar el canvas en diferentes escalas
-   para aumentar la probabilidad de lectura. */
-async function tryDecodeWithScales(img){
-  const reader = getZXReader();
-
-  // resoluciones relativas para reescalar
-  const scales = [1.0, 1.5, 0.8, 2.0]; // intentos con diferentes tamaños
-  for(let s of scales){
-    try{
-      const canvas = document.createElement('canvas');
-      const w = Math.max(200, Math.round(img.width * s));
-      const h = Math.max(200, Math.round(img.height * s));
-      canvas.width = w;
-      canvas.height = h;
-      const ctx = canvas.getContext('2d');
-      // draw scaled and sharpen a little by drawing twice (simple)
-      ctx.drawImage(img, 0, 0, w, h);
-      // try decodeFromCanvas (ZXing supports it)
-      // some ZXing builds expose decodeFromCanvas; using decodeFromCanvas if present
-      if(typeof reader.decodeFromCanvas === 'function'){
-        try{
-          const result = await reader.decodeFromCanvas(canvas);
-          if(result && result.text) return result.text;
-        }catch(e){
-          // fallthrough to next attempt
-          //console.debug('decodeFromCanvas failed at scale', s, e);
-        }
+      // 🔹 Productos añadidos por Deivid
+      "7702090042139": {
+        nombre: "Uva Postobón 250 ml",
+        tipo: "PET 1",
+        reciclaje: "Lava el envase, retira etiqueta y deposítalo en reciclaje de plásticos.",
+        descripcion: "Refresco sabor uva en presentación pequeña y práctica.",
+        impacto: "Reciclar ayuda a disminuir la contaminación plástica en fuentes hídricas.",
+        calorias: "105 kcal",
+        ingredientes: "Agua carbonatada, azúcar, saborizante de uva"
+      },
+      "7707151701031": {
+        nombre: "Colombiana Cero 350 ml",
+        tipo: "PET 1",
+        reciclaje: "Enjuaga y deposítala en el contenedor de plásticos reciclables.",
+        descripcion: "Versión sin azúcar de la tradicional Colombiana.",
+        impacto: "Reciclar permite aprovechar el PET para nuevos envases.",
+        calorias: "0 kcal",
+        ingredientes: "Agua carbonatada, edulcorantes, saborizantes"
+      },
+      "7702057075088": {
+        nombre: "Alcohol MK 350 ml",
+        tipo: "PET 1",
+        reciclaje: "Enjuaga el envase y deposítalo en el contenedor de reciclaje de plásticos.",
+        descripcion: "Alcohol antiséptico para desinfección y limpieza.",
+        impacto: "Reciclar reduce residuos y evita acumulación de plásticos en vertederos.",
+        calorias: "No aplica",
+        ingredientes: "Alcohol etílico al 70%, agua"
+      },
+      "7707133083216": {
+        nombre: "Hit Mora 500 ml",
+        tipo: "PET 1",
+        reciclaje: "Retira etiqueta, enjuaga y deposítalo en reciclaje de plásticos.",
+        descripcion: "Jugo natural de mora con azúcar moderada.",
+        impacto: "Reciclar reduce el impacto ambiental y fomenta la economía circular.",
+        calorias: "95 kcal",
+        ingredientes: "Agua, concentrado de mora, azúcar, vitamina C"
       }
-      // fallback: use decodeFromImageUrl with dataURL
-      try{
-        const dataUrl = canvas.toDataURL('image/jpeg', 0.9);
-        const result2 = await reader.decodeFromImageUrl(dataUrl);
-        if(result2 && result2.text) return result2.text;
-      }catch(e){
-        //console.debug('decodeFromImageUrl failed at scale', s, e);
+    };
+
+    const camera = document.getElementById('camera');
+    const preview = document.getElementById('preview');
+    const resultado = document.getElementById('resultado');
+    const cameraPlaceholder = document.getElementById('camera-placeholder');
+    const scanLine = document.getElementById('scan-line');
+    const resetButton = document.getElementById('resetButton');
+    const successSound = document.getElementById('success-sound');
+    const errorSound = document.getElementById('error-sound');
+
+    const codeReader = new ZXing.BrowserMultiFormatReader();
+
+    async function iniciarCamara() {
+      try {
+        const devices = await codeReader.listVideoInputDevices();
+        if (devices.length === 0) throw new Error('No hay cámara disponible');
+
+        const selectedDeviceId = devices[0].deviceId;
+        scanLine.style.display = 'block';
+        resultado.style.display = 'block';
+        resultado.innerHTML = "<p>Escaneando...</p>";
+
+        codeReader.decodeFromVideoDevice(selectedDeviceId, camera, (result, err) => {
+          if (result) {
+            const codigo = result.text.trim();
+            if (productos[codigo]) {
+              const p = productos[codigo];
+              successSound.play();
+              cameraPlaceholder.style.display = 'none';
+              preview.style.display = 'block';
+              camera.style.display = 'none';
+              scanLine.style.display = 'none';
+              resultado.innerHTML = `
+                <h3>${p.nombre}</h3>
+                <p><strong>Tipo:</strong> ${p.tipo}</p>
+                <p><strong>Reciclaje:</strong> ${p.reciclaje}</p>
+                <p><strong>Descripción:</strong> ${p.descripcion}</p>
+                <p><strong>Impacto:</strong> ${p.impacto}</p>
+                <p><strong>Calorías:</strong> ${p.calorias}</p>
+                <p><strong>Ingredientes:</strong> ${p.ingredientes}</p>
+              `;
+              codeReader.reset();
+              resetButton.style.display = 'inline-block';
+            } else {
+              resultado.innerHTML = "<p>Producto no reconocido.</p>";
+              errorSound.play();
+            }
+          }
+        });
+      } catch (error) {
+        resultado.innerHTML = "<p>Error al acceder a la cámara.</p>";
       }
-    }catch(innerErr){
-      // ignore and continue
-      //console.warn('scale attempt error', innerErr);
     }
-  }
-  // if none worked, throw
-  throw new Error('No se pudo decodificar en ninguna escala');
-}
 
-/* Función principal: procesa la imagen (File o Blob) */
-async function escanearImagen(file){
-  const reader = new FileReader();
-  reader.onload = async function(ev){
-    try{
-      // mostrar preview y estado
-      preview.src = ev.target.result;
-      preview.style.display = 'block';
-      cameraPlaceholder.style.display = 'none';
-      resultado.style.display = 'block';
-      resultado.innerHTML = 'Escaneando...';
-      scanLine.style.display = 'block';
+    resetButton.addEventListener('click', () => {
+      resultado.style.display = 'none';
+      preview.style.display = 'none';
+      cameraPlaceholder.style.display = 'flex';
+      camera.style.display = 'block';
       resetButton.style.display = 'none';
-
-      // crear imagen para decodificar
-      const img = new Image();
-      img.src = ev.target.result;
-      await img.decode();
-
-      // Intentar decodificar con varios tamaños / metodos
-      let decodedText = null;
-      try{
-        decodedText = await tryDecodeWithScales(img);
-      }catch(e){
-        // fallback: intentar con reader.decodeFromImageUrl directo (otra vez)
-        try{
-          const readerInst = getZXReader();
-          const dataUrl = ev.target.result;
-          const r = await readerInst.decodeFromImageUrl(dataUrl);
-          decodedText = r?.text || null;
-        }catch(e2){
-          decodedText = null;
-        }
-      }
-
-      if(!decodedText){
-        // No se pudo leer un código
-        resultado.innerHTML = `<p>Producto no reconocido (no se detectó código de barras).\nIntenta con mejor iluminación o enfoque.</p>`;
-        errorSound.play();
-        return;
-      }
-
-      // Normaliza y compara
-      const norm = normalizeCode(decodedText);
-      const raw = norm.raw;
-      const noLead = norm.noLeading;
-
-      // Intentos de búsqueda en 'productos'
-      let foundKey = null;
-
-      // exact match raw
-      if(raw && productos[raw]) foundKey = raw;
-      // exact match noLeading
-      if(!foundKey && noLead && productos[noLead]) foundKey = noLead;
-      // try removing leading zeros from product keys (compare)
-      if(!foundKey){
-        for(const k of Object.keys(productos)){
-          if(k.replace(/^0+/,'') === noLead) { foundKey = k; break; }
-          if(noLead.endsWith(k.replace(/^0+/,''))) { foundKey = k; break; }
-          if(k.endsWith(noLead)) { foundKey = k; break; }
-        }
-      }
-
-      // If still not found, show code read and suggest
-      if(!foundKey){
-        resultado.innerHTML = `<p>Código leído: <strong>${decodedText}</strong></p>
-          <p>No hay coincidencia en la base de datos. Revisa el código o agrégalo.</p>`;
-        errorSound.play();
-      } else {
-        // show product
-        mostrarInfoProducto(foundKey);
-        successSound.play();
-      }
-    } catch(err){
-      console.error('Error en escanearImagen:', err);
-      resultado.innerHTML = `<p>Error al procesar la imagen: ${err.message || err}</p>`;
-      errorSound.play();
-    } finally {
-      scanLine.style.display = 'none';
-      resetButton.style.display = 'inline-block';
-    }
-  };
-  reader.readAsDataURL(file);
-}
-
-/* Mostrar info (sin cambiar diseño) */
-function mostrarInfoProducto(codigo){
-  if(productos[codigo]){
-    const p = productos[codigo];
-    resultado.innerHTML = `<h3>${p.nombre}</h3>
-      <p><b>Tipo de plástico:</b> ${p.tipo}</p>
-      <p><b>Cómo reciclar:</b> ${p.reciclaje}</p>
-      <p><b>Descripción:</b> ${p.descripcion}</p>
-      <p><b>Impacto ambiental:</b> ${p.impacto}</p>
-      <p><b>Calorías:</b> ${p.calorias}</p>
-      <p><b>Ingredientes:</b> ${p.ingredientes}</p>`;
-  } else {
-    resultado.innerHTML = `<p>Producto no encontrado (código: ${codigo}).</p>`;
-  }
-}
-
-/* event listeners (manteniendo tu flujo) */
-fileInput.addEventListener('change', e=>{
-  if(e.target.files && e.target.files.length>0) escanearImagen(e.target.files[0]);
-});
-
-/* Mejor flujo para tomar foto desde cámara: abrir video en el recuadro y capturar.
-   Esto no cambia diseño: el video se añade dinámicamente y luego se quita. */
-photoButton.addEventListener('click', async ()=>{
-  try{
-    // crear elementos video + controles temporales (no cambia estilos base)
-    const videoContainer = document.createElement('div');
-    const video = document.createElement('video');
-    video.style.width = '100%';
-    video.style.height = '100%';
-    video.playsInline = true;
-    video.muted = true;
-    videoContainer.style.width = '100%';
-    videoContainer.style.height = '100%';
-    videoContainer.style.position = 'absolute';
-    videoContainer.style.top = 0;
-    videoContainer.style.left = 0;
-    videoContainer.appendChild(video);
-
-    // insertar dentro del image-container (para no tocar CSS global)
-    const imageContainer = document.getElementById('image-container');
-    imageContainer.appendChild(videoContainer);
-
-    // ocultar preview/placeholder y mostrar animación
-    preview.style.display = 'none';
-    cameraPlaceholder.style.display = 'none';
-    scanLine.style.display = 'block';
-    resultado.style.display = 'block';
-    resultado.innerHTML = 'Cámara activa - apunta al código y pulsa Capturar';
-
-    // pedir stream (varios intentos de constraints)
-    let stream = null;
-    const constraintsTry = [
-      { video: { facingMode: { exact: "environment" }, width: { ideal: 1280 }, height: { ideal: 720 } } },
-      { video: { facingMode: "environment", width: { ideal: 1280 }, height: { ideal: 720 } } },
-      { video: true }
-    ];
-    for(const c of constraintsTry){
-      try{
-        stream = await navigator.mediaDevices.getUserMedia(c);
-        if(stream) break;
-      }catch(err){ /* intentar siguiente */ }
-    }
-    if(!stream){
-      resultado.innerHTML = '<p>No se pudo acceder a la cámara. Verifica permisos.</p>';
-      scanLine.style.display = 'none';
-      resetButton.style.display = 'inline-block';
-      videoContainer.remove();
-      return;
-    }
-
-    video.srcObject = stream;
-    await video.play();
-
-    // crear botón Capturar
-    const snapButton = document.createElement('button');
-    snapButton.innerText = 'Capturar Foto';
-    snapButton.className = 'custom-button';
-    snapButton.style.position = 'absolute';
-    snapButton.style.bottom = '12px';
-    snapButton.style.left = '50%';
-    snapButton.style.transform = 'translateX(-50%)';
-    videoContainer.appendChild(snapButton);
-
-    // cuando pulsas capturar, tomamos frame y lo procesamos
-    snapButton.addEventListener('click', async function onSnap(){
-      snapButton.disabled = true;
-      try{
-        const canvas = document.createElement('canvas');
-        canvas.width = video.videoWidth || 1280;
-        canvas.height = video.videoHeight || 720;
-        const ctx = canvas.getContext('2d');
-        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-        // detener stream
-        stream.getTracks().forEach(t => t.stop());
-        // quitar video
-        videoContainer.remove();
-
-        // convertir canvas a blob y llamar a escanearImagen
-        canvas.toBlob(blob => {
-          if(blob) escanearImagen(blob);
-        }, 'image/jpeg', 0.95);
-      }catch(err){
-        console.error('Error al capturar:', err);
-        resultado.innerHTML = '<p>Error al capturar la imagen.</p>';
-        resetButton.style.display = 'inline-block';
-        scanLine.style.display = 'none';
-        // intentar cerrar stream
-        try{ stream.getTracks().forEach(t=>t.stop()); }catch(e){}
-        try{ videoContainer.remove(); }catch(e){}
-      } finally {
-        snapButton.removeEventListener('click', onSnap);
-      }
+      iniciarCamara();
     });
-  }catch(err){
-    console.error('Error init camera capture:', err);
-    resultado.innerHTML = '<p>No se pudo iniciar la cámara.</p>';
-    scanLine.style.display = 'none';
-    resetButton.style.display = 'inline-block';
-  }
-});
 
-/* reinicio limpio (manteniendo diseño) */
-resetButton.addEventListener('click', ()=>{
-  resultado.style.display = 'none';
-  preview.style.display = 'none';
-  preview.src = '';
-  scanLine.style.display = 'none';
-  cameraPlaceholder.style.display = 'block';
-  resetButton.style.display = 'none';
-
-  // reset ZXing reader (liberando camera reader internal)
-  try{ if(zxingReader && typeof zxingReader.reset === 'function') zxingReader.reset(); }catch(e){}
-});
-
-/* accessibility: stop any camera tracks al cambiar de página */
-window.addEventListener('pagehide', ()=>{
-  try{ if(zxingReader && typeof zxingReader.reset === 'function') zxingReader.reset(); }catch(e){}
-});
-
-</script>
+    window.onload = iniciarCamara;
+  </script>
 </body>
 </html>
