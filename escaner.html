@@ -230,7 +230,6 @@ footer {
 
   <div id="button-group">
     <label for="fileInput" class="custom-button">Subir Imagen</label>
-    <!-- 🔧 Cambio: se eliminó capture="environment" -->
     <input type="file" accept="image/*" id="fileInput" style="display:none">
     <button id="photoButton">Tomar Foto</button>
   </div>
@@ -247,111 +246,328 @@ footer {
 
 <footer>© 2025 FACAS X. Todos los derechos reservados.</footer>
 
-<audio id="beep-sound" src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg" preload="auto"></audio>
+<!-- 🔊 Sonidos -->
+<audio id="success-sound" src="https://actions.google.com/sounds/v1/cartoon/clang_and_wobble.ogg" preload="auto"></audio>
+<audio id="error-sound" src="https://actions.google.com/sounds/v1/cartoon/wood_plank_flicks.ogg" preload="auto"></audio>
 
 <script src="https://unpkg.com/@zxing/library@latest"></script>
 <script>
-const fileInput=document.getElementById('fileInput');
-const preview=document.getElementById('preview');
-const cameraPlaceholder=document.getElementById('cameraPlaceholder');
-const scanLine=document.getElementById('scan-line');
-const resultado=document.getElementById('resultado');
-const photoButton=document.getElementById('photoButton');
-const resetButton=document.getElementById('resetButton');
-const beep=document.getElementById('beep-sound');
+/* ============================
+   Mejora de decodificación JS
+   ============================ */
 
-const productos={
+// Elementos DOM (sin tocar diseño)
+const fileInput = document.getElementById('fileInput');
+const preview = document.getElementById('preview');
+const cameraPlaceholder = document.getElementById('cameraPlaceholder');
+const scanLine = document.getElementById('scan-line');
+const resultado = document.getElementById('resultado');
+const photoButton = document.getElementById('photoButton');
+const resetButton = document.getElementById('resetButton');
+const successSound = document.getElementById('success-sound');
+const errorSound = document.getElementById('error-sound');
+
+// Productos (mantener igual)
+const productos = {
   "7709947664513":{nombre:"Volt Energizante 300 ml",tipo:"PET 1",reciclaje:"Lávalo, retira etiqueta y deposítala en contenedor de plásticos reciclables.",descripcion:"Bebida energética popular en envase PET transparente.",impacto:"Reciclar esta botella ahorra suficiente energía para encender un bombillo 6 horas.",calorias:"110 kcal",ingredientes:"Agua, azúcar, cafeína, saborizantes"},
-  "7702001111008":{nombre:"Coca-Cola 400 ml",tipo:"PET 1",reciclaje:"Retira la tapa y etiqueta, enjuaga y deposita en contenedor de reciclaje.",descripcion:"Refresco clásico de cola en envase PET.",impacto:"Cada botella reciclada evita emisión de CO₂ y residuos en océanos.",calorias:"140 kcal",ingredientes:"Agua carbonatada, azúcar, colorante, saborizantes"},
+  "7702001111008":{nombre:"Coca-Cola 400 ml",tipo:"PET 1",reciclaje:"Retira la tapa y etiqueta, enjuaga y deposítala en contenedor de reciclaje.",descripcion:"Refresco clásico de cola en envase PET.",impacto:"Cada botella reciclada evita emisión de CO₂ y residuos en océanos.",calorias:"140 kcal",ingredientes:"Agua carbonatada, azúcar, colorante, saborizantes"},
   "7702001011001":{nombre:"Postobón Manzana 500 ml",tipo:"PET 1",reciclaje:"Enjuaga y separa de materiales no reciclables.",descripcion:"Refresco de manzana en envase PET.",impacto:"Reciclar ayuda a reducir residuos y consumo de energía.",calorias:"120 kcal",ingredientes:"Agua, azúcar, saborizante de manzana"},
   "7702011011015":{nombre:"Agua Cristal 600 ml",tipo:"PET 1",reciclaje:"Lava la botella, retira etiqueta y aplástala para ahorrar espacio.",descripcion:"Agua mineral embotellada.",impacto:"Reciclar una botella ahorra energía para encender bombillo 6 horas.",calorias:"0 kcal",ingredientes:"Agua mineral"},
   "7709992001008":{nombre:"Pepsi 400 ml",tipo:"PET 1",reciclaje:"Lava la botella y deposítala junto con otros plásticos reciclables.",descripcion:"Refresco de cola en envase PET.",impacto:"Reciclar reduce residuos y CO₂.",calorias:"140 kcal",ingredientes:"Agua carbonatada, azúcar, colorante, saborizantes"}
 };
 
-async function escanearImagen(file){
-  const reader=new FileReader();
-  reader.onload=async function(e){
-    preview.src=e.target.result;
-    preview.style.display='block';
-    cameraPlaceholder.style.display='none';
-    scanLine.style.display='block';
-    resultado.style.display='block';
-    resultado.innerHTML="Escaneando...";
-    setTimeout(async ()=>{
-      const codeReader=new ZXing.BrowserBarcodeReader();
-      try{
-        const result=await codeReader.decodeFromImageUrl(preview.src);
-        mostrarInfoProducto(result.text);
-        beep.play();
-      }catch{
-        resultado.innerHTML="<p>Producto no reconocido.</p>";
-        beep.play();
+// Reusar una instancia ZXing para evitar instancias repetidas
+let zxingReader = null;
+function getZXReader(){
+  if(!zxingReader){
+    zxingReader = new ZXing.BrowserMultiFormatReader();
+  }
+  return zxingReader;
+}
+
+/* Normaliza código leído para comparar mejor:
+   - elimina no dígitos
+   - quita ceros a la izquierda para comparar con versiones sin ceros
+*/
+function normalizeCode(code){
+  if(!code) return '';
+  const digits = code.replace(/\D/g,''); // solo dígitos
+  // también devolver versión sin ceros a la izquierda
+  const noLeading = digits.replace(/^0+/, '') || digits;
+  return { raw: digits, noLeading };
+}
+
+/* Intenta decodificar el canvas en diferentes escalas
+   para aumentar la probabilidad de lectura. */
+async function tryDecodeWithScales(img){
+  const reader = getZXReader();
+
+  // resoluciones relativas para reescalar
+  const scales = [1.0, 1.5, 0.8, 2.0]; // intentos con diferentes tamaños
+  for(let s of scales){
+    try{
+      const canvas = document.createElement('canvas');
+      const w = Math.max(200, Math.round(img.width * s));
+      const h = Math.max(200, Math.round(img.height * s));
+      canvas.width = w;
+      canvas.height = h;
+      const ctx = canvas.getContext('2d');
+      // draw scaled and sharpen a little by drawing twice (simple)
+      ctx.drawImage(img, 0, 0, w, h);
+      // try decodeFromCanvas (ZXing supports it)
+      // some ZXing builds expose decodeFromCanvas; using decodeFromCanvas if present
+      if(typeof reader.decodeFromCanvas === 'function'){
+        try{
+          const result = await reader.decodeFromCanvas(canvas);
+          if(result && result.text) return result.text;
+        }catch(e){
+          // fallthrough to next attempt
+          //console.debug('decodeFromCanvas failed at scale', s, e);
+        }
       }
-      scanLine.style.display='none';
-      resetButton.style.display='inline-block';
-    },1500);
+      // fallback: use decodeFromImageUrl with dataURL
+      try{
+        const dataUrl = canvas.toDataURL('image/jpeg', 0.9);
+        const result2 = await reader.decodeFromImageUrl(dataUrl);
+        if(result2 && result2.text) return result2.text;
+      }catch(e){
+        //console.debug('decodeFromImageUrl failed at scale', s, e);
+      }
+    }catch(innerErr){
+      // ignore and continue
+      //console.warn('scale attempt error', innerErr);
+    }
+  }
+  // if none worked, throw
+  throw new Error('No se pudo decodificar en ninguna escala');
+}
+
+/* Función principal: procesa la imagen (File o Blob) */
+async function escanearImagen(file){
+  const reader = new FileReader();
+  reader.onload = async function(ev){
+    try{
+      // mostrar preview y estado
+      preview.src = ev.target.result;
+      preview.style.display = 'block';
+      cameraPlaceholder.style.display = 'none';
+      resultado.style.display = 'block';
+      resultado.innerHTML = 'Escaneando...';
+      scanLine.style.display = 'block';
+      resetButton.style.display = 'none';
+
+      // crear imagen para decodificar
+      const img = new Image();
+      img.src = ev.target.result;
+      await img.decode();
+
+      // Intentar decodificar con varios tamaños / metodos
+      let decodedText = null;
+      try{
+        decodedText = await tryDecodeWithScales(img);
+      }catch(e){
+        // fallback: intentar con reader.decodeFromImageUrl directo (otra vez)
+        try{
+          const readerInst = getZXReader();
+          const dataUrl = ev.target.result;
+          const r = await readerInst.decodeFromImageUrl(dataUrl);
+          decodedText = r?.text || null;
+        }catch(e2){
+          decodedText = null;
+        }
+      }
+
+      if(!decodedText){
+        // No se pudo leer un código
+        resultado.innerHTML = `<p>Producto no reconocido (no se detectó código de barras).\nIntenta con mejor iluminación o enfoque.</p>`;
+        errorSound.play();
+        return;
+      }
+
+      // Normaliza y compara
+      const norm = normalizeCode(decodedText);
+      const raw = norm.raw;
+      const noLead = norm.noLeading;
+
+      // Intentos de búsqueda en 'productos'
+      let foundKey = null;
+
+      // exact match raw
+      if(raw && productos[raw]) foundKey = raw;
+      // exact match noLeading
+      if(!foundKey && noLead && productos[noLead]) foundKey = noLead;
+      // try removing leading zeros from product keys (compare)
+      if(!foundKey){
+        for(const k of Object.keys(productos)){
+          if(k.replace(/^0+/,'') === noLead) { foundKey = k; break; }
+          if(noLead.endsWith(k.replace(/^0+/,''))) { foundKey = k; break; }
+          if(k.endsWith(noLead)) { foundKey = k; break; }
+        }
+      }
+
+      // If still not found, show code read and suggest
+      if(!foundKey){
+        resultado.innerHTML = `<p>Código leído: <strong>${decodedText}</strong></p>
+          <p>No hay coincidencia en la base de datos. Revisa el código o agrégalo.</p>`;
+        errorSound.play();
+      } else {
+        // show product
+        mostrarInfoProducto(foundKey);
+        successSound.play();
+      }
+    } catch(err){
+      console.error('Error en escanearImagen:', err);
+      resultado.innerHTML = `<p>Error al procesar la imagen: ${err.message || err}</p>`;
+      errorSound.play();
+    } finally {
+      scanLine.style.display = 'none';
+      resetButton.style.display = 'inline-block';
+    }
   };
   reader.readAsDataURL(file);
 }
 
+/* Mostrar info (sin cambiar diseño) */
 function mostrarInfoProducto(codigo){
   if(productos[codigo]){
-    const p=productos[codigo];
-    resultado.innerHTML=`<h3>${p.nombre}</h3>
-    <p><b>Tipo de plástico:</b> ${p.tipo}</p>
-    <p><b>Cómo reciclar:</b> ${p.reciclaje}</p>
-    <p><b>Descripción:</b> ${p.descripcion}</p>
-    <p><b>Impacto ambiental:</b> ${p.impacto}</p>
-    <p><b>Calorías:</b> ${p.calorias}</p>
-    <p><b>Ingredientes:</b> ${p.ingredientes}</p>`;
+    const p = productos[codigo];
+    resultado.innerHTML = `<h3>${p.nombre}</h3>
+      <p><b>Tipo de plástico:</b> ${p.tipo}</p>
+      <p><b>Cómo reciclar:</b> ${p.reciclaje}</p>
+      <p><b>Descripción:</b> ${p.descripcion}</p>
+      <p><b>Impacto ambiental:</b> ${p.impacto}</p>
+      <p><b>Calorías:</b> ${p.calorias}</p>
+      <p><b>Ingredientes:</b> ${p.ingredientes}</p>`;
   } else {
-    resultado.innerHTML="<p>Producto no reconocido.</p>";
-    beep.play();
+    resultado.innerHTML = `<p>Producto no encontrado (código: ${codigo}).</p>`;
   }
 }
 
-fileInput.addEventListener('change',e=>{
-  if(e.target.files.length>0) escanearImagen(e.target.files[0]);
+/* event listeners (manteniendo tu flujo) */
+fileInput.addEventListener('change', e=>{
+  if(e.target.files && e.target.files.length>0) escanearImagen(e.target.files[0]);
 });
 
-photoButton.addEventListener('click',async ()=>{
-  const videoContainer=document.createElement('div');
-  const video=document.createElement('video');
-  video.style.width='100%';
-  videoContainer.appendChild(video);
-  document.querySelector('.container').appendChild(videoContainer);
-  const stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:"environment"}});
-  video.srcObject=stream;
-  video.play();
-  const snapButton=document.createElement('button');
-  snapButton.innerText="Capturar Foto";
-  snapButton.className="custom-button";
-  videoContainer.appendChild(snapButton);
-  snapButton.addEventListener('click',()=>{
-    const canvas=document.createElement('canvas');
-    canvas.width=video.videoWidth;
-    canvas.height=video.videoHeight;
-    canvas.getContext('2d').drawImage(video,0,0);
-    stream.getTracks().forEach(track=>track.stop());
-    videoContainer.remove();
-    canvas.toBlob(blob=>escanearImagen(blob),'image/jpeg');
-  });
+/* Mejor flujo para tomar foto desde cámara: abrir video en el recuadro y capturar.
+   Esto no cambia diseño: el video se añade dinámicamente y luego se quita. */
+photoButton.addEventListener('click', async ()=>{
+  try{
+    // crear elementos video + controles temporales (no cambia estilos base)
+    const videoContainer = document.createElement('div');
+    const video = document.createElement('video');
+    video.style.width = '100%';
+    video.style.height = '100%';
+    video.playsInline = true;
+    video.muted = true;
+    videoContainer.style.width = '100%';
+    videoContainer.style.height = '100%';
+    videoContainer.style.position = 'absolute';
+    videoContainer.style.top = 0;
+    videoContainer.style.left = 0;
+    videoContainer.appendChild(video);
+
+    // insertar dentro del image-container (para no tocar CSS global)
+    const imageContainer = document.getElementById('image-container');
+    imageContainer.appendChild(videoContainer);
+
+    // ocultar preview/placeholder y mostrar animación
+    preview.style.display = 'none';
+    cameraPlaceholder.style.display = 'none';
+    scanLine.style.display = 'block';
+    resultado.style.display = 'block';
+    resultado.innerHTML = 'Cámara activa - apunta al código y pulsa Capturar';
+
+    // pedir stream (varios intentos de constraints)
+    let stream = null;
+    const constraintsTry = [
+      { video: { facingMode: { exact: "environment" }, width: { ideal: 1280 }, height: { ideal: 720 } } },
+      { video: { facingMode: "environment", width: { ideal: 1280 }, height: { ideal: 720 } } },
+      { video: true }
+    ];
+    for(const c of constraintsTry){
+      try{
+        stream = await navigator.mediaDevices.getUserMedia(c);
+        if(stream) break;
+      }catch(err){ /* intentar siguiente */ }
+    }
+    if(!stream){
+      resultado.innerHTML = '<p>No se pudo acceder a la cámara. Verifica permisos.</p>';
+      scanLine.style.display = 'none';
+      resetButton.style.display = 'inline-block';
+      videoContainer.remove();
+      return;
+    }
+
+    video.srcObject = stream;
+    await video.play();
+
+    // crear botón Capturar
+    const snapButton = document.createElement('button');
+    snapButton.innerText = 'Capturar Foto';
+    snapButton.className = 'custom-button';
+    snapButton.style.position = 'absolute';
+    snapButton.style.bottom = '12px';
+    snapButton.style.left = '50%';
+    snapButton.style.transform = 'translateX(-50%)';
+    videoContainer.appendChild(snapButton);
+
+    // cuando pulsas capturar, tomamos frame y lo procesamos
+    snapButton.addEventListener('click', async function onSnap(){
+      snapButton.disabled = true;
+      try{
+        const canvas = document.createElement('canvas');
+        canvas.width = video.videoWidth || 1280;
+        canvas.height = video.videoHeight || 720;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+        // detener stream
+        stream.getTracks().forEach(t => t.stop());
+        // quitar video
+        videoContainer.remove();
+
+        // convertir canvas a blob y llamar a escanearImagen
+        canvas.toBlob(blob => {
+          if(blob) escanearImagen(blob);
+        }, 'image/jpeg', 0.95);
+      }catch(err){
+        console.error('Error al capturar:', err);
+        resultado.innerHTML = '<p>Error al capturar la imagen.</p>';
+        resetButton.style.display = 'inline-block';
+        scanLine.style.display = 'none';
+        // intentar cerrar stream
+        try{ stream.getTracks().forEach(t=>t.stop()); }catch(e){}
+        try{ videoContainer.remove(); }catch(e){}
+      } finally {
+        snapButton.removeEventListener('click', onSnap);
+      }
+    });
+  }catch(err){
+    console.error('Error init camera capture:', err);
+    resultado.innerHTML = '<p>No se pudo iniciar la cámara.</p>';
+    scanLine.style.display = 'none';
+    resetButton.style.display = 'inline-block';
+  }
 });
 
-resetButton.addEventListener('click',()=>{
-  resultado.style.display='none';
-  preview.style.display='none';
-  scanLine.style.display='none';
-  cameraPlaceholder.style.display='block';
-  resetButton.style.display='none';
+/* reinicio limpio (manteniendo diseño) */
+resetButton.addEventListener('click', ()=>{
+  resultado.style.display = 'none';
+  preview.style.display = 'none';
+  preview.src = '';
+  scanLine.style.display = 'none';
+  cameraPlaceholder.style.display = 'block';
+  resetButton.style.display = 'none';
+
+  // reset ZXing reader (liberando camera reader internal)
+  try{ if(zxingReader && typeof zxingReader.reset === 'function') zxingReader.reset(); }catch(e){}
 });
 
-const sidebar=document.getElementById("mySidebar");
-const hamburger=document.getElementById("hamburger");
-hamburger.addEventListener("click",()=>{
-  hamburger.classList.toggle("active");
-  sidebar.classList.toggle("active");
+/* accessibility: stop any camera tracks al cambiar de página */
+window.addEventListener('pagehide', ()=>{
+  try{ if(zxingReader && typeof zxingReader.reset === 'function') zxingReader.reset(); }catch(e){}
 });
+
 </script>
 </body>
 </html>
