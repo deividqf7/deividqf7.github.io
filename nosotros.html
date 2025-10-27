@@ -3,35 +3,44 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nosotros - FACAS X</title>
+  <title>FACAS X - Nosotros</title>
   <style>
-    body {
+    * {
       margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f4f7fa;
-      color: #000;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #002b5c, #004080);
+      color: #fff;
       overflow-x: hidden;
+      min-height: 100vh;
     }
 
     header {
-      background: linear-gradient(90deg, #002b5c, #004080);
-      padding: 15px;
       text-align: center;
-      color: white;
-      font-size: 22px;
-      font-weight: bold;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.3);
+      font-size: 26px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      color: #fff;
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.4);
     }
 
+    /* --- MENÚ LATERAL --- */
     .sidebar {
-      height: 100%;
-      width: 250px;
       position: fixed;
+      left: -270px;
       top: 0;
-      left: -260px;
-      background-color: #111;
-      overflow-x: hidden;
-      transition: left 0.5s ease;
+      width: 250px;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.9);
+      backdrop-filter: blur(8px);
       padding-top: 60px;
+      transition: left 0.4s ease;
       z-index: 1000;
     }
 
@@ -40,11 +49,11 @@
     }
 
     .sidebar a {
-      padding: 12px 24px;
-      text-decoration: none;
-      font-size: 18px;
-      color: #f1f1f1;
       display: block;
+      color: #fff;
+      text-decoration: none;
+      padding: 14px 25px;
+      font-size: 18px;
       transition: 0.3s;
       opacity: 0;
       transform: translateX(-20px);
@@ -57,13 +66,14 @@
     }
 
     .sidebar a:hover {
-      background-color: #004080;
+      background: #004080;
     }
 
+    /* --- BOTÓN MENÚ --- */
     .hamburger {
       position: fixed;
-      top: 15px;
-      left: 15px;
+      top: 18px;
+      left: 18px;
       width: 35px;
       height: 28px;
       display: flex;
@@ -76,7 +86,7 @@
     .bar {
       height: 4px;
       width: 100%;
-      background-color: white;
+      background-color: #fff;
       border-radius: 4px;
       transition: 0.4s;
     }
@@ -93,121 +103,135 @@
       transform: rotate(-45deg) translate(6px, -6px);
     }
 
+    /* --- CONTENEDOR PRINCIPAL --- */
     .container {
       max-width: 900px;
-      margin: 80px auto;
+      margin: 100px auto;
       padding: 30px;
-      background: white;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      background: rgba(255, 255, 255, 0.95);
+      color: #000;
+      border-radius: 16px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
       text-align: center;
+      animation: fadeIn 1s ease;
     }
 
     h1 {
       color: #002b5c;
       margin-bottom: 15px;
+      font-size: 32px;
     }
 
     p {
-      font-size: 16px;
-      line-height: 1.6;
+      font-size: 17px;
+      line-height: 1.7;
+      margin-bottom: 15px;
     }
 
     .highlight {
       color: #004080;
-      font-weight: bold;
+      font-weight: 600;
     }
 
     footer {
-      background-color: #002b5c;
-      color: white;
       text-align: center;
-      padding: 12px;
+      padding: 15px;
+      color: #fff;
+      font-size: 15px;
       margin-top: 40px;
+      background: rgba(0,0,0,0.3);
     }
 
-    .fade {
-      opacity: 0;
-      transform: translateY(30px);
-      animation: fadeInUp 0.8s forwards;
-    }
-
-    @keyframes fadeInUp {
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
       to {
         opacity: 1;
         transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        width: 90%;
+        padding: 20px;
+      }
+      .sidebar {
+        width: 220px;
+      }
+      .sidebar a {
+        font-size: 16px;
       }
     }
   </style>
 </head>
 <body>
 
+  <!-- Botón de menú -->
   <div class="hamburger" id="hamburger">
     <div class="bar"></div>
     <div class="bar"></div>
     <div class="bar"></div>
   </div>
 
+  <!-- Sidebar -->
   <div id="mySidebar" class="sidebar">
-    <!-- Nosotros primero -->
     <a href="inicio.html">Nosotros</a>
     <a href="escaner.html">Escáner de Materiales</a>
-
-    <!-- Procesos -->
     <a href="plastico.html">Proceso del Plástico</a>
     <a href="reciclaje.html">Métodos de Reciclaje</a>
     <a href="tipos.html">Tipos de Plásticos</a>
     <a href="caracteristicas.html">Características del Material</a>
     <a href="impacto.html">Impacto Ambiental</a>
-
-    <!-- Educación y creatividad -->
     <a href="educacion.html">Formación y Educación Ambiental</a>
     <a href="manualidades.html">Creaciones con Plástico Reciclado</a>
-
-    <!-- Información -->
     <a href="curiosidades.html">Curiosidades y Datos Útiles</a>
     <a href="noticias.html">Noticias Ambientales</a>
-
-    <!-- Evaluación -->
     <a href="evaluacion.html">Evaluación y Retroalimentación</a>
     <a href="ayuda.html">Ayuda</a>
   </div>
 
+  <!-- Encabezado -->
   <header>
     FACAS X - Nosotros
   </header>
 
+  <!-- Contenido principal -->
   <div class="container">
-    <h1 class="fade">Quiénes Somos</h1>
-    <p class="fade" style="animation-delay: 0.2s;">
+    <h1>Quiénes Somos</h1>
+    <p>
       <span class="highlight">FACAS X</span> es una iniciativa dedicada a la sostenibilidad, la educación ambiental y la innovación con materiales reciclables. 
       Nacimos con la convicción de que cada acción cuenta y que la transformación hacia un futuro más limpio comienza con la conciencia y la educación.
     </p>
-    <p class="fade" style="animation-delay: 0.4s;">
+    <p>
       Nuestro propósito es crear un espacio donde el conocimiento y la tecnología se unan para fomentar el reciclaje inteligente, 
       la reutilización creativa del plástico y el desarrollo de soluciones que reduzcan el impacto ambiental. 
       A través de proyectos, talleres y herramientas digitales, buscamos empoderar a las personas para que sean agentes de cambio dentro de sus comunidades.
     </p>
-    <p class="fade" style="animation-delay: 0.6s;">
+    <p>
       En FACAS X creemos en el poder de la información y la acción colectiva. Nuestro <span class="highlight">Escáner de Materiales</span> 
       y los distintos apartados educativos de la plataforma fueron diseñados para orientar a los usuarios sobre los tipos de plásticos, 
       los procesos de reciclaje y las alternativas sostenibles que pueden aplicarse en la vida diaria.
     </p>
-    <p class="fade" style="animation-delay: 0.8s;">
+    <p>
       Además, trabajamos para impulsar la innovación verde, integrando la creatividad con la responsabilidad ambiental. 
       Promovemos ideas, manualidades, proyectos escolares y empresariales que reutilizan el plástico, 
       convirtiendo lo que antes era un desecho en algo útil, funcional y con propósito.
     </p>
-    <p class="fade" style="animation-delay: 1s;">
+    <p>
       En resumen, somos una comunidad comprometida con el cambio, con la misión de inspirar y educar a las nuevas generaciones 
       para que comprendan el valor del medio ambiente y actúen en favor de un planeta más sano, sostenible y consciente.
     </p>
   </div>
 
+  <!-- Pie de página -->
   <footer>
     © 2025 FACAS X. Todos los derechos reservados.
   </footer>
 
+  <!-- Script del menú -->
   <script>
     const sidebar = document.getElementById("mySidebar");
     const hamburger = document.getElementById("hamburger");
