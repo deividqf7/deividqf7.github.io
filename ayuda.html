@@ -1,198 +1,221 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ayuda - FACAS X</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f4f7fa;
-      color: #000;
-      overflow-x: hidden;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FACAS X - Ayuda</title>
+<style>
+/* =========================================================================
+   ESTILOS GENERALES Y DE FONDO (Diseño FACAS X)
+   ========================================================================= */
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /* Fondo Degradado Azul/Cian */
+    background: linear-gradient(-45deg, #001f3f, #003366, #000, #00f0ff);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    color: #fff; /* Color de texto claro para el fondo oscuro */
+    overflow-x: hidden;
+    text-align: center;
+    /* FIJACIÓN: Margen superior para el header fijo */
+    padding-top: 60px;
+}
 
-    header {
-      background: linear-gradient(90deg, #002b5c, #004080);
-      padding: 15px;
-      text-align: center;
-      color: white;
-      font-size: 22px;
-      font-weight: bold;
-    }
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
 
-    /* Menú lateral */
-    .sidebar {
-      height: 100%;
-      width: 250px;
-      position: fixed;
-      top: 0;
-      left: -260px; /* oculto fuera de la pantalla */
-      background-color: #111;
-      overflow-x: hidden;
-      transition: left 0.5s ease;
-      padding-top: 60px;
-      z-index: 1000;
-    }
+/* =========================================================================
+   HEADER FIJO Y NAVEGACIÓN
+   ========================================================================= */
+header {
+    /* FIJACIÓN: Header ahora es fijo */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    /* Degradado del Header */
+    background: linear-gradient(90deg, #001f3f, #003366);
+    padding: 15px;
+    font-size: 22px;
+    font-weight: bold;
+    color: #00f0ff; /* Color cian para el título */
+    text-align: center;
+    z-index: 1050; 
+}
 
-    .sidebar.active {
-      left: 0; /* se desliza hacia dentro */
-    }
+.sidebar {
+    height: 100%;
+    width: 280px; 
+    position: fixed;
+    top: 0;
+    left: -290px;
+    background-color: #111;
+    overflow-x: hidden;
+    transition: left 0.5s ease;
+    padding-top: 60px;
+    z-index: 1200; 
+    /* MODIFICACIÓN: Quitar el text-align: left del sidebar */
+}
+.sidebar.active { left: 0; }
 
-    .sidebar a {
-      padding: 12px 24px;
-      text-decoration: none;
-      font-size: 18px;
-      color: #f1f1f1;
-      display: block;
-      transition: 0.3s;
-      opacity: 0;
-      transform: translateX(-20px);
-    }
+.sidebar a {
+    /* MANTENER: Propiedades básicas del enlace */
+    padding: 12px 0; /* Ajustamos el padding horizontal a 0 */
+    text-decoration: none;
+    font-size: 16px; 
+    color: #f1f1f1;
+    display: block;
+    transition: 0.3s;
+    /* CENTRADO: Estas dos líneas centran el texto del enlace */
+    text-align: center; 
+    margin: 0 auto; /* Asegura el centrado si el enlace tiene ancho limitado */
+    width: 90%; /* Ancho para que el color de fondo no ocupe todo al hacer hover */
+}
+.sidebar a:hover { 
+    background-color: #004080; 
+    border-radius: 5px;
+}
 
-    /* Animación al entrar cada link */
-    .sidebar.active a {
-      opacity: 1;
-      transform: translateX(0);
-      transition: all 0.4s ease;
-    }
+.hamburger {
+    /* FIJACIÓN: Hamburguesa fija sobre el header */
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    width: 35px;
+    height: 28px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+    z-index: 1100;
+}
+.bar {
+    height: 4px;
+    width: 100%;
+    background-color: white;
+    border-radius: 4px;
+    transition: 0.4s;
+}
+.hamburger.active .bar:nth-child(1) {
+    transform: rotate(45deg) translate(6px, 6px);
+}
+.hamburger.active .bar:nth-child(2) { opacity: 0; }
+.hamburger.active .bar:nth-child(3) {
+    transform: rotate(-45deg) translate(6px, -6px);
+}
 
-    .sidebar a:hover {
-      background-color: #004080;
-    }
+/* =========================================================================
+   ESTILOS DE CONTENIDO PRINCIPAL (AYUDA)
+   ========================================================================= */
+.container {
+    max-width: 800px;
+    margin: 40px auto; 
+    padding: 30px;
+    background: #001f3f; 
+    border-radius: 12px;
+    border: 2px solid #00f0ff; 
+    box-shadow: 0 0 25px #00f0ff; 
+    text-align: center; 
+}
 
-    /* Botón hamburguesa */
-    .hamburger {
-      position: fixed;
-      top: 15px;
-      left: 15px;
-      width: 35px;
-      height: 28px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      cursor: pointer;
-      z-index: 1100;
-    }
+h2 {
+    color: #00f0ff;
+    margin-bottom: 20px;
+}
 
-    .bar {
-      height: 4px;
-      width: 100%;
-      background-color: white;
-      border-radius: 4px;
-      transition: 0.4s;
-    }
+p {
+    font-size: 17px;
+    line-height: 1.6;
+    color: #ccc;
+    margin-bottom: 25px;
+}
 
-    /* Animación al convertir en X */
-    .hamburger.active .bar:nth-child(1) {
-      transform: rotate(45deg) translate(6px, 6px);
-    }
+.correo {
+    font-weight: bold;
+    color: #00f0ff; 
+    font-size: 19px;
+    display: block;
+    margin-top: 5px;
+}
 
-    .hamburger.active .bar:nth-child(2) {
-      opacity: 0;
-    }
-
-    .hamburger.active .bar:nth-child(3) {
-      transform: rotate(-45deg) translate(6px, -6px);
-    }
-
-    /* Contenido principal */
-    .container {
-      max-width: 800px;
-      margin: 80px auto;
-      padding: 20px;
-      background: white;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-      opacity: 0;
-      transform: translateY(40px);
-      animation: fadeInUp 1s ease forwards;
-    }
-
-    @keyframes fadeInUp {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    h2 {
-      color: #002b5c;
-      text-align: center;
-      margin-bottom: 15px;
-    }
-
-    p {
-      font-size: 16px;
-      line-height: 1.6;
-      text-align: center;
-    }
-
-    .correo {
-      font-weight: bold;
-      color: #004080;
-    }
-
-    footer {
-      background-color: #002b5c;
-      color: white;
-      text-align: center;
-      padding: 12px;
-      margin-top: 40px;
-    }
-  </style>
+footer {
+    background-color: #001f3f;
+    color: #00f0ff;
+    text-align: center;
+    padding: 12px;
+    margin-top: 40px;
+}
+</style>
 </head>
 <body>
-
-  <!-- Botón hamburguesa -->
-  <div class="hamburger" id="hamburger">
+<div class="hamburger" id="hamburger">
     <div class="bar"></div>
     <div class="bar"></div>
     <div class="bar"></div>
-  </div>
-
-  <!-- Menú lateral SIN portada -->
-<div id="mySidebar" class="sidebar">
-  <a href="inicio.html">Inicio</a>
-  <a href="escaner.html">Escáner</a>
-  <a href="plastico.html">Cómo se hace el plástico</a>
-  <a href="reciclaje.html">Maneras de reciclar</a>
-  <a href="tipos.html">Tipos de plásticos</a>
-  <a href="caracteristicas.html">Características</a>
-  <a href="impacto.html">Impacto Ambiental</a> <!-- corregido -->
-  <a href="ayuda.html">Ayuda</a>
 </div>
 
-  <!-- Encabezado -->
-  <header>
-    FACAS X - Ayuda
-  </header>
+<div id="mySidebar" class="sidebar">
+    <a href="nosotros.html">Nosotros</a>
+    <a href="escaner.html">Escáner</a>
+    <a href="proceso-plastico.html">Proceso del Plástico</a>
+    <a href="metodos-reciclaje.html">Métodos de Reciclaje</a>
+    <a href="tipos-plasticos.html">Tipos de Plásticos</a>
+    <a href="caracteristicas-material.html">Características del Material</a>
+    <a href="impacto-ambiental.html">Impacto Ambiental</a>
+    <a href="formacion-educacion.html">Formación y Educación Ambiental</a>
+    <a href="creaciones-reciclado.html">Creaciones con Plástico Reciclado</a>
+    <a href="curiosidades.html">Curiosidades y Datos Útiles</a>
+    <a href="noticias-ambientales.html">Noticias Ambientales</a>
+    <a href="evaluacion.html">Evaluación y Retroalimentación</a>
+    <a href="ayuda.html">Ayuda</a>
+</div>
 
-  <!-- Contenido -->
-  <div class="container">
-    <h2>¿Necesitas Ayuda?</h2>
+<header>FACAS X - Ayuda y Soporte</header>
+
+<div class="container">
+    <h2>¿Necesitas Ayuda? 💡</h2>
     <p>
-      Si tienes alguna duda, puedes <span class="correo">contactarnos al correo:</span><br>
-      <span class="correo">facasx@gmail.com</span>
+        Si tienes alguna duda, un reporte de error, o necesitas soporte técnico, 
+        puedes contactarnos directamente al correo electrónico:
     </p>
-    <p>
-      También puedes dejarnos tu sugerencia y con gusto la revisaremos para seguir mejorando.
+    <span class="correo">facasx@gmail.com</span>
+    
+    <p style="margin-top: 40px;">
+        También puedes dejarnos tus sugerencias y comentarios sobre la aplicación. 
+        ¡Con gusto las revisaremos para seguir mejorando FACAS X!
     </p>
-  </div>
+</div>
 
-  <footer>
-    © 2025 FACAS X. Todos los derechos reservados.
-  </footer>
+<footer>© 2025 FACAS X. Todos los derechos reservados.</footer>
 
-  <script>
-    const sidebar = document.getElementById("mySidebar");
-    const hamburger = document.getElementById("hamburger");
+<script>
+/* =======================================
+    Funcionalidad Hamburguesa
+    ======================================= */
+document.addEventListener('DOMContentLoaded', () => {
+    const hamburger = document.getElementById('hamburger');
+    const sidebar = document.getElementById('mySidebar');
 
-    hamburger.addEventListener("click", () => {
-      hamburger.classList.toggle("active");
-      sidebar.classList.toggle("active");
+    const toggleMenu = () => {
+        sidebar.classList.toggle('active');
+        hamburger.classList.toggle('active');
+    };
+
+    // Event listener para abrir/cerrar con el icono
+    hamburger.addEventListener('click', toggleMenu);
+
+    // Event listener para cerrar la barra lateral al hacer clic en un enlace
+    sidebar.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            // Se cierra la barra lateral con un pequeño retraso
+            setTimeout(toggleMenu, 50); 
+        });
     });
-  </script>
+});
+</script>
 </body>
 </html>

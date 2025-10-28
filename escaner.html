@@ -207,24 +207,24 @@ footer {
 </div>
 
 <div id="mySidebar" class="sidebar">
-  <a href="#">Nosotros</a>
-  <a href="#">Escáner de Materiales</a>
-  <a href="#">Proceso del Plástico</a>
-  <a href="#">Métodos de Reciclaje</a>
-  <a href="#">Tipos de Plásticos</a>
-  <a href="#">Características del Material</a>
-  <a href="#">Impacto Ambiental</a>
-  <a href="#">Formación y Educación Ambiental</a>
-  <a href="#">Creaciones con Plástico Reciclado</a>
-  <a href="#">Curiosidades y Datos Útiles</a>
-  <a href="#">Noticias Ambientales</a>
-  <a href="#">Evaluación y Retroalimentación</a>
-  <a href="#">Ayuda</a>
+  <a href="nosotros.html">Nosotros</a>
+  <a href="escaner-materiales.html">Escáner de Materiales</a>
+  <a href="proceso-plastico.html">Proceso del Plástico</a>
+  <a href="metodos-reciclaje.html">Métodos de Reciclaje</a>
+  <a href="tipos-plasticos.html">Tipos de Plásticos</a>
+  <a href="caracteristicas-material.html">Características del Material</a>
+  <a href="impacto-ambiental.html">Impacto Ambiental</a>
+  <a href="formacion-educacion.html">Formación y Educación Ambiental</a>
+  <a href="creaciones-reciclado.html">Creaciones con Plástico Reciclado</a>
+  <a href="curiosidades.html">Curiosidades y Datos Útiles</a>
+  <a href="noticias-ambientales.html">Noticias Ambientales</a>
+  <a href="evaluacion.html">Evaluación y Retroalimentación</a>
+  <a href="ayuda.html">Ayuda</a>
 </div>
 
 <header>FACAS X - Escáner de Materiales</header>
 
-<div class="container">
+<div class="container" id="scanner">
   <h2>Escáner de Botellas</h2>
   <p>Sube o toma una foto del código de barras del producto para identificarlo y conocer cómo reciclarlo.</p>
 
@@ -246,15 +246,14 @@ footer {
 
 <footer>© 2025 FACAS X. Todos los derechos reservados.</footer>
 
-<!-- 🔊 Sonidos -->
 <audio id="success-sound" src="https://actions.google.com/sounds/v1/cartoon/clang_and_wobble.ogg" preload="auto"></audio>
 <audio id="error-sound" src="https://actions.google.com/sounds/v1/cartoon/wood_plank_flicks.ogg" preload="auto"></audio>
 
 <script src="https://unpkg.com/@zxing/library@latest"></script>
 <script>
 /* ============================
-   Mejora de decodificación JS
-   ============================ */
+    Mejora de decodificación JS
+    ============================ */
 
 // Elementos DOM (sin tocar diseño)
 const fileInput = document.getElementById('fileInput');
@@ -294,8 +293,8 @@ function getZXReader(){
 }
 
 /* Normaliza código leído para comparar mejor:
-   - elimina no dígitos
-   - quita ceros a la izquierda para comparar con versiones sin ceros
+    - elimina no dígitos
+    - quita ceros a la izquierda para comparar con versiones sin ceros
 */
 function normalizeCode(code){
   if(!code) return '';
@@ -306,7 +305,7 @@ function normalizeCode(code){
 }
 
 /* Intenta decodificar el canvas en diferentes escalas
-   para aumentar la probabilidad de lectura. */
+    para aumentar la probabilidad de lectura. */
 async function tryDecodeWithScales(img){
   const reader = getZXReader();
 
@@ -457,7 +456,7 @@ fileInput.addEventListener('change', e=>{
 });
 
 /* Mejor flujo para tomar foto desde cámara: abrir video en el recuadro y capturar.
-   Esto no cambia diseño: el video se añade dinámicamente y luego se quita. */
+    Esto no cambia diseño: el video se añade dinámicamente y luego se quita. */
 photoButton.addEventListener('click', async ()=>{
   try{
     // crear elementos video + controles temporales (no cambia estilos base)
@@ -576,6 +575,32 @@ window.addEventListener('pagehide', ()=>{
   try{ if(zxingReader && typeof zxingReader.reset === 'function') zxingReader.reset(); }catch(e){}
 });
 
+/* ============================
+    Añadido: Funcionalidad Hamburguesa y Navegación
+    ============================ */
+document.addEventListener('DOMContentLoaded', () => {
+    const hamburger = document.getElementById('hamburger');
+    const sidebar = document.getElementById('mySidebar');
+    // Ya no necesitamos sidebarLinks para navegación, solo para cerrar el menú
+
+    // Función para alternar el menú
+    const toggleMenu = () => {
+        sidebar.classList.toggle('active');
+        hamburger.classList.toggle('active');
+    };
+
+    // Event listener al hacer click en la hamburguesa
+    hamburger.addEventListener('click', toggleMenu);
+
+    // Funcionalidad para cerrar la barra lateral al hacer clic en un enlace (permite la navegación)
+    sidebar.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            // Cierra la barra lateral con un pequeño retraso ANTES de que el navegador cambie de página.
+            setTimeout(toggleMenu, 50); 
+            // El navegador automáticamente sigue el 'href' del enlace después de que este script termina.
+        });
+    });
+});
 </script>
 </body>
 </html>
