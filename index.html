@@ -6,7 +6,7 @@
     <title>FACAS X - Portal Principal</title>
     <style>
         /* =========================================================================
-           ESTILOS DE FONDO INMERSIVO FACAS X (Mismos que en los otros archivos)
+           ESTILOS DE FONDO INMERSIVO FACAS X (Base)
            ========================================================================= */
         body {
             margin: 0;
@@ -19,69 +19,77 @@
             overflow: hidden; 
             text-align: center;
             
-            /* Fondo animado: Degradado futurista (Tonos azul/cian/negro) */
+            /* Fondo animado: Degradado futurista */
             background: linear-gradient(-45deg, #001f3f, #003366, #000, #00f0ff);
             background-size: 400% 400%;
+            /* Mantenemos esta animación, es ligera */
             animation: gradientBG 15s ease infinite;
         }
 
-        /* Animación del fondo (movimiento suave del color) */
         @keyframes gradientBG {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
 
-        /* Ocultar elementos de navegación (Menú y Hamburguesa) */
+        /* Ocultar elementos de navegación */
         .sidebar, .hamburger, header, footer {
             display: none !important;
         }
 
         /* =========================================================================
-           CONTENEDOR PORTADA (Botón que lleva a nosotros.html)
+           CONTENEDOR PORTADA
            ========================================================================= */
         .main-portal {
-            text-decoration: none; /* Es un enlace <a> */
+            text-decoration: none;
             width: 90%; 
             max-width: 650px;
             padding: 40px;
-            background-color: rgba(0, 15, 30, 0.9); /* Azul muy oscuro, semi-transparente */
-            border: 5px solid #00f0ff; /* Borde cian brillante */
+            background-color: rgba(0, 15, 30, 0.9);
+            border: 5px solid #00f0ff;
             border-radius: 20px;
-            box-shadow: 0 0 40px rgba(0, 240, 255, 0.5); /* Sombra cian */
+            box-shadow: 0 0 40px rgba(0, 240, 255, 0.5);
             position: relative;
-            animation: portalGlow 2s infinite alternate; /* Animación de brillo */
-            z-index: 10;
-            color: #fff; /* Asegura que el texto dentro del <a> sea blanco/cian */
+            /* Mantenemos el brillo, es clave para el diseño */
+            animation: portalGlow 2s infinite alternate;
+            z-index: 100; 
+            color: #fff;
             transition: transform 0.3s ease;
             cursor: pointer;
         }
 
         .main-portal:hover {
-            transform: scale(1.03); /* Ligeramente más grande al pasar el ratón */
+            transform: scale(1.03);
+            background-color: rgba(0, 30, 60, 0.95);
         }
 
-        /* Animación de pulso del contenedor */
         @keyframes portalGlow {
-            0% {
-                box-shadow: 0 0 20px #00f0ff, 0 0 30px #007bff;
-                transform: scale(1);
-            }
-            100% {
-                box-shadow: 0 0 35px #00f0ff, 0 0 55px #007bff;
-                transform: scale(1.01);
-            }
+            0% { box-shadow: 0 0 20px #00f0ff, 0 0 30px #007bff; transform: scale(1); }
+            100% { box-shadow: 0 0 35px #00f0ff, 0 0 55px #007bff; transform: scale(1.01); }
         }
 
         /* Títulos y texto */
         h1 {
             font-size: 4em; 
-            color: #00f0ff; /* Cian brillante */
+            color: #00f0ff; 
             text-shadow: 0 0 10px #00aaff;
             letter-spacing: 7px;
             margin-bottom: 5px;
             margin-top: 0;
             font-weight: 800;
+            position: relative;
+            display: inline-block;
+        }
+        
+        /* Efecto Glitch (activado solo al hacer hover) */
+        .main-portal:hover h1 {
+            animation: glitchEffect 0.5s infinite linear;
+        }
+
+        @keyframes glitchEffect {
+            0% { text-shadow: 5px 0 0 #00f0ff, -5px 0 0 #ff00ff; }
+            50% { text-shadow: -5px 0 0 #00f0ff, 5px 0 0 #ff00ff; }
+            100% { text-shadow: 5px 0 0 #00f0ff, -5px 0 0 #ff00ff; }
         }
 
         h2 {
@@ -99,7 +107,7 @@
             font-size: 1.4em;
             font-weight: bold;
             color: #001f3f;
-            background-color: #00c0ff; /* Cian más claro */
+            background-color: #00c0ff;
             border-radius: 50px; 
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
             transition: background-color 0.3s, color 0.3s;
@@ -109,6 +117,25 @@
             background-color: #fff;
             color: #003366;
         }
+        
+        /* =========================================================================
+           PARTÍCULAS OPTIMIZADAS (Menos elementos, animación más simple)
+           ========================================================================= */
+        .particle {
+            position: absolute;
+            background: radial-gradient(circle at center, #ffffff 0%, #00f0ff 50%, transparent 100%);
+            border-radius: 50%;
+            pointer-events: none;
+            box-shadow: 0 0 5px #00f0ff; 
+            /* Animación más simple y corta: solo opacidad y un poco de escala */
+            animation: starPulse 4s infinite ease-in-out;
+        }
+        
+        @keyframes starPulse {
+            0% { opacity: 0.8; transform: scale(1); }
+            50% { opacity: 0.3; transform: scale(0.8); }
+            100% { opacity: 0.8; transform: scale(1); }
+        }
     </style>
 </head>
 <body>
@@ -117,12 +144,40 @@
         <h1>FACAS X</h1>
         <h2>Innovación en la gestión y reciclaje de plásticos</h2>
         
-        <p>Descubre los tipos de polímeros, sus características y los procesos tecnológicos que transforman el residuo en recurso.</p>
+        <p>Tu portal de datos para la clasificación inteligente de materiales y la economía circular.</p>
         
         <span class="cta-text">
-            INICIAR
+            INICIAR ANÁLISIS DEL SISTEMA
         </span>
     </a>
+
+    <script>
+        const body = document.body;
+        const particleCount = 18; // REDUCIDO de 60 a 18 para rendimiento
+
+        for (let i = 0; i < particleCount; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            
+            // Tamaño y posición inicial aleatorios
+            const size = Math.random() * 4 + 1;
+            particle.style.width = `${size}px`;
+            particle.style.height = `${size}px`;
+            
+            // Posicionamiento más aleatorio (usando menos ciclos de CPU)
+            particle.style.left = `${Math.random() * 100}vw`;
+            particle.style.top = `${Math.random() * 100}vh`;
+
+            // Animación aleatoria (solo duración y retraso)
+            const duration = Math.random() * 2 + 3; // 3s a 5s
+            const delay = Math.random() * -duration; 
+            
+            particle.style.animationDuration = `${duration}s`;
+            particle.style.animationDelay = `${delay}s`;
+            
+            body.appendChild(particle);
+        }
+    </script>
 
 </body>
 </html>
