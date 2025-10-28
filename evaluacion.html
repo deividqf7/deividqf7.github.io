@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FACAS X - Quiz de Evaluación Avanzado</title>
+<style>
+/* =========================================================================
+   ESTILOS GENERALES Y DE FONDO (Diseño FACAS X)
+   ========================================================================= */
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(-45deg, #001f3f, #003366, #000, #00f0ff);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    color: #fff;
+    overflow-x: hidden;
+    text-align: center;
+    padding-top: 60px;
+}
+
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* =========================================================================
+   HEADER FIJO Y NAVEGACIÓN
+   ========================================================================= */
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: linear-gradient(90deg, #001f3f, #003366);
+    padding: 15px;
+    font-size: 22px;
+    font-weight: bold;
+    color: #00f0ff;
+    text-align: center;
+    z-index: 1050; 
+}
+
+.sidebar {
+    height: 100%;
+    width: 280px; 
+    position: fixed;
+    top: 0;
+    left: -290px;
+    background-color: #111;
+    overflow-x: hidden;
+    transition: left 0.5s ease;
+    padding-top: 60px;
+    z-index: 1200; 
+}
+.sidebar.active { left: 0; }
+
+.sidebar a {
+    padding: 12px 0; 
+    text-decoration: none;
+    font-size: 16px; 
+    color: #f1f1f1;
+    display: block;
+    transition: 0.3s;
+    text-align: center; 
+    margin: 0 auto; 
+    width: 90%; 
+}
+.sidebar a:hover { 
+    background-color: #004080; 
+    border-radius: 5px;
+}
+
+.hamburger {
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    width: 35px;
+    height: 28px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+    z-index: 1100;
+}
+.bar {
+    height: 4px;
+    width: 100%;
+    background-color: white;
+    border-radius: 4px;
+    transition: 0.4s;
+}
+.hamburger.active .bar:nth-child(1) {
+    transform: rotate(45deg) translate(6px, 6px);
+}
+.hamburger.active .bar:nth-child(2) { opacity: 0; }
+.hamburger.active .bar:nth-child(3) {
+    transform: rotate(-45deg) translate(6px, -6px);
+}
+
+/* =========================================================================
+   ESTILOS DE CONTENIDO PRINCIPAL (QUIZ)
+   ========================================================================= */
+.container {
+    max-width: 700px;
+    margin: 40px auto; 
+    padding: 30px;
+    background: #001f3f; 
+    border-radius: 12px;
+    border: 2px solid #00f0ff; 
+    box-shadow: 0 0 25px #00f0ff; 
+    text-align: left;
+}
+
+h2 {
+    color: #00f0ff;
+    text-align: center;
+    border-bottom: 2px solid #003366;
+    padding-bottom: 10px;
+    margin-bottom: 30px;
+}
+
+.quiz-question {
+    background-color: #00152b;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    border: 1px solid #003366;
+}
+
+.quiz-question p {
+    font-weight: bold;
+    color: #fff;
+    margin-bottom: 15px;
+    font-size: 1.1em;
+    text-align: left;
+}
+
+.option-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.option-group label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    background-color: #002b5c;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background-color 0.2s;
+}
+
+.option-group label:hover {
+    background-color: #004080;
+}
+
+.option-group input[type="radio"] {
+    margin-right: 10px;
+}
+
+/* Botón de Enviar y Reiniciar - Estilos compartidos */
+#submitQuiz, #resetQuiz {
+    background: linear-gradient(90deg, #00f0ff, #00cfff);
+    color: #001f3f;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 0 0 15px #00f0ff;
+    transition: 0.3s;
+    display: block;
+    width: 100%;
+    margin-top: 30px;
+}
+#submitQuiz:hover, #resetQuiz:hover {
+    background: linear-gradient(90deg, #00cfff, #0099cc);
+    box-shadow: 0 0 25px #00f0ff;
+}
+
+/* Estilo específico para el botón de Reiniciar (ahora en tonos azules) */
+#resetQuiz {
+    background: linear-gradient(90deg, #004080, #0050a0); /* Tonos de azul más oscuro */
+    color: #fff; /* Texto blanco para contraste */
+    margin-top: 15px; 
+    box-shadow: 0 0 15px rgba(0, 80, 160, 0.7); /* Sombra azul */
+}
+#resetQuiz:hover {
+    background: linear-gradient(90deg, #0050a0, #0060c0);
+    box-shadow: 0 0 25px rgba(0, 96, 192, 0.9);
+}
+
+/* Sección de Resultados */
+#quizResult {
+    background-color: #111; 
+    padding: 20px;
+    border-radius: 15px;
+    margin-top: 30px;
+    text-align: center;
+    display: none; 
+    position: relative; 
+    overflow: hidden; 
+    border: 2px solid transparent; 
+    box-shadow: none; 
+}
+
+/* =========================================================================
+   CLASES DE BORDES DINÁMICOS (SOLO COLORES FACAS X)
+   ========================================================================= */
+
+/* ESTILO DE GUZANITO (Puntuación Baja/Necesita Mejorar) */
+#quizResult.animated-border::before {
+    content: '';
+    position: absolute;
+    top: -5px; 
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    background: linear-gradient(45deg, #00f0ff, #007bff, #003366, #001f3f, #00f0ff);
+    background-size: 400% 400%; 
+    z-index: -1; 
+    border-radius: 20px; 
+    animation: borderAnimation 8s linear infinite; 
+}
+
+@keyframes borderAnimation {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+}
+
+#quizResult.animated-border {
+    box-shadow: 0 0 15px rgba(0, 240, 255, 0.7); /* Sombra azul brillante */
+    border: 2px solid transparent; 
+}
+
+
+/* ESTILO NORMAL (Puntuación Media - Ahora un azul intermedio) */
+#quizResult.border-medium { /* Cambiado de 'border-yellow' a 'border-medium' */
+    border: 2px solid #007bff; /* Un azul de la paleta FACAS X */
+    box-shadow: 0 0 15px #007bff;
+}
+
+/* ESTILO EXCELENTE (Puntuación Alta - Cian de FACAS X) */
+#quizResult.border-high { /* Cambiado de 'border-lime' a 'border-high' */
+    border: 2px solid #00f0ff; /* Cian de FACAS X */
+    box-shadow: 0 0 15px #00f0ff;
+}
+/* ========================================================================= */
+
+
+#quizResult h3 {
+    color: #00f0ff; /* Cian para títulos de resultados */
+    margin-bottom: 15px;
+}
+
+#resultScore {
+    font-size: 2em;
+    color: #00f0ff; /* Cian brillante para la puntuación */
+    font-weight: bold;
+}
+
+.result-message {
+    margin-top: 15px;
+    font-size: 1.1em;
+    color: #ffffff; /* Texto blanco por defecto */
+}
+
+footer {
+    background-color: #001f3f;
+    color: #00f0ff;
+    text-align: center;
+    padding: 12px;
+    margin-top: 40px;
+}
+</style>
+</head>
+<body>
+<div class="hamburger" id="hamburger">
+    <div class="bar"></div>
+    <div class="bar"></div>
+    <div class="bar"></div>
+</div>
+
+<div id="mySidebar" class="sidebar">
+    <a href="nosotros.html">Nosotros</a>
+    <a href="escaner.html">Escáner</a>
+    <a href="proceso-plastico.html">Proceso del Plástico</a>
+    <a href="metodos-reciclaje.html">Métodos de Reciclaje</a>
+    <a href="tipos-plasticos.html">Tipos de Plásticos</a>
+    <a href="caracteristicas.html">Características del Material</a>
+    <a href="impacto-ambiental.html">Impacto Ambiental</a>
+    <a href="formacion-educacion.html">Formación y Educación Ambiental</a>
+    <a href="creaciones-reciclado.html">Creaciones con Plástico Reciclado</a>
+    <a href="curiosidades.html">Curiosidades y Datos Útiles</a>
+    <a href="noticias-ambientales.html">Noticias Ambientales</a>
+    <a href="evaluacion.html">Evaluación y Retroalimentación</a>
+    <a href="ayuda.html">Ayuda</a>
+</div>
+
+<header>FACAS X - Quiz de Evaluación Avanzado</header>
+
+<div class="container">
+    <h2>Mide tu Nivel de Conocimiento Ecológico 🎓</h2>
+    <p style="text-align: center;">¡Demuestra que eres un experto en el manejo responsable del plástico! (7 Preguntas)</p>
+
+    <form id="quizForm">
+        
+        <div class="quiz-question">
+            <p>1. ¿Cuál es el proceso químico fundamental mediante el cual las moléculas pequeñas (monómeros) se unen para formar el plástico (polímero)?</p>
+            <div class="option-group">
+                <label><input type="radio" name="q1" value="a"> A) Condensación.</label>
+                <label><input type="radio" name="q1" value="b"> B) Polimerización.</label>
+                <label><input type="radio" name="q1" value="c"> C) Destilación.</label>
+                <label><input type="radio" name="q1" value="d"> D) Oxidación.</label>
+            </div>
+        </div>
+
+        <div class="quiz-question">
+            <p>2. La mayoría de los plásticos que se reciclan comúnmente (PET, HDPE, PP) pertenecen al grupo de:</p>
+            <div class="option-group">
+                <label><input type="radio" name="q2" value="a"> A) Plásticos Termoestables (no pueden ser refundidos).</label>
+                <label><input type="radio" name="q2" value="b"> B) Plásticos Bio-degradables (se descomponen rápidamente).</label>
+                <label><input type="radio" name="q2" value="c"> C) Plásticos Termoplásticos (pueden ser fundidos y remoldeados varias veces).</label>
+                <label><input type="radio" name="q2" value="d"> D) Plásticos de Alta Fusión (solo se usan en la industria aeroespacial).</label>
+            </div>
+        </div>
+
+        <div class="quiz-question">
+            <p>3. ¿Cuál es el principal riesgo ambiental a largo plazo asociado con la desintegración física de los plásticos en la naturaleza?</p>
+            <div class="option-group">
+                <label><input type="radio" name="q3" value="a"> A) La lluvia ácida.</label>
+                <label><input type="radio" name="q3" value="b"> B) La formación de Microplásticos.</label>
+                <label><input type="radio" name="q3" value="c"> C) El efecto invernadero directo.</label>
+                <label><input type="radio" name="q3" value="d"> D) El agotamiento de la capa de ozono.</label>
+            </div>
+        </div>
+
+        <div class="quiz-question">
+            <p>4. El **Reciclaje Químico** de plásticos, a diferencia del mecánico, tiene la ventaja de:</p>
+            <div class="option-group">
+                <label><input type="radio" name="q4" value="a"> A) Usar solo agua para el proceso.</label>
+                <label><input type="radio" name="q4" value="b"> B) Romper los polímeros para obtener monómeros (materia prima virgen).</label>
+                <label><input type="radio" name="q4" value="c"> C) Ser más rápido que el mecánico.</label>
+                <label><input type="radio" name="q4" value="d"> D) Requerir menos energía que la fabricación original.</label>
+            </div>
+        </div>
+        
+        <div class="quiz-question">
+            <p>5. ¿Qué función principal cumplen los **Aditivos** (como los plastificantes o retardantes) añadidos a los polímeros base?</p>
+            <div class="option-group">
+                <label><input type="radio" name="q5" value="a"> A) Reducir el peso del plástico para el transporte.</label>
+                <label><input type="radio" name="q5" value="b"> B) Determinar el color final del producto (pigmentación).</label>
+                <label><input type="radio" name="q5" value="c"> C) Mejorar propiedades como la flexibilidad, resistencia o durabilidad.</label>
+                <label><input type="radio" name="q5" value="d"> D) Disminuir el coste de la materia prima, sin afectar la calidad).</label>
+            </div>
+        </div>
+        
+        <div class="quiz-question">
+            <p>6. La principal diferencia entre **Reúso** y **Reciclaje** es que el reúso:</p>
+            <div class="option-group">
+                <label><input type="radio" name="q6" value="a"> A) Implica transformar la materia prima en un producto completamente nuevo.</label>
+                <label><input type="radio" name="q6" value="b"> B) Requiere un proceso industrial de fundición y granulación.</label>
+                <label><input type="radio" name="q6" value="c"> C) Mantiene la forma original del objeto para un nuevo fin (ej. una botella como maceta).</label>
+                <label><input type="radio" name="q6" value="d"> D) Solo aplica a plásticos con código PET 1.</label>
+            </div>
+        </div>
+        
+        <div class="quiz-question">
+            <p>7. ¿Qué tipo de información proporciona el código de barras **EAN-13** que utiliza el Escáner de FACAS X?</p>
+            <div class="option-group">
+                <label><input type="radio" name="q7" value="a"> A) Directamente el tipo de polímero (ej. PET).</label>
+                <label><input type="radio" name="q7" value="b"> B) El país de origen y la identificación del producto, no el material.</label>
+                <label><input type="radio" name="q7" value="c"> C) El nivel de toxicidad del material.</label>
+                <label><input type="radio" name="q7" value="d"> D) La antigüedad del producto.</label>
+            </div>
+        </div>
+
+        <button type="submit" id="submitQuiz">Calcular mi Puntuación</button>
+    </form>
+
+    <div id="quizResult">
+        <h3>Tu Puntuación es:</h3>
+        <p id="resultScore"></p>
+        <p class="result-message" id="resultMessage"></p>
+        
+        <button id="resetQuiz" style="display: none;">Reiniciar Evaluación</button>
+    </div>
+</div>
+
+<footer>© 2025 FACAS X. Todos los derechos reservados.</footer>
+
+<script>
+/* =======================================
+    Funcionalidad Hamburguesa
+    ======================================= */
+document.addEventListener('DOMContentLoaded', () => {
+    const hamburger = document.getElementById('hamburger');
+    const sidebar = document.getElementById('mySidebar');
+    const quizForm = document.getElementById('quizForm');
+    const quizResult = document.getElementById('quizResult');
+    const resetQuizButton = document.getElementById('resetQuiz'); 
+    const submitQuizButton = document.getElementById('submitQuiz'); 
+    const resultScore = document.getElementById('resultScore');
+    const resultMessage = document.getElementById('resultMessage');
+
+    // Respuestas correctas (7 Preguntas)
+    const CORRECT_ANSWERS = {
+        q1: 'b', // Polimerización
+        q2: 'c', // Termoplásticos
+        q3: 'b', // Microplásticos
+        q4: 'b', // Obtener monómeros
+        q5: 'c', // Mejorar flexibilidad/resistencia
+        q6: 'c', // Mantiene la forma original
+        q7: 'b'  // Identificación del producto
+    };
+
+    const toggleMenu = () => {
+        sidebar.classList.toggle('active');
+        hamburger.classList.toggle('active');
+    };
+
+    // Listeners de Navegación
+    hamburger.addEventListener('click', toggleMenu);
+    sidebar.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            setTimeout(toggleMenu, 50); 
+        });
+    });
+
+    /* =======================================
+        Función para reiniciar el Quiz
+        ======================================= */
+    const resetQuiz = () => {
+        // 1. Limpia el formulario
+        quizForm.reset(); 
+        
+        // 2. Oculta el resultado y el botón de reinicio
+        quizResult.style.display = 'none';
+        resetQuizButton.style.display = 'none';
+        
+        // 3. Vuelve a habilitar el formulario
+        const inputs = quizForm.querySelectorAll('input, select, button');
+        inputs.forEach(input => input.disabled = false);
+        
+        // 4. Muestra el botón de enviar
+        submitQuizButton.style.display = 'block'; 
+        submitQuizButton.disabled = false;
+        
+        // 5. Limpia estilos de borde y animación
+        quizResult.classList.remove('animated-border', 'border-medium', 'border-high');
+        quizResult.style.borderColor = 'transparent'; 
+        quizResult.style.boxShadow = 'none';
+    };
+
+    // Event Listener para el botón de Reiniciar
+    resetQuizButton.addEventListener('click', resetQuiz);
+
+    /* =======================================
+        Lógica del Quiz (Aplicación de Animación)
+        ======================================= */
+    quizForm.addEventListener('submit', function(e) {
+        e.preventDefault(); 
+        
+        let score = 0;
+        const totalQuestions = Object.keys(CORRECT_ANSWERS).length;
+        let allAnswered = true;
+
+        // 1. Limpiar clases y estilos anteriores antes de la nueva evaluación
+        quizResult.classList.remove('animated-border', 'border-medium', 'border-high');
+        quizResult.style.borderColor = 'transparent'; 
+        quizResult.style.boxShadow = 'none';
+
+        // Itera sobre las preguntas y verifica las respuestas
+        for (const question in CORRECT_ANSWERS) {
+            const selectedOption = document.querySelector(`input[name="${question}"]:checked`);
+            
+            if (!selectedOption) {
+                allAnswered = false;
+                break; 
+            }
+
+            if (selectedOption.value === CORRECT_ANSWERS[question]) {
+                score++;
+            }
+        }
+
+        if (!allAnswered) {
+            alert('Por favor, responde todas las preguntas antes de calcular tu puntuación.');
+            return;
+        }
+
+        // Muestra los resultados
+        const percentage = (score / totalQuestions) * 100;
+        
+        resultScore.textContent = `${score} / ${totalQuestions} (${Math.round(percentage)}%)`;
+        
+        if (score === totalQuestions) {
+            resultMessage.innerHTML = '¡Nivel Experto! 🎉 Tienes un dominio completo del tema. ¡Felicidades!';
+            quizResult.classList.add('border-high'); // Borde cian
+        } else if (score >= 5) { // 5 o 6 correctas
+            resultMessage.innerHTML = '¡Muy bien! 👍 Tienes un conocimiento avanzado. Un pequeño repaso te hará invencible.';
+            quizResult.classList.add('border-medium'); // Borde azul intermedio
+        } else {
+            resultMessage.innerHTML = 'Buen comienzo. 🤔 Repasa los apartados de Procesos y Características para mejorar tus resultados.';
+            // Aplicamos la clase de la animación "gusanito azul"
+            quizResult.classList.add('animated-border'); 
+        }
+
+        quizResult.style.display = 'block';
+        
+        // Deshabilita y oculta el botón de enviar
+        submitQuizButton.style.display = 'none'; 
+        submitQuizButton.disabled = true;
+
+        // Deshabilita el resto del formulario para que no se puedan cambiar las respuestas
+        const inputs = quizForm.querySelectorAll('input, select');
+        inputs.forEach(input => input.disabled = true);
+        
+        // Muestra el botón de Reiniciar
+        resetQuizButton.style.display = 'block'; 
+    });
+    
+    // Al cargar, aseguramos que el botón de Reiniciar esté oculto
+    resetQuizButton.style.display = 'none';
+});
+</script>
+</body>
+</html>
