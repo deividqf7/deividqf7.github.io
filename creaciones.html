@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FACAS X - Creaciones con Plástico Reciclado</title>
+<style>
+/* =========================================================================
+   ESTILOS BASE FACAS X (COPIA EXACTA DEL CÓDIGO DEL ESCÁNER)
+   ========================================================================= */
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /* Fondo degradado neón */
+    background: linear-gradient(-45deg, #001f3f, #003366, #000, #00f0ff);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    color: #fff;
+    overflow-x: hidden;
+    text-align: center; 
+    line-height: 1.6; 
+}
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* --- HEADER (COPIA EXACTA DEL ESCÁNER: NO FIJO Y CENTRADO) --- */
+header {
+    background: linear-gradient(90deg, #001f3f, #003366);
+    padding: 15px;
+    font-size: 22px;
+    font-weight: bold;
+    color: #00f0ff;
+    text-align: center;
+}
+
+/* --- Menú Hamburguesa (COPIA EXACTA DEL ESCÁNER) --- */
+.sidebar {
+    height: 100%;
+    width: 280px;
+    position: fixed;
+    top: 0;
+    left: -290px;
+    background-color: #111;
+    overflow-x: hidden;
+    transition: left 0.5s ease;
+    padding-top: 60px;
+    z-index: 1000;
+}
+.sidebar.active { left: 0; }
+.sidebar a {
+    padding: 12px 24px;
+    text-decoration: none;
+    font-size: 16px;
+    color: #f1f1f1;
+    display: block;
+    transition: 0.3s;
+}
+.sidebar a:hover { background-color: #004080; }
+
+.hamburger {
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    width: 35px;
+    height: 28px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+    z-index: 1100;
+}
+.bar {
+    height: 4px;
+    width: 100%;
+    background-color: white;
+    border-radius: 4px;
+    transition: 0.4s;
+}
+.hamburger.active .bar:nth-child(1) {
+    transform: rotate(45deg) translate(6px, 6px);
+}
+.hamburger.active .bar:nth-child(2) { opacity: 0; }
+.hamburger.active .bar:nth-child(3) {
+    transform: rotate(-45deg) translate(6px, -6px);
+}
+
+/* --- Contenedor principal (COPIA EXACTA DEL ESCÁNER) --- */
+.container {
+    max-width: 800px; 
+    margin: 100px auto; 
+    padding: 30px;
+    background: #001f3f;
+    border-radius: 12px;
+    border: 2px solid #00f0ff;
+    box-shadow: 0 0 25px #00f0ff;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: left; 
+}
+
+h1, h2 {
+    color: #00f0ff;
+    margin-bottom: 15px;
+    text-align: center;
+}
+h1 { font-size: 2.2em; }
+h2 { font-size: 1.8em; }
+
+/* --- ESTILOS ESPECÍFICOS DE CONTENIDO --- */
+.creation-module {
+    background: #003366;
+    padding: 20px;
+    margin-bottom: 25px;
+    border-radius: 10px;
+    /* Color de acento: Cian Neón (#00f0ff) */
+    border-left: 5px solid #00f0ff; 
+    box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+    width: 100%; 
+    box-sizing: border-box;
+}
+
+.creation-module h3 {
+    /* Color de acento: Cian Neón (#00f0ff) */
+    color: #00f0ff; 
+    margin-top: 0;
+    margin-bottom: 10px;
+    border-bottom: 1px solid rgba(0, 240, 255, 0.2);
+    padding-bottom: 5px;
+}
+
+.benefit-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 15px;
+}
+.benefit-list li {
+    padding: 8px 0;
+    border-bottom: 1px dashed rgba(0, 240, 255, 0.1);
+    color: #fff;
+}
+.benefit-list li strong {
+    /* Color de acento: Cian Neón (#00f0ff) */
+    color: #00f0ff; 
+    font-weight: bold;
+}
+
+
+/* --- Estilo para el Video Embed (Responsive) --- */
+.video-container {
+    position: relative;
+    width: 100%; 
+    max-width: 700px; 
+    margin: 40px auto 20px auto;
+    border: 3px solid #00f0ff;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 240, 255, 0.7);
+    background: #000;
+    padding-top: 393.75px; 
+    overflow: hidden; 
+}
+
+.video-container iframe {
+    position: absolute; 
+    top: 0;
+    left: 0;
+    width: 100%; 
+    height: 100%; 
+}
+
+
+/* --- FOOTER (COPIA EXACTA DEL ESCÁNER) --- */
+footer {
+    background-color: #001f3f;
+    color: #00f0ff;
+    text-align: center;
+    padding: 12px;
+    margin-top: 40px;
+}
+</style>
+</head>
+<body>
+
+<div class="hamburger" id="hamburger">
+    <div class="bar"></div>
+    <div class="bar"></div>
+    <div class="bar"></div>
+</div>
+
+<div id="mySidebar" class="sidebar">
+    <a href="nosotros.html">Nosotros</a>
+    <a href="escaner.html">Escáner</a>
+    <a href="proceso.html">Proceso del Plástico</a>
+    <a href="metodos.html">Métodos de Reciclaje</a>
+    <a href="tipos.html">Tipos de Plásticos</a>
+    <a href="caracteristicas.html">Características del Material</a>
+    <a href="impacto.html">Impacto Ambiental</a>
+    <a href="formacion.html">Formación y Educación Ambiental</a>
+    <a href="creaciones.html">Creaciones con Plástico Reciclado</a>
+    <a href="curiosidades.html">Curiosidades y Datos Útiles</a>
+    <a href="noticias.html">Noticias Ambientales</a>
+    <a href="evaluacion.html">Evaluación y Retroalimentación</a>
+    <a href="ayuda.html">Ayuda</a>
+</div>
+
+<header>FACAS X - Creaciones con Plástico Reciclado</header>
+
+<div class="container">
+    <h1>Transformación Circular: Upcycling y Creaciones con Polímeros Reciclados</h1>
+    <p style="text-align: center;">La conversión de residuos plásticos en nuevos objetos funcionales o estéticos representa una estrategia clave para la **reducción del impacto ambiental** y la promoción de la sostenibilidad. Este proceso se enmarca en la filosofía de **Reciclaje Creativo o Upcycling**.</p>
+
+    <h2>I. Fundamento Ecológico y Beneficios de la Reutilización</h2>
+    
+    <div class="creation-module">
+        <h3>1. De Residuos a Recursos (Upcycling)</h3>
+        <p>El concepto de Upcycling implica transformar materiales plásticos desechados —como botellas, bolsas, envases y tapas— en productos de mayor valor o utilidad, en lugar de simplemente desecharlos. Dado que el plástico requiere cientos de años para degradarse, su reutilización es una forma sencilla y efectiva de **mitigar la problemática ambiental**.</p>
+        <p>Esta práctica, además, estimula la **imaginación, la educación ambiental y la conciencia ecológica** en la sociedad, especialmente entre las nuevas generaciones.</p>
+    </div>
+
+    <div class="creation-module">
+        <h3>2. Impacto Positivo en el Entorno</h3>
+        <p>Al implementar estas actividades, se genera un impacto sistémico en la conservación ambiental:</p>
+        <ul class="benefit-list">
+            <li><strong>Mitigación de la Contaminación:</strong> Disminuye la cantidad de basura plástica en suelos, ríos y mares.</li>
+            <li><strong>Ahorro de Recursos:</strong> Se reducen los requerimientos de fabricación de nuevos materiales.</li>
+            <li><strong>Fomento Educativo:</strong> Promueve la creatividad, el trabajo en equipo en comunidades, y enseña que la reutilización puede ser **divertida y útil**.</li>
+        </ul>
+    </div>
+    
+    <h2>II. Clasificación de Creaciones y Aplicaciones Prácticas</h2>
+
+    <div class="creation-module">
+        <h3>3. Aplicaciones Domésticas y Organizativas</h3>
+        <p>Los residuos plásticos son versátiles para la creación de objetos de uso diario, facilitando la organización y la decoración sostenible:</p>
+        <ul>
+            <li>**Macetas Ecológicas:** Botellas de plástico que, al ser cortadas y decoradas, se transforman en jardines urbanos o elementos de paisajismo.</li>
+            <li>**Iluminación Sostenible:** Creación de lámparas decorativas a partir de botellas transparentes, tapas y cucharas plásticas.</li>
+            <li>**Organizadores:** Envases de yogur, refrescos o champú convertidos en recipientes para artículos de escritorio, como lápices y pinceles.</li>
+        </ul>
+    </div>
+
+    <div class="creation-module">
+        <h3>4. Proyectos a Gran Escala y Moda Sostenible</h3>
+        <p>El alcance del reciclaje creativo se extiende a proyectos de infraestructura y a la industria textil:</p>
+        <ul>
+            <li>**Juguetes y Artículos Lúdicos:** Tapas, botellas y pajillas utilizadas para fomentar el juego ecológico, creando carritos, barcos o muñecos.</li>
+            <li>**Accesorios Sostenibles:** Bolsas plásticas fundidas o trenzadas para crear materiales resistentes para monederos, bolsos o pulseras.</li>
+            <li>**Muebles Ecológicos:** Utilización de botellas grandes, rellenas de materiales como arena o tierra, como ladrillos para la construcción de bancos, mesas o incluso paredes funcionales.</li>
+        </ul>
+    </div>
+
+    <h2 style="margin-top: 40px;">Análisis Audiovisual: Casos de Éxito en la Reutilización</h2>
+    <p style="text-align: center;">El material audiovisual ilustra diversas técnicas y ejemplos de éxito en la transformación de residuos plásticos, demostrando que **el cambio empieza con pequeñas acciones** y que la reutilización es un proceso enriquecedor y útil.</p>
+    
+    <div class="video-container">
+        <iframe 
+            src="https://www.youtube.com/embed/ICDlL8Jq3E8" 
+            title="YouTube video player - Creacion con plastico reciclado" 
+            frameborder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+            referrerpolicy="strict-origin-when-cross-origin" 
+            allowfullscreen>
+        </iframe>
+    </div>
+    <p style="text-align: center; font-style: italic; font-size: 0.9em; color: #aaa;">Fuente: pablox'cm (http://www.youtube.com/watch?v=ICDlL8Jq3E8)</p>
+
+</div>
+
+<footer>© 2025 FACAS X. Todos los derechos reservados.</footer>
+
+<script>
+// =========================================================================
+// SCRIPT DE NAVEGACIÓN (Copia exacta del Escáner)
+// =========================================================================
+document.addEventListener('DOMContentLoaded', () => {
+    const hamburger = document.getElementById('hamburger');
+    const sidebar = document.getElementById('mySidebar');
+    
+    const toggleMenu = () => {
+        sidebar.classList.toggle('active');
+        hamburger.classList.toggle('active');
+    };
+
+    hamburger.addEventListener('click', toggleMenu);
+
+    // Funcionalidad para cerrar la barra lateral al hacer clic en un enlace
+    sidebar.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            setTimeout(toggleMenu, 50); 
+        });
+    });
+});
+</script>
+</body>
+</html>

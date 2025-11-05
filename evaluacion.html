@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FACAS X - Quiz de Evaluación Avanzado</title>
+<title>FACAS X - Evaluación de Conocimiento</title>
 <style>
 /* =========================================================================
    ESTILOS GENERALES Y DE FONDO (Diseño FACAS X)
@@ -53,13 +53,13 @@ header {
     overflow-x: hidden;
     transition: left 0.5s ease;
     padding-top: 60px;
-    z-index: 1200; 
+    z-index: 1150; /* Z-index ajustado, debe ser menor que la hamburguesa */
 }
 .sidebar.active { left: 0; }
 
 .sidebar a {
     padding: 12px 0; 
-    text-decoration: none;
+    text-decoration: none !important; /* Elimina el subrayado */
     font-size: 16px; 
     color: #f1f1f1;
     display: block;
@@ -83,7 +83,8 @@ header {
     flex-direction: column;
     justify-content: space-between;
     cursor: pointer;
-    z-index: 1100;
+    /* Z-index CORREGIDO: Siempre debe estar por encima de la barra lateral */
+    z-index: 1200; 
 }
 .bar {
     height: 4px;
@@ -101,7 +102,7 @@ header {
 }
 
 /* =========================================================================
-   ESTILOS DE CONTENIDO PRINCIPAL (QUIZ)
+   ESTILOS DE CONTENIDO PRINCIPAL (QUIZ) - Mejoras creativas
    ========================================================================= */
 .container {
     max-width: 700px;
@@ -122,12 +123,19 @@ h2 {
     margin-bottom: 30px;
 }
 
+/* Animación inicial de entrada para las preguntas */
+@keyframes fadeInSlide {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
 .quiz-question {
     background-color: #00152b;
     padding: 15px;
     border-radius: 8px;
     margin-bottom: 20px;
     border: 1px solid #003366;
+    animation: fadeInSlide 0.5s ease-out; /* Aplicación de la animación */
 }
 
 .quiz-question p {
@@ -151,7 +159,7 @@ h2 {
     background-color: #002b5c;
     padding: 10px;
     border-radius: 5px;
-    transition: background-color 0.2s;
+    transition: background-color 0.2s, box-shadow 0.2s;
 }
 
 .option-group label:hover {
@@ -160,7 +168,31 @@ h2 {
 
 .option-group input[type="radio"] {
     margin-right: 10px;
+    /* Estilo de radio button más sutil */
+    accent-color: #00f0ff; 
 }
+
+/* Estilo creativo: Sombra interior neón al seleccionar una opción */
+.option-group input[type="radio"]:checked + span {
+    font-weight: bold;
+    color: #00f0ff;
+}
+.option-group input[type="radio"]:checked + span::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 5px;
+    /* Sombra interior para efecto neón */
+    box-shadow: inset 0 0 10px rgba(0, 240, 255, 0.6); 
+    pointer-events: none;
+}
+.option-group label {
+    position: relative; /* Necesario para que el pseudo-elemento funcione */
+}
+
 
 /* Botón de Enviar y Reiniciar - Estilos compartidos */
 #submitQuiz, #resetQuiz {
@@ -184,10 +216,10 @@ h2 {
 
 /* Estilo específico para el botón de Reiniciar (ahora en tonos azules) */
 #resetQuiz {
-    background: linear-gradient(90deg, #004080, #0050a0); /* Tonos de azul más oscuro */
-    color: #fff; /* Texto blanco para contraste */
+    background: linear-gradient(90deg, #004080, #0050a0); 
+    color: #fff; 
     margin-top: 15px; 
-    box-shadow: 0 0 15px rgba(0, 80, 160, 0.7); /* Sombra azul */
+    box-shadow: 0 0 15px rgba(0, 80, 160, 0.7); 
 }
 #resetQuiz:hover {
     background: linear-gradient(90deg, #0050a0, #0060c0);
@@ -212,7 +244,7 @@ h2 {
    CLASES DE BORDES DINÁMICOS (SOLO COLORES FACAS X)
    ========================================================================= */
 
-/* ESTILO DE GUZANITO (Puntuación Baja/Necesita Mejorar) */
+/* Puntuación Baja/Necesita Mejorar (Animación 'Gusanito') */
 #quizResult.animated-border::before {
     content: '';
     position: absolute;
@@ -233,40 +265,45 @@ h2 {
 }
 
 #quizResult.animated-border {
-    box-shadow: 0 0 15px rgba(0, 240, 255, 0.7); /* Sombra azul brillante */
+    box-shadow: 0 0 15px rgba(0, 240, 255, 0.7); 
     border: 2px solid transparent; 
 }
 
 
-/* ESTILO NORMAL (Puntuación Media - Ahora un azul intermedio) */
-#quizResult.border-medium { /* Cambiado de 'border-yellow' a 'border-medium' */
-    border: 2px solid #007bff; /* Un azul de la paleta FACAS X */
+/* Puntuación Media - Azul Intermedio */
+#quizResult.border-medium { 
+    border: 2px solid #007bff; 
     box-shadow: 0 0 15px #007bff;
 }
 
-/* ESTILO EXCELENTE (Puntuación Alta - Cian de FACAS X) */
-#quizResult.border-high { /* Cambiado de 'border-lime' a 'border-high' */
-    border: 2px solid #00f0ff; /* Cian de FACAS X */
+/* Puntuación Alta - Cian de FACAS X */
+#quizResult.border-high { 
+    border: 2px solid #00f0ff; 
     box-shadow: 0 0 15px #00f0ff;
 }
-/* ========================================================================= */
+
+/* Colores Dinámicos para el Mensaje de Resultado */
+#quizResult .result-message.low { color: #f0f0ff; /* Blanco suave */ }
+#quizResult .result-message.medium { color: #007bff; /* Azul vibrante */ }
+#quizResult .result-message.high { color: #00f0ff; /* Cian brillante */ }
 
 
 #quizResult h3 {
-    color: #00f0ff; /* Cian para títulos de resultados */
+    color: #00f0ff; 
     margin-bottom: 15px;
 }
 
 #resultScore {
-    font-size: 2em;
-    color: #00f0ff; /* Cian brillante para la puntuación */
+    font-size: 2.2em; /* Tamaño ligeramente más grande */
+    color: #00f0ff; 
     font-weight: bold;
+    text-shadow: 0 0 10px #00f0ff; /* Efecto brillo */
 }
 
 .result-message {
     margin-top: 15px;
     font-size: 1.1em;
-    color: #ffffff; /* Texto blanco por defecto */
+    color: #ffffff; 
 }
 
 footer {
@@ -287,7 +324,7 @@ footer {
 
 <div id="mySidebar" class="sidebar">
     <a href="nosotros.html">Nosotros</a>
-    <a href="escaner.html">Escáner</a>
+    <a href="escaner.html">Escáner Inteligente</a> 
     <a href="proceso.html">Proceso del Plástico</a>
     <a href="metodos.html">Métodos de Reciclaje</a>
     <a href="tipos.html">Tipos de Plásticos</a>
@@ -301,81 +338,81 @@ footer {
     <a href="ayuda.html">Ayuda</a>
 </div>
 
-<header>FACAS X - Quiz de Evaluación Avanzado</header>
+<header>FACAS X - Evaluación de Conocimiento</header>
 
 <div class="container">
-    <h2>Mide tu Nivel de Conocimiento Ecológico 🎓</h2>
-    <p style="text-align: center;">¡Demuestra que eres un experto en el manejo responsable del plástico! (7 Preguntas)</p>
+    <h2>Mide Tu Nivel De Conocimiento Ecológico </h2>
+    <p style="text-align: center; color: #00cfff;">¡Demuestra que eres un Agente FACAS X en el manejo responsable del plástico!</p>
 
     <form id="quizForm">
         
         <div class="quiz-question">
             <p>1. ¿Cuál es el proceso químico fundamental mediante el cual las moléculas pequeñas (monómeros) se unen para formar el plástico (polímero)?</p>
             <div class="option-group">
-                <label><input type="radio" name="q1" value="a"> A) Condensación.</label>
-                <label><input type="radio" name="q1" value="b"> B) Polimerización.</label>
-                <label><input type="radio" name="q1" value="c"> C) Destilación.</label>
-                <label><input type="radio" name="q1" value="d"> D) Oxidación.</label>
+                <label><input type="radio" name="q1" value="a"> <span>A) Condensación.</span></label>
+                <label><input type="radio" name="q1" value="b"> <span>B) Polimerización.</span></label>
+                <label><input type="radio" name="q1" value="c"> <span>C) Destilación.</span></label>
+                <label><input type="radio" name="q1" value="d"> <span>D) Oxidación.</span></label>
             </div>
         </div>
 
         <div class="quiz-question">
             <p>2. La mayoría de los plásticos que se reciclan comúnmente (PET, HDPE, PP) pertenecen al grupo de:</p>
             <div class="option-group">
-                <label><input type="radio" name="q2" value="a"> A) Plásticos Termoestables (no pueden ser refundidos).</label>
-                <label><input type="radio" name="q2" value="b"> B) Plásticos Bio-degradables (se descomponen rápidamente).</label>
-                <label><input type="radio" name="q2" value="c"> C) Plásticos Termoplásticos (pueden ser fundidos y remoldeados varias veces).</label>
-                <label><input type="radio" name="q2" value="d"> D) Plásticos de Alta Fusión (solo se usan en la industria aeroespacial).</label>
+                <label><input type="radio" name="q2" value="a"> <span>A) Plásticos Termoestables (no pueden ser refundidos).</span></label>
+                <label><input type="radio" name="q2" value="b"> <span>B) Plásticos Bio-degradables (se descomponen rápidamente).</span></label>
+                <label><input type="radio" name="q2" value="c"> <span>C) Plásticos Termoplásticos (pueden ser fundidos y remoldeados varias veces).</span></label>
+                <label><input type="radio" name="q2" value="d"> <span>D) Plásticos de Alta Fusión (solo se usan en la industria aeroespacial).</span></label>
             </div>
         </div>
 
         <div class="quiz-question">
             <p>3. ¿Cuál es el principal riesgo ambiental a largo plazo asociado con la desintegración física de los plásticos en la naturaleza?</p>
             <div class="option-group">
-                <label><input type="radio" name="q3" value="a"> A) La lluvia ácida.</label>
-                <label><input type="radio" name="q3" value="b"> B) La formación de Microplásticos.</label>
-                <label><input type="radio" name="q3" value="c"> C) El efecto invernadero directo.</label>
-                <label><input type="radio" name="q3" value="d"> D) El agotamiento de la capa de ozono.</label>
+                <label><input type="radio" name="q3" value="a"> <span>A) La lluvia ácida.</span></label>
+                <label><input type="radio" name="q3" value="b"> <span>B) La formación de Microplásticos.</span></label>
+                <label><input type="radio" name="q3" value="c"> <span>C) El efecto invernadero directo.</span></label>
+                <label><input type="radio" name="q3" value="d"> <span>D) El agotamiento de la capa de ozono.</span></label>
             </div>
         </div>
 
         <div class="quiz-question">
             <p>4. El **Reciclaje Químico** de plásticos, a diferencia del mecánico, tiene la ventaja de:</p>
             <div class="option-group">
-                <label><input type="radio" name="q4" value="a"> A) Usar solo agua para el proceso.</label>
-                <label><input type="radio" name="q4" value="b"> B) Romper los polímeros para obtener monómeros (materia prima virgen).</label>
-                <label><input type="radio" name="q4" value="c"> C) Ser más rápido que el mecánico.</label>
-                <label><input type="radio" name="q4" value="d"> D) Requerir menos energía que la fabricación original.</label>
+                <label><input type="radio" name="q4" value="a"> <span>A) Usar solo agua para el proceso.</span></label>
+                <label><input type="radio" name="q4" value="b"> <span>B) Romper los polímeros para obtener monómeros (materia prima virgen).</span></label>
+                <label><input type="radio" name="q4" value="c"> <span>C) Ser más rápido que el mecánico.</span></label>
+                <label><input type="radio" name="q4" value="d"> <span>D) Requerir menos energía que la fabricación original.</span></label>
             </div>
         </div>
         
         <div class="quiz-question">
             <p>5. ¿Qué función principal cumplen los **Aditivos** (como los plastificantes o retardantes) añadidos a los polímeros base?</p>
             <div class="option-group">
-                <label><input type="radio" name="q5" value="a"> A) Reducir el peso del plástico para el transporte.</label>
-                <label><input type="radio" name="q5" value="b"> B) Determinar el color final del producto (pigmentación).</label>
-                <label><input type="radio" name="q5" value="c"> C) Mejorar propiedades como la flexibilidad, resistencia o durabilidad.</label>
-                <label><input type="radio" name="q5" value="d"> D) Disminuir el coste de la materia prima, sin afectar la calidad).</label>
+                <label><input type="radio" name="q5" value="a"> <span>A) Reducir el peso del plástico para el transporte.</span></label>
+                <label><input type="radio" name="q5" value="b"> <span>B) Determinar el color final del producto (pigmentación).</span></label>
+                <label><input type="radio" name="q5" value="c"> <span>C) Mejorar propiedades como la flexibilidad, resistencia o durabilidad.</span></label>
+                <label><input type="radio" name="q5" value="d"> <span>D) Disminuir el coste de la materia prima, sin afectar la calidad).</span></label>
             </div>
         </div>
         
         <div class="quiz-question">
             <p>6. La principal diferencia entre **Reúso** y **Reciclaje** es que el reúso:</p>
             <div class="option-group">
-                <label><input type="radio" name="q6" value="a"> A) Implica transformar la materia prima en un producto completamente nuevo.</label>
-                <label><input type="radio" name="q6" value="b"> B) Requiere un proceso industrial de fundición y granulación.</label>
-                <label><input type="radio" name="q6" value="c"> C) Mantiene la forma original del objeto para un nuevo fin (ej. una botella como maceta).</label>
-                <label><input type="radio" name="q6" value="d"> D) Solo aplica a plásticos con código PET 1.</label>
+                <label><input type="radio" name="q6" value="a"> <span>A) Implica transformar la materia prima en un producto completamente nuevo.</span></label>
+                <label><input type="radio" name="q6" value="b"> <span>B) Requiere un proceso industrial de fundición y granulación.</span></label>
+                <label><input type="radio" name="q6" value="c"> <span>C) Mantiene la forma original del objeto para un nuevo fin (ej. una botella como maceta).</span></label>
+                <label><input type="radio" name="q6" value="d"> <span>D) Solo aplica a plásticos con código PET 1.</span></label>
             </div>
         </div>
         
         <div class="quiz-question">
             <p>7. ¿Qué tipo de información proporciona el código de barras **EAN-13** que utiliza el Escáner de FACAS X?</p>
             <div class="option-group">
-                <label><input type="radio" name="q7" value="a"> A) Directamente el tipo de polímero (ej. PET).</label>
-                <label><input type="radio" name="q7" value="b"> B) El país de origen y la identificación del producto, no el material.</label>
-                <label><input type="radio" name="q7" value="c"> C) El nivel de toxicidad del material.</label>
-                <label><input type="radio" name="q7" value="d"> D) La antigüedad del producto.</label>
+                <label><input type="radio" name="q7" value="a"> <span>A) Directamente el tipo de polímero (ej. PET).</span></label>
+                <label><input type="radio" name="q7" value="b"> <span>B) El país de origen y la identificación del producto, no el material.</span></label>
+                <label><input type="radio" name="q7" value="c"> <span>C) El nivel de toxicidad del material.</span></label>
+                <label><input type="radio" name="q7" value="d"> <span>D) La antigüedad del producto.</span></label>
             </div>
         </div>
 
@@ -383,7 +420,7 @@ footer {
     </form>
 
     <div id="quizResult">
-        <h3>Tu Puntuación es:</h3>
+        <h3>Tu Puntuación Final:</h3>
         <p id="resultScore"></p>
         <p class="result-message" id="resultMessage"></p>
         
@@ -395,7 +432,7 @@ footer {
 
 <script>
 /* =======================================
-    Funcionalidad Hamburguesa
+    Funcionalidad JavaScript del Quiz
     ======================================= */
 document.addEventListener('DOMContentLoaded', () => {
     const hamburger = document.getElementById('hamburger');
@@ -435,25 +472,22 @@ document.addEventListener('DOMContentLoaded', () => {
         Función para reiniciar el Quiz
         ======================================= */
     const resetQuiz = () => {
-        // 1. Limpia el formulario
         quizForm.reset(); 
-        
-        // 2. Oculta el resultado y el botón de reinicio
         quizResult.style.display = 'none';
         resetQuizButton.style.display = 'none';
         
-        // 3. Vuelve a habilitar el formulario
-        const inputs = quizForm.querySelectorAll('input, select, button');
+        // Vuelve a habilitar el formulario
+        const inputs = quizForm.querySelectorAll('input, select');
         inputs.forEach(input => input.disabled = false);
         
-        // 4. Muestra el botón de enviar
         submitQuizButton.style.display = 'block'; 
         submitQuizButton.disabled = false;
         
-        // 5. Limpia estilos de borde y animación
+        // Limpia estilos de borde, animación y color de mensaje
         quizResult.classList.remove('animated-border', 'border-medium', 'border-high');
         quizResult.style.borderColor = 'transparent'; 
         quizResult.style.boxShadow = 'none';
+        resultMessage.classList.remove('low', 'medium', 'high');
     };
 
     // Event Listener para el botón de Reiniciar
@@ -473,6 +507,7 @@ document.addEventListener('DOMContentLoaded', () => {
         quizResult.classList.remove('animated-border', 'border-medium', 'border-high');
         quizResult.style.borderColor = 'transparent'; 
         quizResult.style.boxShadow = 'none';
+        resultMessage.classList.remove('low', 'medium', 'high');
 
         // Itera sobre las preguntas y verifica las respuestas
         for (const question in CORRECT_ANSWERS) {
@@ -489,7 +524,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if (!allAnswered) {
-            alert('Por favor, responde todas las preguntas antes de calcular tu puntuación.');
+            alert('🚨 ¡ALERTA! Por favor, responde todas las preguntas para completar la evaluación. 🚨');
             return;
         }
 
@@ -498,16 +533,20 @@ document.addEventListener('DOMContentLoaded', () => {
         
         resultScore.textContent = `${score} / ${totalQuestions} (${Math.round(percentage)}%)`;
         
+        // Definición de mensajes, bordes y colores
         if (score === totalQuestions) {
-            resultMessage.innerHTML = '¡Nivel Experto! 🎉 Tienes un dominio completo del tema. ¡Felicidades!';
+            resultMessage.innerHTML = '¡Nivel Experto! 🎉 Tienes un dominio completo del tema y eres un Agente FACAS X Nivel 5. ¡Felicidades!';
             quizResult.classList.add('border-high'); // Borde cian
+            resultMessage.classList.add('high');
         } else if (score >= 5) { // 5 o 6 correctas
-            resultMessage.innerHTML = '¡Muy bien! 👍 Tienes un conocimiento avanzado. Un pequeño repaso te hará invencible.';
+            resultMessage.innerHTML = '¡Muy bien! 👍 Tienes un conocimiento avanzado. Un pequeño repaso te hará invencible. ¡Estás cerca del Nivel 5!';
             quizResult.classList.add('border-medium'); // Borde azul intermedio
+            resultMessage.classList.add('medium');
         } else {
-            resultMessage.innerHTML = 'Buen comienzo. 🤔 Repasa los apartados de Procesos y Características para mejorar tus resultados.';
+            resultMessage.innerHTML = 'Buen comienzo. 🤔 Repasa los apartados de Procesos y Características para mejorar tus resultados y alcanzar el siguiente nivel.';
             // Aplicamos la clase de la animación "gusanito azul"
             quizResult.classList.add('animated-border'); 
+            resultMessage.classList.add('low');
         }
 
         quizResult.style.display = 'block';

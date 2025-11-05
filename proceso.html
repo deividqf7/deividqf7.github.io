@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FACAS X - Proceso del Plástico</title>
+    <style>
+        /* =========================================================================
+           ESTILOS BASE FACAS X Y FONDO ANIMADO 
+           ========================================================================= */
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(-45deg, #001f3f, #003366, #000, #00f0ff);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: #fff;
+            overflow-x: hidden;
+            text-align: center;
+            padding-top: 60px; /* Espacio para el header fijo, en el body */
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* HEADER FIJO */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(90deg, #001f3f, #003366);
+            padding: 15px;
+            font-size: 22px;
+            font-weight: bold;
+            color: #00f0ff;
+            text-align: center;
+            z-index: 1050; 
+        }
+
+        /* =========================================================================
+           ESTILOS DEL MENÚ LATERAL (SIDEBAR) - CORREGIDO
+           ========================================================================= */
+        .sidebar {
+            height: 100%;
+            width: 280px;
+            position: fixed;
+            top: 0; 
+            left: -290px;
+            background-color: #111;
+            overflow-x: hidden;
+            transition: left 0.5s ease;
+            padding-top: 70px; /* CORRECCIÓN: Bajar los enlaces para dejar espacio a la 'X' */
+            z-index: 1060; 
+        }
+        .sidebar.active { left: 0; }
+        .sidebar a {
+            padding: 12px 24px;
+            text-decoration: none !important; 
+            font-size: 16px;
+            color: #f1f1f1; 
+            display: block;
+            transition: 0.3s;
+        }
+        .sidebar a:hover { 
+            background-color: #004080; 
+            color: #00f0ff; 
+        }
+        
+        /* Botón de Hamburguesa */
+        .hamburger {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            width: 35px;
+            height: 28px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            cursor: pointer;
+            z-index: 1100;
+        }
+        .bar {
+            height: 4px;
+            width: 100%;
+            background-color: white;
+            border-radius: 4px;
+            transition: 0.4s;
+        }
+        .hamburger.active .bar:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+        .hamburger.active .bar:nth-child(2) { opacity: 0; }
+        .hamburger.active .bar:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+
+        /* =========================================================================
+           ESTILOS DE CONTENIDO PRINCIPAL (PROCESO)
+           ========================================================================= */
+
+        .container {
+            max-width: 1200px;
+            margin: 40px auto; 
+            padding: 30px;
+            background: #001f3f;
+            border-radius: 12px;
+            border: 2px solid #00f0ff;
+            box-shadow: 0 0 30px #00f0ff; 
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        h1 { /* Título principal */
+            color: #00f0ff; 
+            text-align: center;
+            font-size: 2.6em; 
+            margin-bottom: 40px;
+            text-shadow: 0 0 8px rgba(0, 240, 255, 0.8); 
+            border-bottom: 2px solid #00aaff; 
+            padding-bottom: 15px;
+            width: 100%;
+        }
+
+        .news-grid { 
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-top: 30px;
+            width: 100%;
+        }
+        
+        @media (max-width: 900px) {
+            .news-grid {
+                grid-template-columns: 1fr; 
+            }
+        }
+
+        .video-highlight {
+            padding: 0;
+            border: none;
+            background: none;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            text-align: left;
+        }
+        
+        .video-highlight h2 {
+            color: #00f0ff; 
+            font-size: 2em;
+            margin-bottom: 20px;
+            border-left: 5px solid #00aaff; 
+            padding-left: 15px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; 
+            height: 0;
+            overflow: hidden;
+            border-radius: 8px;
+            border: 3px solid #00f0ff; 
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.8); 
+            background: #000;
+        }
+        
+        .video-container iframe {
+            position: absolute; 
+            top: 0;
+            left: 0;
+            width: 100%; 
+            height: 100%; 
+            border: none;
+        }
+        
+        .process-summary { 
+            background-color: rgba(0, 30, 60, 0.8);
+            padding: 30px;
+            border-radius: 10px;
+            border: 1px solid #00aaff;
+            text-align: left;
+            box-shadow: 0 0 15px rgba(0, 170, 255, 0.4);
+        }
+
+        .process-summary h3 {
+            color: #00f0ff;
+            font-size: 1.6em;
+            margin-top: 0;
+            margin-bottom: 25px;
+            border-bottom: 1px dashed #00aaff;
+            padding-bottom: 5px;
+        }
+
+        .process-summary ol { 
+            list-style: none;
+            counter-reset: step-counter; 
+            padding: 0;
+        }
+        
+        .process-summary ol li {
+            counter-increment: step-counter; 
+            background-color: rgba(0, 50, 100, 0.6);
+            margin-bottom: 20px;
+            padding: 18px 18px 18px 60px; 
+            border-radius: 8px;
+            transition: background-color 0.4s, border-left 0.4s;
+            border-left: 4px solid transparent;
+            position: relative;
+        }
+        
+        .process-summary ol li::before {
+            content: "PASO " counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 50px;
+            height: 100%;
+            line-height: 54px; 
+            text-align: center;
+            background: #00aaff; 
+            color: #001f3f;
+            font-weight: bold;
+            border-radius: 8px 0 0 8px;
+        }
+
+        .process-summary ol li:hover {
+            background-color: rgba(0, 50, 100, 0.9);
+            border-left: 4px solid #00f0ff;
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+        }
+
+        .process-summary strong {
+            color: #00aaff;
+            display: block;
+            margin-bottom: 5px;
+            font-size: 1.1em;
+        }
+
+        .process-summary span {
+            font-size: 0.9em;
+            color: #ccc;
+            display: block; 
+        }
+        
+        /* FOOTER */
+        footer {
+            background-color: #001f3f;
+            color: #00f0ff;
+            text-align: center;
+            padding: 12px;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="hamburger active" id="hamburger"> 
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+    </div>
+
+    <div id="mySidebar" class="sidebar active"> 
+        <a href="nosotros.html">Nosotros</a>
+        <a href="escaner.html">Escáner Inteligente</a> 
+        <a href="proceso.html">Proceso del Plástico</a>
+        <a href="metodos.html">Métodos de Reciclaje</a>
+        <a href="tipos.html">Tipos de Plásticos</a>
+        <a href="caracteristicas.html">Características del Material</a>
+        <a href="impacto.html">Impacto Ambiental</a>
+        <a href="formacion.html">Formación y Educación Ambiental</a>
+        <a href="creaciones.html">Creaciones con Plástico Reciclado</a>
+        <a href="curiosidades.html">Curiosidades y Datos Útiles</a>
+        <a href="noticias.html">Noticias Ambientales</a> 
+        <a href="evaluacion.html">Evaluación y Retroalimentación</a>
+        <a href="ayuda.html">Ayuda</a>
+    </div>
+
+    <header>FACAS X - Análisis de Procesos</header>
+
+    <div class="container">
+        <h1>FLUJO DE DATOS: PROCESO DE CREACIÓN DEL PLÁSTICO</h1>
+        
+        <div class="news-grid">
+            
+            <div class="video-highlight">
+                <h2>VISUALIZACIÓN: Cómo se Fabrica Este Material Común</h2>
+                
+                <div class="video-container">
+                    <iframe 
+                        src="https://www.youtube.com/embed/p58rXEyW6Xw" 
+                        title="Como se hace"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
+                <p style="font-style: italic; font-size: 0.9em; color: #aaa; margin-top: 15px; text-align: left;">
+                    Fuente: pablox'cm. Video: [Como se hace](http://www.youtube.com/watch?v=p58rXEyW6Xw)
+                </p>
+            </div>
+
+            <div class="process-summary">
+                <h3>Detalle del Proceso: De la Materia Prima al Polímero</h3>
+                <ol>
+                    <li>
+                        <strong>Obtención de Materias Primas</strong>
+                        <span>La mayoría de los plásticos se fabrica a partir de **derivados del petróleo y gas natural**, pero también existen alternativas **más ecológicas** que utilizan materias primas vegetales.</span>
+                    </li>
+                    <li>
+                        <strong>Producción del Monómero (Molécula Base)</strong>
+                        <span>El primer paso es obtener el **monómero**, una molécula simple que servirá como base para el plástico. Esto se logra mediante procesos químicos, como la **destilación del petróleo**, que separa los distintos componentes según su punto de ebullición. Monómeros comunes incluyen el **etileno**, **propileno** y **estireno**.</span>
+                    </li>
+                    <li>
+                        <strong>Polimerización (Creación del Polímero)</strong>
+                        <span>En esta etapa, los monómeros se combinan mediante **reacciones químicas** para formar largas cadenas llamadas **polímeros**, que son la verdadera estructura del plástico. Dependiendo del tipo de polimerización (adición o condensación), se obtienen plásticos con características distintas como el **polietileno**, **polipropileno** o **PVC**.</span>
+                    </li>
+                </ol>
+                
+                <h3>Fase de Moldeo: De Polímero a Producto Útil</h3>
+                <ol start="4">
+                    <li>
+                        <strong>Transformación y Moldeo</strong>
+                        <span>El polímero se calienta y se moldea mediante diferentes técnicas para transformarlo en productos útiles. Las técnicas principales son:</span>
+                        <ul>
+                            <li>**Extrusión:** El plástico fundido se empuja a través de un molde para formar **tubos o láminas**.</li>
+                            <li>**Inyección:** Se introduce el material en moldes cerrados para obtener objetos con **formas complejas** como juguetes o piezas de maquinaria.</li>
+                            <li>**Soplado:** Técnica utilizada para fabricar **botellas y envases huecos**.</li>
+                        </ul>
+                    </li>
+                </ol>
+            </div>
+
+        </div>
+    </div>
+
+    <footer>© 2025 FACAS X. Todos los derechos reservados.</footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const hamburger = document.getElementById('hamburger');
+            const sidebar = document.getElementById('mySidebar');
+            
+            const toggleMenu = () => {
+                sidebar.classList.toggle('active');
+                hamburger.classList.toggle('active');
+            };
+
+            hamburger.addEventListener('click', toggleMenu);
+
+            sidebar.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    setTimeout(toggleMenu, 50); 
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>

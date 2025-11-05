@@ -1,322 +1,347 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FACAS X - Evaluación</title>
-<style>
-/* =========================================================================
-   ESTILOS GENERALES Y DE FONDO (Diseño FACAS X)
-   ========================================================================= */
-body {
-    margin: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    /* Fondo Degradado Azul/Cian */
-    background: linear-gradient(-45deg, #001f3f, #003366, #000, #00f0ff);
-    background-size: 400% 400%;
-    animation: gradientBG 15s ease infinite;
-    color: #fff; /* Color de texto claro para el fondo oscuro */
-    overflow-x: hidden;
-    text-align: center;
-    /* FIJACIÓN: Margen superior para el header fijo */
-    padding-top: 60px;
-}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FACAS X - Noticias Ambientales</title>
+    <style>
+        /* =========================================================================
+           ESTILOS BASE FACAS X Y FONDO ANIMADO 
+           ========================================================================= */
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(-45deg, #001f3f, #003366, #000, #00f0ff);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: #fff;
+            overflow-x: hidden;
+            text-align: center;
+            padding-top: 60px; /* Espacio para el header fijo */
+        }
 
-@keyframes gradientBG {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
 
-/* =========================================================================
-   HEADER FIJO Y NAVEGACIÓN
-   ========================================================================= */
-header {
-    /* FIJACIÓN: Header ahora es fijo */
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    /* Degradado del Header */
-    background: linear-gradient(90deg, #001f3f, #003366);
-    padding: 15px;
-    font-size: 22px;
-    font-weight: bold;
-    color: #00f0ff; /* Color cian para el título */
-    text-align: center;
-    z-index: 1050; 
-}
+        /* HEADER FIJO */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(90deg, #001f3f, #003366);
+            padding: 15px;
+            font-size: 22px;
+            font-weight: bold;
+            color: #00f0ff;
+            text-align: center;
+            z-index: 1050;
+        }
 
-.sidebar {
-    height: 100%;
-    width: 280px; 
-    position: fixed;
-    top: 0;
-    left: -290px;
-    background-color: #111;
-    overflow-x: hidden;
-    transition: left 0.5s ease;
-    padding-top: 60px;
-    z-index: 1200; 
-}
-.sidebar.active { left: 0; }
+        /* =========================================================================
+           ESTILOS DEL MENÚ LATERAL (SIDEBAR) 
+           ========================================================================= */
+        .sidebar {
+            height: 100%;
+            width: 280px;
+            position: fixed;
+            top: 0; 
+            left: -290px;
+            background-color: #111;
+            overflow-x: hidden;
+            transition: left 0.5s ease;
+            padding-top: 60px; 
+            z-index: 1000;
+        }
+        .sidebar.active { left: 0; }
+        .sidebar a {
+            padding: 12px 24px;
+            text-decoration: none !important; 
+            font-size: 16px;
+            color: #f1f1f1; 
+            display: block;
+            transition: 0.3s;
+        }
+        .sidebar a:hover { 
+            background-color: #004080; 
+            color: #00f0ff; 
+        }
+        
+        /* Botón de Hamburguesa */
+        .hamburger {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            width: 35px;
+            height: 28px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            cursor: pointer;
+            z-index: 1100;
+        }
+        .bar {
+            height: 4px;
+            width: 100%;
+            background-color: white;
+            border-radius: 4px;
+            transition: 0.4s;
+        }
+        .hamburger.active .bar:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+        .hamburger.active .bar:nth-child(2) { opacity: 0; }
+        .hamburger.active .bar:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
 
-.sidebar a {
-    padding: 12px 0; 
-    text-decoration: none;
-    font-size: 16px; 
-    color: #f1f1f1;
-    display: block;
-    transition: 0.3s;
-    /* CENTRADO */
-    text-align: center; 
-    margin: 0 auto; 
-    width: 90%; 
-}
-.sidebar a:hover { 
-    background-color: #004080; 
-    border-radius: 5px;
-}
+        /* =========================================================================
+           ESTILOS DE CONTENIDO DE NOTICIAS (VIDEO CORREGIDO)
+           ========================================================================= */
 
-.hamburger {
-    /* FIJACIÓN: Hamburguesa fija sobre el header */
-    position: fixed;
-    top: 15px;
-    left: 15px;
-    width: 35px;
-    height: 28px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    cursor: pointer;
-    z-index: 1100;
-}
-.bar {
-    height: 4px;
-    width: 100%;
-    background-color: white;
-    border-radius: 4px;
-    transition: 0.4s;
-}
-.hamburger.active .bar:nth-child(1) {
-    transform: rotate(45deg) translate(6px, 6px);
-}
-.hamburger.active .bar:nth-child(2) { opacity: 0; }
-.hamburger.active .bar:nth-child(3) {
-    transform: rotate(-45deg) translate(6px, -6px);
-}
+        .container {
+            max-width: 1200px;
+            margin: 40px auto; 
+            padding: 30px;
+            background: #001f3f;
+            border-radius: 12px;
+            border: 2px solid #00f0ff;
+            box-shadow: 0 0 30px #00f0ff; 
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        h1 { /* Título principal */
+            color: #00f0ff; 
+            text-align: center;
+            font-size: 2.6em; 
+            margin-bottom: 40px;
+            text-shadow: 0 0 8px rgba(0, 240, 255, 0.8); 
+            border-bottom: 2px solid #00aaff; 
+            padding-bottom: 15px;
+            width: 100%;
+        }
 
-/* =========================================================================
-   ESTILOS DE CONTENIDO PRINCIPAL (EVALUACIÓN)
-   ========================================================================= */
-.container {
-    max-width: 650px;
-    margin: 40px auto; 
-    padding: 30px;
-    background: #001f3f; 
-    border-radius: 12px;
-    border: 2px solid #00f0ff; 
-    box-shadow: 0 0 25px #00f0ff; 
-    text-align: left; /* Alineación a la izquierda para el formulario */
-}
+        .news-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-top: 30px;
+            width: 100%;
+        }
+        
+        @media (max-width: 900px) {
+            .news-grid {
+                grid-template-columns: 1fr; 
+            }
+        }
 
-h2 {
-    color: #00f0ff;
-    text-align: center;
-    border-bottom: 2px solid #003366;
-    padding-bottom: 10px;
-    margin-bottom: 30px;
-}
+        /* Contenedor del título y video, sin bordes directos para que el video los tenga */
+        .video-highlight {
+            padding: 0; /* Eliminar padding aquí para que el video ocupe más espacio */
+            border: none; /* Eliminar borde aquí */
+            background: none; /* Eliminar fondo aquí */
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start; /* Alinear contenido a la izquierda */
+            text-align: left;
+        }
+        
+        .video-highlight h2 {
+            color: #00f0ff; /* Mismo color neón */
+            font-size: 2em;
+            margin-bottom: 20px;
+            border-left: 5px solid #00aaff; /* Borde de acento */
+            padding-left: 15px;
+            width: 100%; /* Asegurar que el título ocupe todo el ancho disponible */
+            box-sizing: border-box; /* Incluir padding y borde en el ancho */
+        }
 
-p {
-    font-size: 16px;
-    line-height: 1.6;
-    color: #ccc;
-    margin-bottom: 20px;
-    text-align: center;
-}
+        /* Recuadro que contiene el iframe, ahora con los estilos de neón */
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* Relación de aspecto 16:9 */
+            height: 0;
+            overflow: hidden;
+            border-radius: 8px;
+            border: 3px solid #00f0ff; /* Borde de neón */
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.8); /* Sombra de neón */
+            background: #000; /* Fondo negro para el video */
+        }
+        
+        .video-container iframe {
+            position: absolute; 
+            top: 0;
+            left: 0;
+            width: 100%; 
+            height: 100%; 
+            border: none;
+        }
+        
+        .news-summary {
+            background-color: rgba(0, 30, 60, 0.8);
+            padding: 30px;
+            border-radius: 10px;
+            border: 1px solid #00aaff;
+            text-align: left;
+            box-shadow: 0 0 15px rgba(0, 170, 255, 0.4);
+        }
 
-/* Estilos de formulario */
-.form-group {
-    margin-bottom: 20px;
-}
+        .news-summary h3 {
+            color: #00f0ff;
+            font-size: 1.6em;
+            margin-top: 0;
+            margin-bottom: 25px;
+            border-bottom: 1px dashed #00aaff;
+            padding-bottom: 5px;
+        }
 
-label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: bold;
-    color: #00f0ff;
-}
+        .news-summary ul {
+            list-style: none;
+            padding: 0;
+        }
 
-textarea, select {
-    width: 100%;
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #003366;
-    background-color: #00152b;
-    color: #fff;
-    box-sizing: border-box; /* Incluye padding y borde en el ancho total */
-}
+        .news-summary ul li {
+            background-color: rgba(0, 50, 100, 0.6);
+            margin-bottom: 15px;
+            padding: 18px;
+            border-radius: 8px;
+            transition: background-color 0.4s, border-left 0.4s;
+            border-left: 4px solid transparent;
+        }
 
-/* Estilos de botones de radio (Estrellas para calificación) */
-.rating {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    direction: rtl; /* Invertir para que la calificación empiece de derecha a izquierda */
-}
+        .news-summary ul li:hover {
+            background-color: rgba(0, 50, 100, 0.9);
+            border-left: 4px solid #00f0ff;
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+        }
 
-.rating input {
-    display: none;
-}
+        .news-summary strong {
+            color: #00aaff;
+            display: block;
+            margin-bottom: 5px;
+            font-size: 1.1em;
+        }
 
-.rating label {
-    font-size: 35px;
-    color: #444;
-    transition: color 0.2s;
-    cursor: pointer;
-    display: inline-block;
-    margin: 0;
-}
-
-.rating input:checked ~ label,
-.rating label:hover,
-.rating label:hover ~ label {
-    color: gold;
-}
-
-/* Botón de Enviar */
-.submit-button {
-    background: linear-gradient(90deg, #00f0ff, #00cfff);
-    color: #001f3f;
-    border: none;
-    padding: 12px 25px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
-    box-shadow: 0 0 15px #00f0ff;
-    transition: 0.3s;
-    display: block;
-    width: 100%;
-    margin-top: 30px;
-}
-.submit-button:hover {
-    background: linear-gradient(90deg, #00cfff, #0099cc);
-    box-shadow: 0 0 25px #00f0ff;
-}
-
-footer {
-    background-color: #001f3f;
-    color: #00f0ff;
-    text-align: center;
-    padding: 12px;
-    margin-top: 40px;
-}
-</style>
+        .news-summary span {
+            font-size: 0.9em;
+            color: #ccc;
+        }
+        
+        /* FOOTER */
+        footer {
+            background-color: #001f3f;
+            color: #00f0ff;
+            text-align: center;
+            padding: 12px;
+            margin-top: 40px;
+        }
+    </style>
 </head>
 <body>
-<div class="hamburger" id="hamburger">
-    <div class="bar"></div>
-    <div class="bar"></div>
-    <div class="bar"></div>
-</div>
 
-<div id="mySidebar" class="sidebar">
-    <a href="nosotros.html">Nosotros</a>
-    <a href="escaner.html">Escáner</a>
-    <a href="proceso-plastico.html">Proceso del Plástico</a>
-    <a href="metodos-reciclaje.html">Métodos de Reciclaje</a>
-    <a href="tipos-plasticos.html">Tipos de Plásticos</a>
-    <a href="caracteristicas-material.html">Características del Material</a>
-    <a href="impacto-ambiental.html">Impacto Ambiental</a>
-    <a href="formacion-educacion.html">Formación y Educación Ambiental</a>
-    <a href="creaciones-reciclado.html">Creaciones con Plástico Reciclado</a>
-    <a href="curiosidades.html">Curiosidades y Datos Útiles</a>
-    <a href="noticias-ambientales.html">Noticias Ambientales</a>
-    <a href="evaluacion.html">Evaluación y Retroalimentación</a>
-    <a href="ayuda.html">Ayuda</a>
-</div>
+    <div class="hamburger" id="hamburger">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+    </div>
 
-<header>FACAS X - Evaluación y Retroalimentación</header>
+    <div id="mySidebar" class="sidebar">
+        <a href="nosotros.html">Nosotros</a>
+        <a href="escaner.html">Escáner Inteligente</a> 
+        <a href="proceso.html">Proceso del Plástico</a>
+        <a href="metodos.html">Métodos de Reciclaje</a>
+        <a href="tipos.html">Tipos de Plásticos</a>
+        <a href="caracteristicas.html">Características del Material</a>
+        <a href="impacto.html">Impacto Ambiental</a>
+        <a href="formacion.html">Formación y Educación Ambiental</a>
+        <a href="creaciones.html">Creaciones con Plástico Reciclado</a>
+        <a href="curiosidades.html">Curiosidades y Datos Útiles</a>
+        <a href="noticias.html">Noticias Ambientales</a> 
+        <a href="evaluacion.html">Evaluación y Retroalimentación</a>
+        <a href="ayuda.html">Ayuda</a>
+    </div>
 
-<div class="container">
-    <h2>Evalúa tu Experiencia con FACAS X ✨</h2>
-    <p>
-        Tu opinión es muy importante para mejorar nuestra aplicación. Por favor, tómate un momento para calificar tu experiencia y dejarnos tus comentarios.
-    </p>
+    <header>FACAS X - Transmisión de Datos Ambientales</header>
 
-    <form id="feedbackForm">
+    <div class="container">
+        <h1>CENTRO DE DATOS FACAS X: NOTICIAS AMBIENTALES Y TECNOLÓGICAS</h1>
         
-        <div class="form-group" style="text-align: center;">
-            <label>1. ¿Cómo calificarías la utilidad del Escáner? (1=Malo, 5=Excelente)</label>
-            <div class="rating">
-                <input type="radio" id="star5" name="scanner_rating" value="5" required><label for="star5">★</label>
-                <input type="radio" id="star4" name="scanner_rating" value="4"><label for="star4">★</label>
-                <input type="radio" id="star3" name="scanner_rating" value="3"><label for="star3">★</label>
-                <input type="radio" id="star2" name="scanner_rating" value="2"><label for="star2">★</label>
-                <input type="radio" id="star1" name="scanner_rating" value="1"><label for="star1">★</label>
+        <div class="news-grid">
+            
+            <div class="video-highlight">
+                <h2>INFORME EXCLUSIVO: Avances y Retos del Reciclaje Global (2025)</h2>
+                
+                <div class="video-container">
+                    <iframe 
+                        src="https://www.youtube.com/embed/N_EYB8ObUvI" 
+                        title="Avances y Retos del Reciclaje Global"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
+                <p style="font-style: italic; font-size: 0.9em; color: #aaa; margin-top: 15px; text-align: left;">
+                    Fuente de Datos: 701 Cristian Aguilar. Sincronización: 2025-10-25.
+                </p>
             </div>
+
+            <div class="news-summary">
+                <h3>Resumen Analítico de Puntos Críticos</h3>
+                <ul>
+                    <li>
+                        <strong>Riesgo de Microplásticos en Salud Reproductiva</strong>
+                        <span>Alerta: La bioacumulación de microplásticos derivados de la degradación podría impactar la salud uterina de las mujeres, un problema de salud humana directo que requiere acción inmediata.</span>
+                    </li>
+                    <li>
+                        <strong>Solución Climática Innovadora: Café y Plástico</strong>
+                        <span>Innovación: Tecnología patentada combina residuos de plástico y borra de café para crear un material de carbono de alto rendimiento capaz de **capturar CO2 industrial**. Una doble victoria ambiental.</span>
+                    </li>
+                    <li>
+                        <strong>Activismo Ambiental: Protección Fluvial en Texas</strong>
+                        <span>Movilización: Pescadores y agentes turísticos exigen estándares más estrictos contra la contaminación por **pellets plásticos** (nurdles) en vías fluviales costeras, protegiendo hábitats críticos.</span>
+                    </li>
+                    <li>
+                        <strong>Geografía Crítica: Tailandia, el Sexto Lugar Mundial</strong>
+                        <span>Estadística: El país ha sido clasificado como el sexto a nivel global en la generación de residuos plásticos oceánicos, con impactos ambientales y económicos significativos para el Sudeste Asiático.</span>
+                    </li>
+                    <li>
+                        <strong>Economía Circular: Retos de Inversión en Reciclaje</strong>
+                        <span>Desafío: El sector aún enfrenta grandes obstáculos logísticos y de infraestructura. Se concluye que se necesitan **mejores sistemas de clasificación** (como FACAS X) más allá de la mera inyección de capital.</span>
+                    </li>
+                </ul>
+            </div>
+
         </div>
+    </div>
 
-        <div class="form-group">
-            <label for="content_usefulness">2. ¿Qué tan útil fue la información proporcionada en los apartados de Reciclaje y Plásticos?</label>
-            <select id="content_usefulness" required>
-                <option value="" disabled selected>Selecciona una opción</option>
-                <option value="Muy_Util">Muy útil, aprendí mucho.</option>
-                <option value="Util">Útil, me sirvió para dudas específicas.</option>
-                <option value="Neutro">Neutro, la información ya la conocía.</option>
-                <option value="Poco_Util">Poco útil.</option>
-            </select>
-        </div>
+    <footer>© 2025 FACAS X. Transmisión de Datos Segura.</footer>
 
-        <div class="form-group">
-            <label for="suggestions">3. Comentarios y Sugerencias:</label>
-            <textarea id="suggestions" rows="4" placeholder="¿Qué podemos mejorar? ¿Qué nueva funcionalidad te gustaría ver?"></textarea>
-        </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const hamburger = document.getElementById('hamburger');
+            const sidebar = document.getElementById('mySidebar');
+            
+            const toggleMenu = () => {
+                sidebar.classList.toggle('active');
+                hamburger.classList.toggle('active');
+            };
 
-        <button type="submit" class="submit-button">Enviar Evaluación</button>
-    </form>
-</div>
+            hamburger.addEventListener('click', toggleMenu);
 
-<footer>© 2025 FACAS X. Todos los derechos reservados.</footer>
-
-<script>
-/* =======================================
-    Funcionalidad Hamburguesa
-    ======================================= */
-document.addEventListener('DOMContentLoaded', () => {
-    const hamburger = document.getElementById('hamburger');
-    const sidebar = document.getElementById('mySidebar');
-    const feedbackForm = document.getElementById('feedbackForm');
-
-    const toggleMenu = () => {
-        sidebar.classList.toggle('active');
-        hamburger.classList.toggle('active');
-    };
-
-    // Event listener para abrir/cerrar con el icono
-    hamburger.addEventListener('click', toggleMenu);
-
-    // Event listener para cerrar la barra lateral al hacer clic en un enlace
-    sidebar.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => {
-            setTimeout(toggleMenu, 50); 
+            sidebar.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    setTimeout(toggleMenu, 50); 
+                });
+            });
         });
-    });
+    </script>
 
-    /* =======================================
-        Funcionalidad de Envío de Formulario (Demo)
-        ======================================= */
-    feedbackForm.addEventListener('submit', function(e) {
-        e.preventDefault(); // Evita que la página se recargue
-
-        // Se simula el envío exitoso de datos
-        alert("🎉 ¡Gracias por tu evaluación! Hemos recibido tus comentarios y los revisaremos para mejorar FACAS X.");
-
-        // Opcional: Resetear el formulario después de la alerta
-        feedbackForm.reset();
-    });
-});
-</script>
 </body>
 </html>

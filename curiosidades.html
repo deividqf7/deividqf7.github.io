@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FACAS X - Curiosidades y Datos Útiles</title>
+    <style>
+        /* =========================================================================
+           ESTILOS GENERALES Y DE FONDO (Diseño FACAS X)
+           ========================================================================= */
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(-45deg, #001f3f, #003366, #000, #00f0ff);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: #fff;
+            overflow-x: hidden;
+            text-align: center;
+            padding-top: 60px;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* =========================================================================
+           HEADER FIJO Y NAVEGACIÓN (Consistente con diseños anteriores)
+           ========================================================================= */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(90deg, #001f3f, #003366);
+            padding: 15px;
+            font-size: 22px;
+            font-weight: bold;
+            color: #00f0ff;
+            text-align: center;
+            z-index: 1050; 
+        }
+
+        .sidebar {
+            height: 100%;
+            width: 280px; 
+            position: fixed;
+            top: 0;
+            left: -290px;
+            background-color: #111;
+            overflow-x: hidden;
+            transition: left 0.5s ease;
+            padding-top: 60px;
+            z-index: 1150; 
+        }
+        .sidebar.active { left: 0; }
+
+        .sidebar a {
+            padding: 12px 0; 
+            text-decoration: none !important; 
+            font-size: 16px; 
+            color: #f1f1f1;
+            display: block;
+            transition: 0.3s;
+            text-align: center; 
+            margin: 0 auto; 
+            width: 90%; 
+        }
+        .sidebar a:hover { 
+            background-color: #004080; 
+            border-radius: 5px;
+        }
+
+        .hamburger {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            width: 35px;
+            height: 28px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            cursor: pointer;
+            z-index: 1200; 
+        }
+        .bar {
+            height: 4px;
+            width: 100%;
+            background-color: white;
+            border-radius: 4px;
+            transition: 0.4s;
+        }
+        .hamburger.active .bar:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+        .hamburger.active .bar:nth-child(2) { opacity: 0; }
+        .hamburger.active .bar:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+
+        /* =========================================================================
+           ESTILOS DE CONTENIDO PRINCIPAL (Curiosidades)
+           ========================================================================= */
+        .container {
+            max-width: 1200px;
+            margin: 40px auto; 
+            padding: 30px;
+            background: #001f3f; 
+            border-radius: 12px;
+            border: 2px solid #00f0ff; 
+            box-shadow: 0 0 25px #00f0ff; 
+            text-align: center;
+        }
+
+        h1 {
+            color: #00f0ff;
+            font-size: 2.8em;
+            margin-bottom: 40px;
+            text-shadow: 0 0 8px #00aaff;
+            border-bottom: 2px solid rgba(0, 240, 255, 0.5);
+            padding-bottom: 15px;
+        }
+
+        /* Sección de Video */
+        .video-section {
+            margin-bottom: 40px;
+            padding: 20px;
+            background: rgba(0, 50, 100, 0.3);
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.5);
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* Relación de aspecto 16:9 */
+            height: 0;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.8);
+            margin-top: 20px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Grid de Curiosidades */
+        .curiosity-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        /* Estilo de Tarjeta de Curiosidad (Efecto Neón) */
+        .curiosity-card {
+            background-color: #00152b;
+            padding: 25px;
+            border-radius: 15px;
+            /* Borde inicial */
+            border: 2px solid #003366; 
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-align: left;
+            position: relative;
+        }
+
+        /* Efecto Hover: Sombra Neón y Elevación */
+        .curiosity-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: #00f0ff;
+            box-shadow: 0 0 25px #00f0ff, 0 0 5px #00f0ff; /* Sombra doble para neón */
+        }
+
+        .curiosity-card h3 {
+            font-size: 1.4em;
+            color: #00cfff;
+            margin-top: 0;
+            border-bottom: 1px dashed rgba(0, 240, 255, 0.3);
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        .curiosity-card p {
+            font-size: 1em;
+            color: #e0e0e0;
+        }
+
+        /* Icono/Marcador */
+        .curiosity-card::before {
+            content: '💡';
+            position: absolute;
+            top: -15px;
+            right: 15px;
+            font-size: 2em;
+            color: #00f0ff;
+            text-shadow: 0 0 10px #00f0ff;
+        }
+
+        footer {
+            background-color: #001f3f;
+            color: #00f0ff;
+            text-align: center;
+            padding: 12px;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="hamburger" id="hamburger">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+    </div>
+
+  <div id="mySidebar" class="sidebar">
+    <a href="nosotros.html">Nosotros</a>
+    <a href="escaner.html">Escáner</a>
+    <a href="proceso.html">Proceso del Plástico</a>
+    <a href="metodos.html">Métodos de Reciclaje</a>
+    <a href="tipos.html">Tipos de Plásticos</a>
+    <a href="caracteristicas.html">Características del Material</a>
+    <a href="impacto.html">Impacto Ambiental</a>
+    <a href="formacion.html">Formación y Educación Ambiental</a>
+    <a href="creaciones.html">Creaciones con Plástico Reciclado</a>
+    <a href="curiosidades.html">Curiosidades y Datos Útiles</a>
+    <a href="noticias.html">Noticias Ambientales</a>
+    <a href="evaluacion.html">Evaluación y Retroalimentación</a>
+    <a href="ayuda.html">Ayuda</a>
+</div>
+
+    <header>FACAS X - Datos Curiosos del Plástico</header>
+
+    <div class="container">
+        <h1>DESCLASIFICANDO ARCHIVOS: DATOS CURIOSOS DEL PLÁSTICO</h1>
+        
+        <h2 style="color: #00f0ff; text-align: center; font-size: 2em; margin-top: 10px; text-shadow: 0 0 5px #00f0ff;">TOP 7 DATOS FACAS X: EXPEDIENTE CLASIFICADO</h2>
+
+        <div class="curiosity-grid">
+            
+            <div class="curiosity-card">
+                <h3>Microplásticos en el Agua</h3>
+                <p>En un solo litro de agua embotellada puede haber hasta **300 partículas de microplástico**, por lo que se recomienda no reutilizar botellas de un solo uso, ya que se puede incrementar la cantidad de microplástico.</p>
+            </div>
+            
+            <div class="curiosity-card">
+                <h3>El Plástico Invisible</h3>
+                <p>El plástico más ligero conocido es el **aerogel de polímero**, el cual llega a pesar incluso **menos que el aire** debido a su estructura porosa. Este material es vital para la investigación avanzada.</p>
+            </div>
+            
+            <div class="curiosity-card">
+                <h3>El Plástico en el Espacio</h3>
+                <p>Las naves espaciales y los trajes de los astronautas usan **polímeros plásticos especiales** diseñados para resistir la radiación, las fluctuaciones extremas de temperatura y el vacío del espacio, demostrando su resiliencia.</p>
+            </div>
+            
+            <div class="curiosity-card">
+                <h3>Reciclaje de Infraestructura</h3>
+                <p>Existen proyectos innovadores donde carreteras, ladrillos y hasta ropa son fabricados utilizando **plástico reciclado**, dándole un segundo uso duradero y de alto rendimiento en la infraestructura civil.</p>
+            </div>
+            
+            <div class="curiosity-card">
+                <h3>La Evolución Inteligente</h3>
+                <p>Los **plásticos inteligentes** pueden llegar a cambiar de forma o color según estímulos externos como la temperatura o la luz. Pueden incluso retomar su forma original para facilitar procesos de desmontaje y reciclaje.</p>
+            </div>
+            
+            <div class="curiosity-card">
+                <h3>Más Claro que el Vidrio</h3>
+                <p>Algunos plásticos, como el policarbonato, son **más transparentes que el propio vidrio**, además de ser considerablemente más resistentes al impacto y ligeros. Por ello, se usan en vehículos y aviación.</p>
+            </div>
+            
+            <div class="curiosity-card">
+                <h3>El Padre del Plástico Sintético</h3>
+                <p>El primer plástico sintético termoestable fue inventado en 1907 por el químico **Leo Hendrik Baekeland** (y no Lego Kelant como se menciona en el video). Lo nombró **Baquelita**, marcando el inicio de la era moderna de los polímeros.</p>
+            </div>
+
+        </div>
+
+        <div class="video-section">
+            <h2 style="color: #00f0ff; text-align: center; font-size: 1.8em; margin-top: 30px;">🎥 Archivo Audiovisual de Profundización</h2>
+            
+            <div class="video-container">
+                <iframe 
+                    src="https://www.youtube.com/embed/3ELEaz5Yjos?autoplay=0&controls=1&showinfo=0&rel=0" 
+                    title="DATOS CURIOSOS SOBRE EL PLASTICO"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen>
+                </iframe>
+            </div>
+            <p style="font-style: italic; font-size: 0.9em; color: #aaa; margin-top: 15px; text-align: center;">
+                Fuente: 701 Cristian Aguilar. Consulte el archivo para detalles técnicos.
+            </p>
+        </div>
+
+    </div>
+
+    <footer>© 2025 FACAS X. Todos los derechos reservados.</footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const hamburger = document.getElementById('hamburger');
+            const sidebar = document.getElementById('mySidebar');
+            
+            const toggleMenu = () => {
+                sidebar.classList.toggle('active');
+                hamburger.classList.toggle('active');
+            };
+
+            hamburger.addEventListener('click', toggleMenu);
+
+            sidebar.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    setTimeout(toggleMenu, 50); 
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>

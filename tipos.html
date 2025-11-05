@@ -1,266 +1,271 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FACAS X - Tipos de Plásticos Comunes</title>
-<style>
-/* ... (Estilos CSS omitidos para brevedad, son los mismos que antes) ... */
-/* =========================================================================
-   ESTILOS GENERALES Y DE FONDO (Diseño FACAS X)
-   ========================================================================= */
-body {
-    margin: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    /* Fondo animado de la marca FACAS X (tonos azul/cian/negro) */
-    background: linear-gradient(-45deg, #001f3f, #003366, #000, #00f0ff);
-    background-size: 400% 400%;
-    animation: gradientBG 15s ease infinite;
-    color: #fff;
-    overflow-x: hidden;
-    text-align: center;
-    padding-top: 60px;
-}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FACAS X - Tipos de Plásticos Comunes</title>
+    <style>
+        /* =========================================================================
+           ESTILOS GENERALES Y DE FONDO (Diseño FACAS X)
+           ========================================================================= */
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            /* Fondo animado de la marca FACAS X (tonos azul/cian/negro) */
+            background: linear-gradient(-45deg, #001f3f, #003366, #000, #00f0ff);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: #fff;
+            overflow-x: hidden;
+            text-align: center;
+            padding-top: 60px; /* Espacio para el header fijo */
+        }
 
-@keyframes gradientBG {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
 
-/* =========================================================================
-   HEADER FIJO Y NAVEGACIÓN
-   ========================================================================= */
-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background: linear-gradient(90deg, #001f3f, #003366);
-    padding: 15px;
-    font-size: 22px;
-    font-weight: bold;
-    color: #00f0ff;
-    text-align: center;
-    z-index: 1050; 
-}
+        /* =========================================================================
+           HEADER FIJO Y NAVEGACIÓN
+           ========================================================================= */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(90deg, #001f3f, #003366);
+            padding: 15px;
+            font-size: 22px;
+            font-weight: bold;
+            color: #00f0ff;
+            text-align: center;
+            z-index: 1050; 
+        }
 
-.sidebar {
-    height: 100%;
-    width: 280px; 
-    position: fixed;
-    top: 0;
-    left: -290px;
-    background-color: #111;
-    overflow-x: hidden;
-    transition: left 0.5s ease;
-    padding-top: 60px;
-    z-index: 1200; 
-}
-.sidebar.active { left: 0; }
+        /* MENÚ LATERAL (SIDEBAR) - CORREGIDO: Inicio desde arriba y padding-top para bajar los enlaces */
+        .sidebar {
+            height: 100%;
+            width: 280px; 
+            position: fixed;
+            top: 0;
+            left: -290px;
+            background-color: #111;
+            overflow-x: hidden;
+            transition: left 0.5s ease;
+            padding-top: 70px; /* Bajar los enlaces para el espacio de la 'X' */
+            z-index: 1060; /* Cubre el header (1050) */
+        }
+        .sidebar.active { left: 0; }
 
-.sidebar a {
-    padding: 12px 0; 
-    text-decoration: none;
-    font-size: 16px; 
-    color: #f1f1f1;
-    display: block;
-    transition: 0.3s;
-    text-align: center; 
-    margin: 0 auto; 
-    width: 90%; 
-}
-.sidebar a:hover { 
-    background-color: #004080; 
-    border-radius: 5px;
-}
+        .sidebar a {
+            padding: 12px 0; 
+            text-decoration: none;
+            font-size: 16px; 
+            color: #f1f1f1;
+            display: block;
+            transition: 0.3s;
+            text-align: center; 
+            margin: 0 auto; 
+            width: 90%; 
+        }
+        .sidebar a:hover { 
+            background-color: #004080; 
+            color: #00f0ff;
+            border-radius: 5px;
+        }
 
-.hamburger {
-    position: fixed;
-    top: 15px;
-    left: 15px;
-    width: 35px;
-    height: 28px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    cursor: pointer;
-    z-index: 1100;
-}
-.bar {
-    height: 4px;
-    width: 100%;
-    background-color: white;
-    border-radius: 4px;
-    transition: 0.4s;
-}
-.hamburger.active .bar:nth-child(1) {
-    transform: rotate(45deg) translate(6px, 6px);
-}
-.hamburger.active .bar:nth-child(2) { opacity: 0; }
-.hamburger.active .bar:nth-child(3) {
-    transform: rotate(-45deg) translate(6px, -6px);
-}
+        /* Botón de Hamburguesa/Cerrar (X) */
+        .hamburger {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            width: 35px;
+            height: 28px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            cursor: pointer;
+            z-index: 1100;
+        }
+        .bar {
+            height: 4px;
+            width: 100%;
+            background-color: white;
+            border-radius: 4px;
+            transition: 0.4s;
+        }
+        .hamburger.active .bar:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+        .hamburger.active .bar:nth-child(2) { opacity: 0; }
+        .hamburger.active .bar:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
 
-/* =========================================================================
-   ESTILOS DE CONTENIDO PRINCIPAL - Tipos de Plásticos
-   ========================================================================= */
-.container {
-    max-width: 900px;
-    margin: 40px auto; 
-    padding: 30px;
-    background: #001f3f; 
-    border-radius: 12px;
-    border: 2px solid #00f0ff; 
-    box-shadow: 0 0 25px #00f0ff; 
-    text-align: left;
-}
+        /* =========================================================================
+           ESTILOS DE CONTENIDO PRINCIPAL - Tipos de Plásticos
+           ========================================================================= */
+        .container {
+            max-width: 1200px;
+            margin: 40px auto; 
+            padding: 30px;
+            background: #001f3f; 
+            border-radius: 12px;
+            border: 2px solid #00f0ff; 
+            box-shadow: 0 0 30px #00f0ff; /* Sombra más intensa */
+            text-align: left;
+        }
+        
+        h1 {
+            color: #00f0ff;
+            text-align: center;
+            font-size: 2.5em;
+            text-shadow: 0 0 8px rgba(0, 240, 255, 0.8);
+            margin-bottom: 40px;
+        }
 
-h2 {
-    color: #00f0ff;
-    text-align: center;
-    border-bottom: 2px solid #003366;
-    padding-bottom: 10px;
-    margin-bottom: 30px;
-}
+        h2 {
+            color: #00f0ff;
+            text-align: center;
+            border-bottom: 2px solid #00aaff; /* Línea de datos neón */
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
 
-.tipos-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 20px;
-    margin-top: 20px;
-    /* Centrar las tarjetas en la cuadrícula */
-    justify-items: center; 
-}
+        .tipos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px; /* Aumenté el espacio */
+            margin-top: 20px;
+            justify-items: center; 
+        }
 
-.card {
-    background-color: #00152b;
-    padding: 20px;
-    border-radius: 10px;
-    border: 1px solid #003366;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-    transition: transform 0.3s, box-shadow 0.3s;
-    width: 100%; /* Asegura que la tarjeta ocupe el espacio disponible en su celda */
-    max-width: 350px; /* Limita el ancho máximo para una mejor visualización */
-}
+        .card {
+            background-color: #00152b;
+            padding: 25px; /* Aumenté el padding */
+            border-radius: 10px;
+            border: 1px solid #0056b3;
+            box-shadow: 0 0 15px rgba(0, 170, 255, 0.4); /* Sombra de tarjeta neón */
+            transition: transform 0.3s, box-shadow 0.3s;
+            width: 100%; 
+            max-width: 350px; 
+        }
 
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 15px rgba(0, 240, 255, 0.3); /* Resplandor al pasar el ratón */
-}
+        .card:hover {
+            transform: translateY(-8px); /* Elevación sutil */
+            box-shadow: 0 0 25px rgba(0, 240, 255, 0.8); /* Resplandor intenso al pasar el ratón */
+        }
 
-.card h3 {
-    color: #00f0ff;
-    margin-top: 0;
-    font-size: 1.5em;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: 1px dashed #003366;
-    padding-bottom: 5px;
-}
+        .card h3 {
+            color: #00f0ff;
+            margin-top: 0;
+            font-size: 1.6em; /* Fuente más grande */
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 2px solid #003366;
+            padding-bottom: 8px;
+            margin-bottom: 15px;
+        }
 
-.card .ric-number {
-    font-size: 2em;
-    font-weight: bold;
-    color: #fff;
-    background-color: #004080; /* Azul oscuro para el número */
-    padding: 5px 10px;
-    border-radius: 5px;
-    line-height: 1;
-}
+        .card .ric-number {
+            font-size: 2.2em; /* Número más grande */
+            font-weight: bold;
+            color: #001f3f;
+            background-color: #00f0ff; /* Fondo cian brillante para el número */
+            padding: 5px 12px;
+            border-radius: 5px;
+            line-height: 1;
+        }
 
-.card p {
-    font-size: 0.95em;
-    margin-top: 10px;
-    color: #ccc;
-}
+        .card p {
+            font-size: 1em;
+            margin-top: 10px;
+            color: #ddd;
+        }
 
-.card strong {
-    color: #fff;
-}
+        .card strong {
+            color: #00aaff; /* Resaltar palabras clave */
+        }
 
-.reciclabilidad {
-    margin-top: 10px;
-    padding: 5px;
-    border-radius: 3px;
-    font-weight: bold;
-    font-size: 0.85em;
-    text-align: center;
-}
+        .reciclabilidad {
+            margin-top: 15px;
+            padding: 8px;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 0.9em;
+            text-align: center;
+            text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+        }
 
-/* Clases de colores de reciclabilidad */
-.reciclable-alto {
-    background-color: #00c0ff; /* Cian más brillante */
-    color: #001f3f; 
-}
-.reciclable-medio {
-    background-color: #007bff; /* Azul intermedio */
-    color: #fff;
-}
-.reciclable-bajo {
-    background-color: #003366; /* Azul oscuro */
-    color: #ccc;
-}
+        /* Clases de colores de reciclabilidad */
+        .reciclable-alto {
+            background-color: #38c172; /* Verde brillante (Alto potencial) */
+            color: #001f3f; 
+        }
+        .reciclable-medio {
+            background-color: #ffc107; /* Amarillo (Potencial medio) */
+            color: #001f3f;
+        }
+        .reciclable-bajo {
+            background-color: #dc3545; /* Rojo (Baja viabilidad) */
+            color: #fff;
+        }
 
+        /* Contenedor del video */
+        .video-box {
+            margin-top: 60px;
+            margin-bottom: 20px;
+            padding: 20px;
+            background-color: #002b5c; 
+            border-radius: 12px;
+            border: 3px solid #00f0ff; /* Borde neón */
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.8); /* Sombra neón */
+            text-align: center;
+        }
 
-/* Contenedor del video */
-.video-box {
-    margin-top: 40px;
-    margin-bottom: 20px;
-    padding: 15px;
-    background-color: #002b5c; 
-    border-radius: 10px;
-    border: 2px solid #007bff; /* Borde azul intermedio */
-    box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
-    text-align: center;
-}
+        .video-responsive {
+            position: relative;
+            width: 95%; /* CORREGIDO: Ocupa el 95% del espacio del recuadro */
+            max-width: 800px; /* Mantener un ancho máximo sensato */
+            padding-bottom: 56.25%; /* Relación de aspecto 16:9 */
+            height: 0;
+            overflow: hidden;
+            margin: 20px auto; /* Centrar el video */
+            border-radius: 8px; 
+        }
 
-.video-box h3 {
-    color: #00f0ff;
-    margin-top: 0;
-    border-bottom: 1px solid #003366;
-    padding-bottom: 10px;
-}
+        .video-responsive iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
 
-.video-responsive {
-    position: relative;
-    padding-bottom: 56.25%; /* Relación de aspecto 16:9 */
-    height: 0;
-    overflow: hidden;
-    margin: 0 auto;
-    max-width: 700px; /* Limita el ancho del video para que no sea demasiado grande */
-}
-
-.video-responsive iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border: none;
-    border-radius: 5px;
-}
-
-footer {
-    background-color: #001f3f;
-    color: #00f0ff;
-    text-align: center;
-    padding: 12px;
-    margin-top: 40px;
-}
-</style>
+        footer {
+            background-color: #001f3f;
+            color: #00f0ff;
+            text-align: center;
+            padding: 12px;
+            margin-top: 40px;
+        }
+    </style>
 </head>
 <body>
-<div class="hamburger" id="hamburger">
+<div class="hamburger active" id="hamburger"> 
     <div class="bar"></div>
     <div class="bar"></div>
     <div class="bar"></div>
 </div>
 
-<div id="mySidebar" class="sidebar">
+<div id="mySidebar" class="sidebar active"> 
     <a href="nosotros.html">Nosotros</a>
-    <a href="escaner.html">Escáner</a>
+    <a href="escaner.html">Escáner Inteligente</a> 
     <a href="proceso.html">Proceso del Plástico</a>
     <a href="metodos.html">Métodos de Reciclaje</a>
     <a href="tipos.html">Tipos de Plásticos</a>
@@ -269,7 +274,7 @@ footer {
     <a href="formacion.html">Formación y Educación Ambiental</a>
     <a href="creaciones.html">Creaciones con Plástico Reciclado</a>
     <a href="curiosidades.html">Curiosidades y Datos Útiles</a>
-    <a href="noticias.html">Noticias Ambientales</a>
+    <a href="noticias.html">Noticias Ambientales</a> 
     <a href="evaluacion.html">Evaluación y Retroalimentación</a>
     <a href="ayuda.html">Ayuda</a>
 </div>
@@ -277,9 +282,10 @@ footer {
 <header>FACAS X - Tipos de Plásticos</header>
 
 <div class="container">
+    <h1>ANÁLISIS DE RESINA: CLASIFICACIÓN Y RECICLABILIDAD</h1>
     <h2>Códigos de Identificación de Resina (RIC)</h2>
-    <p style="text-align: center; color: #00f0ff;">
-        Los Códigos RIC (números 1 al 7) indican el tipo de polímero del material. Conocerlos es crucial para una gestión de residuos efectiva.
+    <p style="text-align: center; color: #00aaff; font-size: 1.1em; font-weight: 500;">
+        Los Códigos RIC (números 1 al 7) son la **huella digital** del plástico. Identificar el polímero es el primer paso para un **reciclaje inteligente**.
     </p>
 
     <div class="tipos-grid">
@@ -289,8 +295,8 @@ footer {
                 PET (Tereftalato de polietileno)
                 <span class="ric-number">1</span>
             </h3>
-            <p><strong>Usos Comunes:</strong> Botellas de bebidas, envases de aceite, bandejas de alimentos. Alto grado de transparencia y resistencia.</p>
-            <div class="reciclabilidad reciclable-alto">ALTA Reciclabilidad</div>
+            <p><strong>Usos Comunes:</strong> Botellas de bebidas carbonatadas, envases de aceite, bandejas de alimentos. Alto grado de **transparencia y ligereza**.</p>
+            <div class="reciclabilidad reciclable-alto">VÍA RÁPIDA: ALTA Reciclabilidad</div>
         </div>
 
         <div class="card">
@@ -298,8 +304,8 @@ footer {
                 HDPE (Polietileno de Alta Densidad)
                 <span class="ric-number">2</span>
             </h3>
-            <p><strong>Usos Comunes:</strong> Botellas de leche, detergentes, champú, tubos y tapas. Material rígido, resistente y opaco.</p>
-            <div class="reciclabilidad reciclable-alto">ALTA Reciclabilidad</div>
+            <p><strong>Usos Comunes:</strong> Botellas de leche, detergentes, champú, tubos y tapas. Material **rígido, resistente** y opaco.</p>
+            <div class="reciclabilidad reciclable-alto">VÍA RÁPIDA: ALTA Reciclabilidad</div>
         </div>
 
         <div class="card">
@@ -307,8 +313,8 @@ footer {
                 PP (Polipropileno)
                 <span class="ric-number">5</span>
             </h3>
-            <p><strong>Usos Comunes:</strong> Envases de yogur, tuppers, pajitas, piezas de coches. Muy resistente al calor y a químicos.</p>
-            <div class="reciclabilidad reciclable-alto">ALTA Reciclabilidad</div>
+            <p><strong>Usos Comunes:</strong> Envases de yogur, tuppers, pajitas, piezas de coches. Muy resistente al **calor y a químicos**.</p>
+            <div class="reciclabilidad reciclable-alto">VÍA RÁPIDA: ALTA Reciclabilidad</div>
         </div>
 
         
@@ -317,8 +323,8 @@ footer {
                 LDPE (Polietileno de Baja Densidad)
                 <span class="ric-number">4</span>
             </h3>
-            <p><strong>Usos Comunes:</strong> Bolsas de supermercado, bolsas de basura, envoltorios de alimentos. Material flexible y delgado.</p>
-            <div class="reciclabilidad reciclable-medio">MEDIA Reciclabilidad</div>
+            <p><strong>Usos Comunes:</strong> Bolsas de supermercado, bolsas de basura, envoltorios de alimentos. Material **flexible y delgado**. Requiere **procesos especiales**.</p>
+            <div class="reciclabilidad reciclable-medio">POTENCIAL: MEDIA Reciclabilidad</div>
         </div>
 
         <div class="card">
@@ -326,8 +332,8 @@ footer {
                 PVC (Policloruro de Vinilo)
                 <span class="ric-number">3</span>
             </h3>
-            <p><strong>Usos Comunes:</strong> Marcos de ventanas, tuberías, cables, cortinas de baño. Difícil de reciclar debido a su contenido de cloro y aditivos.</p>
-            <div class="reciclabilidad reciclable-bajo">BAJA Reciclabilidad</div>
+            <p><strong>Usos Comunes:</strong> Marcos de ventanas, tuberías, cables, cortinas de baño. **Difícil de reciclar** debido a su contenido de cloro y aditivos.</p>
+            <div class="reciclabilidad reciclable-bajo">ALERTA ROJA: BAJA Reciclabilidad</div>
         </div>
 
         <div class="card">
@@ -335,27 +341,27 @@ footer {
                 PS (Poliestireno)
                 <span class="ric-number">6</span>
             </h3>
-            <p><strong>Usos Comunes:</strong> Vasos y cubiertos desechables, envases de espuma (porexpán o unicel). Frágil y difícil de reciclar eficazmente.</p>
-            <div class="reciclabilidad reciclable-bajo">BAJA Reciclabilidad</div>
+            <p><strong>Usos Comunes:</strong> Vasos y cubiertos desechables, envases de espuma (porexpán o unicel). **Frágil** y difícil de reciclar eficazmente por su volumen.</p>
+            <div class="reciclabilidad reciclable-bajo">ALERTA ROJA: BAJA Reciclabilidad</div>
         </div>
         
         <div class="card">
             <h3>
-                OTROS (Incluye policarbonato, ABS, bioplásticos, etc.)
+                OTROS (Mezclas complejas, Bioplásticos, etc.)
                 <span class="ric-number">7</span>
             </h3>
-            <p><strong>Usos Comunes:</strong> CD's, gafas de sol, botellas reutilizables (policarbonato). Es la categoría de mezcla o materiales complejos.</p>
-            <div class="reciclabilidad reciclable-bajo">BAJA/COMPLEJA Reciclabilidad</div>
+            <p><strong>Usos Comunes:</strong> CD's, gafas de sol, botellas reutilizables (policarbonato). Es la categoría de **mezcla o materiales complejos**.</p>
+            <div class="reciclabilidad reciclable-bajo">ALERTA ROJA: BAJA/COMPLEJA Reciclabilidad</div>
         </div>
         
     </div>
     
-    <p style="text-align: center; margin-top: 30px; font-size: 0.9em; color: #00f0ff;">
-        **Nota de FACAS X:** Los plásticos con códigos **1, 2 y 5** son los más solicitados y viables para el reciclaje mecánico a nivel global.
+    <p style="text-align: center; margin-top: 35px; font-size: 1em; color: #00f0ff; font-weight: bold;">
+        **CONSEJO FACAS X:** Prioriza el consumo de productos marcados con códigos **1, 2 y 5**. Estos son los que más **viabilidad económica** tienen para el reciclaje mecánico.
     </p>
 
     <div class="video-box">
-        <h3>Video Adicional: Plásticos en la vida cotidiana</h3>
+        <h3>DATA STREAM: Plásticos en la Vida Cotidiana</h3>
         <div class="video-responsive">
             <iframe 
                 src="https://www.youtube.com/embed/GKOPb0bhZ-A" 
@@ -366,7 +372,7 @@ footer {
             </iframe>
         </div>
         <p style="color: #ccc; font-size: 0.9em; margin-top: 10px;">
-            Video proporcionado por **National Geographic España**.
+            Video proporcionado por **National Geographic España** para entender mejor las implicaciones de cada tipo.
         </p>
     </div>
 
@@ -378,13 +384,14 @@ footer {
 document.addEventListener('DOMContentLoaded', () => {
     const hamburger = document.getElementById('hamburger');
     const sidebar = document.getElementById('mySidebar');
-
+    
     const toggleMenu = () => {
         sidebar.classList.toggle('active');
         hamburger.classList.toggle('active');
     };
 
     hamburger.addEventListener('click', toggleMenu);
+    
     sidebar.querySelectorAll('a').forEach(link => {
         link.addEventListener('click', () => {
             setTimeout(toggleMenu, 50); 

@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FACAS X - Impacto Ambiental</title>
+<style>
+/* =========================================================================
+   ESTILOS BASE FACAS X 
+   ========================================================================= */
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /* Fondo degradado neón */
+    background: linear-gradient(-45deg, #001f3f, #003366, #000, #00f0ff);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    color: #fff;
+    overflow-x: hidden;
+    text-align: center; 
+    line-height: 1.6; 
+    padding-top: 60px; /* Espacio para el header fijo */
+}
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* --- HEADER FIJO (Corregido para consistencia) --- */
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: linear-gradient(90deg, #001f3f, #003366);
+    padding: 15px;
+    font-size: 22px;
+    font-weight: bold;
+    color: #00f0ff;
+    text-align: center;
+    z-index: 1050;
+}
+
+/* --- Menú Hamburguesa --- */
+.sidebar {
+    height: 100%;
+    width: 280px;
+    position: fixed;
+    top: 0;
+    left: -290px;
+    background-color: #111;
+    overflow-x: hidden;
+    transition: left 0.5s ease;
+    padding-top: 60px;
+    z-index: 1000;
+}
+.sidebar.active { left: 0; }
+.sidebar a {
+    padding: 12px 24px;
+    text-decoration: none;
+    font-size: 16px;
+    color: #f1f1f1;
+    display: block;
+    transition: 0.3s;
+}
+.sidebar a:hover { background-color: #004080; }
+
+.hamburger {
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    width: 35px;
+    height: 28px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+    z-index: 1100;
+}
+.bar {
+    height: 4px;
+    width: 100%;
+    background-color: white;
+    border-radius: 4px;
+    transition: 0.4s;
+}
+.hamburger.active .bar:nth-child(1) {
+    transform: rotate(45deg) translate(6px, 6px);
+}
+.hamburger.active .bar:nth-child(2) { opacity: 0; }
+.hamburger.active .bar:nth-child(3) {
+    transform: rotate(-45deg) translate(6px, -6px);
+}
+
+/* --- Contenedor principal --- */
+.container {
+    max-width: 900px; /* Mayor que el anterior para mejor visualización */
+    margin: 40px auto; /* Ajuste de margen superior */
+    padding: 30px;
+    background: #001f3f;
+    border-radius: 12px;
+    border: 2px solid #00f0ff;
+    box-shadow: 0 0 25px #00f0ff;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: left; 
+}
+
+h1 {
+    color: #00f0ff;
+    margin-bottom: 25px;
+    text-align: center;
+    font-size: 2.5em; 
+    text-shadow: 0 0 10px rgba(0, 240, 255, 0.7);
+    border-bottom: 2px solid rgba(0, 240, 255, 0.5);
+    padding-bottom: 10px;
+    width: 100%;
+}
+h2 { 
+    color: #00f0ff;
+    font-size: 1.8em; 
+    margin-top: 30px;
+    text-align: center;
+    width: 100%;
+}
+
+/* --- ESTILOS ESPECÍFICOS DE CONTENIDO --- */
+.impact-module {
+    background: #003366;
+    padding: 20px;
+    margin-bottom: 25px;
+    border-radius: 10px;
+    border-left: 5px solid #00f0ff; /* TODO CIÁN NEÓN */
+    box-shadow: 0 0 15px rgba(0, 240, 255, 0.3); /* TODO CIÁN NEÓN */
+    width: 100%; 
+    box-sizing: border-box;
+    color: #e0e0e0;
+    transition: transform 0.3s;
+}
+
+.impact-module:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0 20px #00f0ff; /* Efecto Neón más fuerte al pasar el ratón */
+}
+
+.impact-module h3 {
+    color: #00cfff; /* Ligero tono de cian para subtítulos */
+    margin-top: 0;
+    margin-bottom: 10px;
+    border-bottom: 1px dashed rgba(0, 240, 255, 0.4);
+    padding-bottom: 5px;
+    font-size: 1.4em;
+}
+
+.key-fact {
+    color: #00f0ff;
+    font-weight: bold;
+    font-style: italic;
+}
+
+.statistic {
+    text-align: center;
+    padding: 15px;
+    border: 1px dashed #00f0ff; /* CIÁN NEÓN */
+    border-radius: 5px;
+    margin-top: 20px;
+    background: rgba(0, 40, 80, 0.5);
+}
+.statistic strong {
+    color: #00f0ff;
+    font-size: 1.8em;
+    display: block;
+    text-shadow: 0 0 5px #00f0ff;
+}
+
+/* --- Estilo para el Video Embed (Responsive 16:9) --- */
+.video-box {
+    width: 100%;
+    max-width: 700px;
+    margin: 40px auto 20px auto;
+    border: 3px solid #00f0ff;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 240, 255, 0.7);
+    background: #000;
+}
+.video-container {
+    position: relative;
+    width: 100%; 
+    padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+    overflow: hidden; 
+}
+.video-container iframe {
+    position: absolute; 
+    top: 0;
+    left: 0;
+    width: 100%; 
+    height: 100%; 
+}
+
+
+/* --- FOOTER --- */
+footer {
+    background-color: #001f3f;
+    color: #00f0ff;
+    text-align: center;
+    padding: 12px;
+    margin-top: 40px;
+}
+</style>
+</head>
+<body>
+
+<div class="hamburger" id="hamburger">
+    <div class="bar"></div>
+    <div class="bar"></div>
+    <div class="bar"></div>
+</div>
+
+<div id="mySidebar" class="sidebar">
+    <a href="nosotros.html">Nosotros</a>
+    <a href="escaner.html">Escáner</a>
+    <a href="proceso.html">Proceso del Plástico</a>
+    <a href="metodos.html">Métodos de Reciclaje</a>
+    <a href="tipos.html">Tipos de Plásticos</a>
+    <a href="caracteristicas.html">Características del Material</a>
+    <a href="impacto.html">Impacto Ambiental</a>
+    <a href="formacion.html">Formación y Educación Ambiental</a>
+    <a href="creaciones.html">Creaciones con Plástico Reciclado</a>
+    <a href="curiosidades.html">Curiosidades y Datos Útiles</a>
+    <a href="noticias.html">Noticias Ambientales</a>
+    <a href="evaluacion.html">Evaluación y Retroalimentación</a>
+    <a href="ayuda.html">Ayuda</a>
+</div>
+
+<header>FACAS X - Impacto Ambiental</header>
+
+<div class="container">
+    <h1>🌎 Protocolo Cero: El Costo Ambiental de la Era del Polímero</h1>
+    <p style="text-align: center; color: #ccc;">El plástico, un material de bajo costo y alta versatilidad [00:00:03], se ha convertido en el contaminante dominante del planeta. La siguiente documentación desclasifica el impacto crítico en los ecosistemas y la salud global.</p>
+
+    <h2>I. Amenazas al Ecosistema Global</h2>
+    
+    <div class="impact-module">
+        <h3>1. Huella de Carbono y Cambio Climático</h3>
+        <p>La producción masiva de polímeros se basa en **derivados del petróleo**. Este proceso industrial genera <span class="key-fact">altas emisiones de Gases de Efecto Invernadero (GEI)</span>, lo que contribuye directamente al calentamiento global y a la crisis climática [00:00:09].</p>
+        <div class="statistic">
+            <strong>~1000 Millones</strong>
+            <small>Toneladas de GEI al año provienen de la cadena de valor del plástico.</small>
+        </div>
+    </div>
+
+    <div class="impact-module">
+        <h3>2. Acumulación y Degradación Lenta</h3>
+        <p>La descomposición del plástico es extremadamente lenta, pudiendo tardar **cientos de años** [00:00:17]. Esto provoca una acumulación preocupante en todos los biomas: suelos, ríos y, notoriamente, en los océanos [00:00:27].</p>
+    </div>
+    
+    <div class="impact-module">
+        <h3>3. Crisis en los Ecosistemas Marinos</h3>
+        <p>Los ecosistemas marinos son los más afectados. Millones de animales ingieren o quedan <span class="key-fact">atrapados en los desechos plásticos</span>, alterando cadenas alimenticias completas y provocando la muerte de un sinnúmero de especies [00:00:34].</p>
+    </div>
+
+    <h2>II. Riesgos Toxicológicos y Mitigación</h2>
+
+    <div class="impact-module">
+        <h3>4. Liberación de Sustancias Tóxicas</h3>
+        <p>El mal manejo o la quema no controlada de residuos plásticos en tierra libera **sustancias tóxicas** que contaminan el aire y el agua, representando un riesgo directo para la salud pública y la calidad de los recursos naturales [00:00:43].</p>
+    </div>
+
+    <div class="impact-module" style="width: 100%;">
+        <h3>Protocolo de Acción: Mitigación FACAS X</h3>
+        <p>Frente a este panorama, la solución estratégica reside en tres pilares fundamentales [00:00:53]:</p>
+        <ul>
+            <li>**Reducción del Consumo:** Disminuir drásticamente el uso de plásticos de un solo uso.</li>
+            <li>**Fomento del Reciclaje:** Aumentar la tasa de procesamiento de materiales existentes.</li>
+            <li>**Innovación:** Desarrollar y utilizar materiales **biodegradables** como alternativa estructural.</li>
+        </ul>
+        <p style="margin-top: 15px; font-weight: bold; color: #00f0ff;">Solo con un cambio radical en los hábitos de producción y consumo podremos mitigar el impacto ambiental y proteger la salud del planeta [00:01:10].</p>
+    </div>
+
+    <h2 style="margin-top: 40px;">🎬 Archivo Audiovisual: Documentación de Riesgos</h2>
+    
+    <div class="video-box">
+        <div class="video-container">
+            <iframe 
+                src="https://www.youtube.com/embed/6nK34TxPqN8" 
+                title="Impacto ambiental" 
+                frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                referrerpolicy="strict-origin-when-cross-origin" 
+                allowfullscreen>
+            </iframe>
+        </div>
+    </div>
+    <p style="text-align: center; font-style: italic; font-size: 0.9em; color: #aaa;">
+        Fuente: pablox'cm. <a href="http://www.youtube.com/watch?v=6nK34TxPqN8" style="color: #00f0ff; text-decoration: none;">Ver documentación original</a>.
+    </p>
+
+</div>
+
+<footer>© 2025 FACAS X. Todos los derechos reservados.</footer>
+
+<script>
+// =========================================================================
+// SCRIPT DE NAVEGACIÓN
+// =========================================================================
+document.addEventListener('DOMContentLoaded', () => {
+    const hamburger = document.getElementById('hamburger');
+    const sidebar = document.getElementById('mySidebar');
+    
+    const toggleMenu = () => {
+        sidebar.classList.toggle('active');
+        hamburger.classList.toggle('active');
+    };
+
+    hamburger.addEventListener('click', toggleMenu);
+
+    // Funcionalidad para cerrar la barra lateral al hacer clic en un enlace
+    sidebar.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            setTimeout(toggleMenu, 50); 
+        });
+    });
+});
+</script>
+</body>
+</html>

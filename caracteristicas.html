@@ -18,7 +18,8 @@ body {
     color: #fff;
     overflow-x: hidden;
     text-align: center;
-    padding-top: 60px;
+    padding-top: 60px; /* Para acomodar el header fijo */
+    line-height: 1.6;
 }
 
 @keyframes gradientBG {
@@ -115,31 +116,48 @@ header {
     text-align: left;
 }
 
+h1 {
+    color: #00f0ff;
+    text-align: center;
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    text-shadow: 0 0 10px rgba(0, 240, 255, 0.7);
+}
+
 h2 {
     color: #00f0ff;
     text-align: center;
-    border-bottom: 2px solid #003366;
+    border-bottom: 2px solid rgba(0, 240, 255, 0.3); /* Línea de neón más sutil */
     padding-bottom: 10px;
     margin-bottom: 30px;
+    font-size: 1.8em;
 }
 
-/* Estilos de la lista de características */
-.caracteristicas-list {
-    padding: 0 20px;
+/* Estilos de los módulos de información */
+.info-module {
+    background-color: #00152b; /* Fondo más oscuro para los módulos */
+    border-left: 5px solid #00f0ff; /* Borde de acento Cian Neón */
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 12px rgba(0, 240, 255, 0.2);
 }
-.caracteristicas-list li {
-    background-color: #00152b;
-    border-left: 5px solid #00f0ff;
-    padding: 15px;
-    margin-bottom: 15px;
-    border-radius: 5px;
-    list-style: none; 
-    font-size: 1.05em;
-    line-height: 1.4;
-}
-.caracteristicas-list strong {
+.info-module h3 {
     color: #00f0ff;
+    margin-top: 0;
+    margin-bottom: 10px;
+    border-bottom: 1px solid rgba(0, 240, 255, 0.1); /* Subrayado sutil */
+    padding-bottom: 5px;
+    font-size: 1.4em;
 }
+.info-module p {
+    color: #e0e0e0;
+    margin-bottom: 0;
+}
+.info-module strong {
+    color: #00f0ff; /* Resaltado en Cian Neón */
+}
+
 
 /* Contenedor del video */
 .video-box {
@@ -148,21 +166,22 @@ h2 {
     padding: 15px;
     background-color: #002b5c; 
     border-radius: 10px;
-    border: 2px solid #007bff; 
-    box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+    border: 3px solid #00f0ff; /* Borde Cian Neón para el video */
+    box-shadow: 0 0 20px rgba(0, 240, 255, 0.7); /* Sombra intensa de neón */
     text-align: center;
 }
 
 .video-box h3 {
     color: #00f0ff;
     margin-top: 0;
-    border-bottom: 1px solid #003366;
+    border-bottom: 1px solid rgba(0, 240, 255, 0.5); /* Subrayado neón más visible */
     padding-bottom: 10px;
+    font-size: 1.6em;
 }
 
 .video-responsive {
     position: relative;
-    padding-bottom: 56.25%; 
+    padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
     height: 0;
     overflow: hidden;
     margin: 0 auto;
@@ -188,6 +207,7 @@ footer {
 </style>
 </head>
 <body>
+
 <div class="hamburger" id="hamburger">
     <div class="bar"></div>
     <div class="bar"></div>
@@ -195,64 +215,78 @@ footer {
 </div>
 
 <div id="mySidebar" class="sidebar">
-  <a href="nosotros.html">Nosotros</a>
-  <a href="escaner.html">Escáner</a> 
-  <a href="proceso-plastico.html">Proceso del Plástico</a>
-  <a href="metodos-reciclaje.html">Métodos de Reciclaje</a>
-  <a href="tipos.html">Tipos de Plásticos</a>
-  <a href="caracteristicas.html">Características del Material</a>
-  <a href="impacto-ambiental.html">Impacto Ambiental</a>
-  <a href="formacion-educacion.html">Formación y Educación Ambiental</a>
-  <a href="creaciones-reciclado.html">Creaciones con Plástico Reciclado</a>
-  <a href="curiosidades.html">Curiosidades y Datos Útiles</a>
-  <a href="noticias-ambientales.html">Noticias Ambientales</a>
-  <a href="evaluacion.html">Evaluación y Retroalimentación</a>
-  <a href="ayuda.html">Ayuda</a>
+    <a href="nosotros.html">Nosotros</a>
+    <a href="escaner-materiales.html">Escáner de Materiales</a>
+    <a href="proceso-plastico.html">Proceso del Plástico</a>
+    <a href="metodos-reciclaje.html">Métodos de Reciclaje</a>
+    <a href="tipos-plasticos.html">Tipos de Plásticos</a>
+    <a href="caracteristicas-material.html">Características del Material</a>
+    <a href="impacto-ambiental.html">Impacto Ambiental</a>
+    <a href="formacion-educacion.html">Formación y Educación Ambiental</a>
+    <a href="creaciones-reciclado.html">Creaciones con Plástico Reciclado</a>
+    <a href="curiosidades.html">Curiosidades y Datos Útiles</a>
+    <a href="noticias-ambientales.html">Noticias Ambientales</a>
+    <a href="evaluacion.html">Evaluación y Retroalimentación</a>
+    <a href="ayuda.html">Ayuda</a>
 </div>
 
 <header>FACAS X - Características del Material</header>
 
 <div class="container">
-    <h2>Análisis de las Características del Plástico</h2>
-    <p>El plástico, material versátil y omnipresente, posee propiedades técnicas que lo hacen invaluable, pero que al mismo tiempo, generan desafíos ambientales críticos.</p>
+    <h1>Propiedades Críticas de los Polímeros Plásticos: Análisis Técnico</h1>
+    <p style="text-align: center;">El plástico, material de ingeniería indispensable en la sociedad moderna, exhibe un conjunto de propiedades físico-químicas que, si bien confieren una versatilidad excepcional, son simultáneamente la raíz de los complejos desafíos medioambientales contemporáneos. A continuación, se detallan estas características inherentes.</p>
 
-    <ul class="caracteristicas-list">
-        <li>
-            <strong>Durabilidad Extrema:</strong> Posee una gran resistencia al agua, la corrosión y agentes químicos. Esta longevidad es positiva para aplicaciones industriales, pero se traduce en una degradación ambiental de **cientos a miles de años**.
-        </li>
-        <li>
-            <strong>Resistencia a la Degradación:</strong> Los microorganismos, la luz solar y la humedad no lo descomponen fácilmente. Con el tiempo, solo se fragmenta en trozos más pequeños llamados **Microplásticos**, los cuales contaminan ecosistemas y entran en la cadena alimenticia.
-        </li>
-        <li>
-            <strong>Ligereza y Flotabilidad:</strong> Su baja densidad facilita su transporte a nivel global. El viento y el agua dispersan la contaminación plástica, llevándola a mares, ríos y playas, incluso desde lugares muy alejados.
-        </li>
-        <li>
-            <strong>Alta Energía Incorporada:</strong> Su producción depende en gran medida del petróleo y gas natural. Esto genera emisiones significativas de **CO2** y otros Gases de Efecto Invernadero (GEI).
-        </li>
-        <li>
-            <strong>Toxicidad por Incineración:</strong> Si se quema sin un control riguroso, puede liberar dioxinas y furanos, sustancias altamente tóxicas y perjudiciales.
-        </li>
-        <li>
-            <strong>Reciclabilidad Limitada:</strong> Aunque muchos tipos son reciclables, la infraestructura y la pureza requerida limitan la eficacia. Actualmente, solo un pequeño porcentaje (aprox. 9%) del plástico mundial se recicla.
-        </li>
-        <li>
-            <strong>Impacto en la Biodiversidad:</strong> El plástico es confundido con alimento por la fauna (aves, peces, animales marinos), lo que provoca asfixia, bloqueo digestivo o intoxicación por microplásticos.
-        </li>
-    </ul>
+    <h2>Análisis de las Características Intrínsicas del Plástico</h2>
+    
+    <div class="info-module">
+        <h3>1. Durabilidad y Persistencia Ambiental</h3>
+        <p>Los plásticos se caracterizan por su **excepcional resistencia** a la degradación por agentes químicos, biológicos y atmosféricos. Esta longevidad, altamente valorada en aplicaciones industriales y de consumo, se traduce en una **persistencia ambiental de siglos a milenios**, acumulándose en los ecosistemas y alterando su equilibrio natural.</p>
+    </div>
+
+    <div class="info-module">
+        <h3>2. Resistencia a la Biodegradación y Fragmentación</h3>
+        <p>A diferencia de los materiales orgánicos, los plásticos son mayoritariamente **resistentes a la biodegradación** por microorganismos. En su lugar, bajo la influencia de la radiación UV y la acción mecánica, se fragmentan progresivamente en partículas cada vez más diminutas, denominadas **microplásticos** y **nanoplásticos**, que representan una contaminación ubicua y una amenaza emergente para la salud ecológica y humana.</p>
+    </div>
+
+    <div class="info-module">
+        <h3>3. Baja Densidad y Dispersión Global</h3>
+        <p>La **ligera densidad** de la mayoría de los plásticos facilita su flotabilidad y, consecuentemente, su dispersión a gran escala por corrientes eólicas y oceánicas. Este fenómeno contribuye a la colonización de plásticos en los ambientes marinos más remotos y en ecosistemas terrestres distantes de los puntos de origen.</p>
+    </div>
+
+    <div class="info-module">
+        <h3>4. Intensidad Energética en Producción</h3>
+        <p>La manufactura de plásticos primarios es un proceso **altamente energético**, dependiente en gran medida de recursos fósiles como el petróleo y el gas natural. La extracción, procesamiento y polimerización conllevan una significativa **huella de carbono**, liberando Gases de Efecto Invernadero (GEI) que contribuyen al cambio climático global.</p>
+    </div>
+
+    <div class="info-module">
+        <h3>5. Emisiones Tóxicas por Incineración</h3>
+        <p>La gestión de residuos plásticos mediante **incineración incontrolada** o deficiente presenta un riesgo severo. La combustión incompleta de ciertos polímeros puede generar y liberar a la atmósfera compuestos orgánicos persistentes, como **dioxinas y furanos**, sustancias altamente tóxicas, cancerígenas y bioacumulables.</p>
+    </div>
+
+    <div class="info-module">
+        <h3>6. Limitaciones en la Reciclabilidad Efectiva</h3>
+        <p>A pesar de la existencia de tecnologías de reciclaje, la **reciclabilidad efectiva del plástico es inherentemente limitada**. Factores como la contaminación por otros materiales, la mezcla de diferentes tipos de polímeros y la pérdida de propiedades mecánicas (downcycling) restringen el número de ciclos de reutilización, resultando en que solo un **pequeño porcentaje global** de plástico se recicla eficazmente.</p>
+    </div>
+
+    <div class="info-module">
+        <h3>7. Interferencia con la Biodiversidad y Ecosistemas</h3>
+        <p>La presencia de residuos plásticos en el ambiente tiene un **impacto devastador en la biodiversidad**. La fauna, al confundir el plástico con alimento o al enredarse en él, sufre lesiones, asfixia, inanición por oclusión digestiva y toxicidad por la ingestión de microplásticos, afectando la salud de poblaciones enteras y la integridad de los ecosistemas.</p>
+    </div>
     
     <div class="video-box">
-        <h3>Video de Profundización</h3>
+        <h3>Profundización Audiovisual: Impacto y Características del Plástico</h3>
         <div class="video-responsive">
             <iframe 
                 src="https://www.youtube.com/embed/KuC6BfmkpCw" 
                 title="CARACTERISTICAS" 
                 frameborder="0" 
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                referrerpolicy="strict-origin-when-cross-origin" 
                 allowfullscreen>
             </iframe>
         </div>
-        <p style="color: #ccc; font-size: 0.9em; margin-top: 10px;">
-            Video proporcionado por 701 Cristian Aguilar.
+        <p style="color: #00f0ff; font-size: 0.9em; margin-top: 10px; font-style: italic;">
+            Material de apoyo visual para una comprensión holística del tema.
         </p>
     </div>
 </div>
